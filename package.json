@@ -1,0 +1,24 @@
+{
+  "name": "sas-blockchain-registry",
+  "version": "1.0.0",
+  "description": "This project implements a decentralized solution for managing and exchanging information in Spectrum Access Systems (SAS) using **blockchain** technology. It replaces the traditional SAS-SAS interface with a **smart contract-based** approach to ensure secure, auditable, and transparent communication between different SAS instances.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alanveloso/SAS-Blockchain-Registry.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alanveloso/SAS-Blockchain-Registry/issues"
+  },
+  "homepage": "https://github.com/alanveloso/SAS-Blockchain-Registry#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.24.3"
+  }
+}
