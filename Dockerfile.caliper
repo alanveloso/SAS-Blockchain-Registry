@@ -1,0 +1,21 @@
+FROM node:12
+
+WORKDIR /project
+
+# Instale dependências do sistema
+RUN apt-get update && apt-get install -y git python3 build-essential
+
+# Copie o projeto para dentro do container
+COPY . .
+
+# Instale dependências do projeto
+RUN npm install
+
+# Instale o Caliper CLI e o binding para Ethereum
+RUN npm install -g @hyperledger/caliper-cli@0.5.0	
+RUN npx caliper bind --caliper-bind-sut ethereum:latest
+
+ENTRYPOINT ["npx", "caliper", "launch", "master", \
+  "--caliper-workspace", ".", \
+  "--caliper-benchconfig", "benchmark/cbsdregistry-benchmark.yaml", \
+  "--caliper-networkconfig", "network-config.yaml"] 

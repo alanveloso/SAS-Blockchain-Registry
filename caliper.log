@@ -1,0 +1,21 @@
+2025.06.18-16:13:30.960[90m debug[39m [caliper] [blockchain] 	Constructed a winston logger with the specified settings
+2025.06.18-16:13:31.140[33m warn [39m [caliper] [bind] 	Working directory for binding not specified. Using "/home/alanveloso/repos/SAS-Blockchain-Registry"
+2025.06.18-16:13:31.142[32m info [39m [caliper] [bind] 	Binding for ethereum@latest. This might take some time...
+2025.06.18-16:13:31.142[32m info [39m [caliper] [bind] 	Binding working directory: /home/alanveloso/repos/SAS-Blockchain-Registry
+2025.06.18-16:13:31.142[32m info [39m [caliper] [bind] 	Calling npm with: install web3@1.2.0
+2025.06.18-16:14:00.019[31m error[39m [caliper] [bind] 	Failed to execute "npm" with return code 1.
+2025.06.18-16:16:09.316[90m debug[39m [caliper] [blockchain] 	Constructed a winston logger with the specified settings
+2025.06.18-16:16:09.416[33m warn [39m [caliper] [bind] 	Working directory for binding not specified. Using "/home/alanveloso/repos/SAS-Blockchain-Registry"
+2025.06.18-16:16:09.417[32m info [39m [caliper] [bind] 	Binding for ethereum@latest. This might take some time...
+2025.06.18-16:16:09.418[32m info [39m [caliper] [bind] 	Binding working directory: /home/alanveloso/repos/SAS-Blockchain-Registry
+2025.06.18-16:16:09.418[32m info [39m [caliper] [bind] 	Calling npm with: install web3@1.2.0
+2025.06.18-16:27:59.370[90m debug[39m [caliper] [blockchain] 	Constructed a winston logger with the specified settings
+2025.06.18-16:27:59.586[33m warn [39m [caliper] [bind] 	Working directory not specified. Using "/home/alanveloso/repos/SAS-Blockchain-Registry"
+2025.06.18-16:27:59.588[32m info [39m [caliper] [bind] 	Binding for ethereum@latest. This might take some time...
+2025.06.18-16:27:59.589[32m info [39m [caliper] [bind] 	Using working directory: /home/alanveloso/repos/SAS-Blockchain-Registry
+2025.06.18-16:27:59.589[32m info [39m [caliper] [bind] 	Calling npm with: install web3@1.2.2
+2025.06.18-16:34:51.059[90m debug[39m [caliper] [blockchain] 	Constructed a winston logger with the specified settings
+2025.06.18-16:34:51.304[33m warn [39m [caliper] [bind] 	Working directory not specified. Using "/home/alanveloso/repos/SAS-Blockchain-Registry"
+2025.06.18-16:34:51.306[32m info [39m [caliper] [bind] 	Binding for ethereum@latest. This might take some time...
+2025.06.18-16:34:51.306[32m info [39m [caliper] [bind] 	Using working directory: /home/alanveloso/repos/SAS-Blockchain-Registry
+2025.06.18-16:34:51.307[32m info [39m [caliper] [bind] 	Calling npm with: install web3@1.2.2

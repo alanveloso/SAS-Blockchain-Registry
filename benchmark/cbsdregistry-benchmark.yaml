@@ -1,0 +1,40 @@
+test:
+  name: CBSDRegistry Benchmark
+  description: Benchmark para CBSDRegistry em Besu IBFT 2.0
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: Registro de CBSD
+      description: Registra CBSDs
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: ./benchmark/cbsdregistry-workload.js
+        arguments:
+          action: register
+    - label: Atualização de Grant
+      description: Atualiza grant de CBSDs
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: ./benchmark/cbsdregistry-workload.js
+        arguments:
+          action: updateGrant
+    - label: Atualização de Status
+      description: Atualiza status de CBSDs
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: ./benchmark/cbsdregistry-workload.js
+        arguments:
+          action: updateStatus 
