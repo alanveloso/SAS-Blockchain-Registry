@@ -136,7 +136,6 @@ CHAIN_ID=1337
 
 ### 7. Iniciar API
 ```bash
-source venv/bin/activate
 python3 run.py
 ```
 
