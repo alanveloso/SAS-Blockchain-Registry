@@ -36,25 +36,80 @@ O sistema é composto por um smart contract Solidity que garante transparência 
 
 ## Setup do Smart Contract
 
-### 1. Instalar Dependências
+### Opção 1: Hardhat Node Local (Desenvolvimento)
+
+#### 1. Instalar Dependências
 ```bash
 npm install
 ```
 
-### 2. Testar Contrato
+#### 2. Testar Contrato
 ```bash
 npx hardhat test
 ```
 
-### 3. Iniciar Blockchain
+#### 3. Iniciar Blockchain
 ```bash
 npx hardhat node
 ```
 
-### 4. Deploy do Contrato
+#### 4. Deploy do Contrato
 ```bash
 npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
 ```
+
+### Opção 2: Quorum Dev Quickstart (Recomendado para Produção)
+
+O [Quorum Dev Quickstart](https://docs.goquorum.consensys.io/tutorials/quorum-dev-quickstart/using-the-quickstart) oferece uma rede blockchain completa com múltiplos nós validadores, ideal para testes e desenvolvimento.
+
+#### 1. Gerar Rede Quorum
+```bash
+npx quorum-dev-quickstart
+```
+Siga as instruções:
+- Escolha **Hyperledger Besu** como cliente
+- Responda **N** para transações privadas
+- Escolha **Loki** para logging
+- Use o diretório padrão `./quorum-test-network`
+
+#### 2. Iniciar Rede
+```bash
+cd quorum-test-network
+./run.sh
+```
+
+#### 3. Verificar Conectividade
+```bash
+# Verificar versão do cliente
+curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":1}' -H 'Content-Type: application/json' http://localhost:8545
+
+# Verificar número de peers
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' -H 'Content-Type: application/json' http://localhost:8545
+
+# Verificar número do bloco
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' -H 'Content-Type: application/json' http://localhost:8545
+```
+
+#### 4. Deploy do Contrato na Rede Quorum
+```bash
+cd smart_contracts
+npm install --legacy-peer-deps
+npx hardhat compile
+node scripts/deploy-sas-shared-registry-quorum.js
+```
+
+**Configurações da Rede Quorum:**
+- **RPC URL:** `http://127.0.0.1:8545`
+- **Chain ID:** `1337`
+- **Contrato Deployado:** `0xBca0fDc68d9b21b5bfB16D784389807017B2bbbc`
+- **Chave Privada Owner:** `0x60bbe10a196a4e71451c0f6e9ec9beab454c2a5ac0542aa5b8b733ff5719fec3`
+
+#### 5. Endpoints da Rede Quorum
+- **JSON-RPC HTTP:** http://localhost:8545
+- **JSON-RPC WebSocket:** ws://localhost:8546
+- **Block Explorer:** http://localhost:25000/explorer/nodes
+- **Prometheus:** http://localhost:9090/graph
+- **Grafana:** http://localhost:3000/d/XE4V0WGZz/besu-overview
 
 ## Setup do Middleware
 
@@ -69,6 +124,14 @@ pip install -r requirements.txt
 ### 6. Configurar Variáveis de Ambiente
 ```bash
 cp env.example .env
+```
+
+**Para Rede Quorum Dev Quickstart, configure:**
+```env
+RPC_URL=http://127.0.0.1:8545
+CONTRACT_ADDRESS=0xBca0fDc68d9b21b5bfB16D784389807017B2bbbc
+OWNER_PRIVATE_KEY=0x60bbe10a196a4e71451c0f6e9ec9beab454c2a5ac0542aa5b8b733ff5719fec3
+CHAIN_ID=1337
 ```
 
 ### 7. Iniciar API
@@ -154,7 +217,8 @@ SAS-Blockchain-Registry/
 │   └── Lock.sol                 # Contrato de exemplo
 ├── middleware/                  # API Python (documentação separada)
 ├── scripts/
-│   └── deploy-sas-shared-registry.js  # Script de deploy
+│   ├── deploy-sas-shared-registry.js           # Deploy Hardhat
+│   └── deploy-sas-shared-registry-quorum.js    # Deploy Quorum
 ├── test/
 │   └── SASSharedRegistry.js     # Testes unitários
 ├── hardhat.config.js            # Configuração Hardhat
@@ -175,6 +239,11 @@ npx hardhat test
 - **CBSD de Teste:** `0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC`
 - **Owner:** `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`
 
+### Endereços de Teste (Quorum Dev Quickstart)
+- **Contrato SASSharedRegistry:** `0xBca0fDc68d9b21b5bfB16D784389807017B2bbbc`
+- **Owner:** `0xC9C913c8c3C1Cd416d80A0abF475db2062F161f6`
+- **RPC Node:** `http://127.0.0.1:8545`
+
 ## Troubleshooting
 
 ### Verificar se o nó está rodando
@@ -190,6 +259,28 @@ curl -X POST -H "Content-Type: application/json" \
   --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
   http://127.0.0.1:8545
 ```
+
+### Problemas Comuns com Quorum Dev Quickstart
+
+#### Rede não inicia
+```bash
+# Parar e remover containers
+cd quorum-test-network
+./remove.sh
+
+# Reiniciar
+./run.sh
+```
+
+#### Contrato não faz deploy
+- Verifique se a rede está sincronizada (blocos > 0)
+- Confirme que a conta tem saldo suficiente
+- Use o script `deploy-sas-shared-registry-quorum.js` específico para Quorum
+
+#### Middleware não conecta
+- Verifique se o RPC_URL está correto
+- Confirme se o CONTRACT_ADDRESS é o correto do deploy
+- Teste a conectividade RPC primeiro
 
 ## Middleware
 
