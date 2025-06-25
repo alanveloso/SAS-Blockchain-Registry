@@ -132,12 +132,68 @@ class Blockchain:
             logger.error(f"Erro na chamada da função: {e}")
             raise
 
-    def get_cbsd_info(self, cbsd_id):
-        """Obtém informações de um CBSD"""
+    def get_cbsd_info(self, fcc_id, cbsd_serial_number):
+        """Obtém informações completas de um CBSD"""
         try:
-            return self.contract.functions.getCBSDInfo(cbsd_id).call()
+            return self.contract.functions.getCBSDInfo(fcc_id, cbsd_serial_number).call()
         except Exception as e:
-            logger.error(f"Erro ao obter info do CBSD {cbsd_id}: {e}")
+            logger.error(f"Erro ao obter info do CBSD {fcc_id}/{cbsd_serial_number}: {e}")
+            raise
+
+    def get_grants(self, fcc_id, cbsd_serial_number):
+        """Obtém todos os grants de um CBSD"""
+        try:
+            return self.contract.functions.getGrants(fcc_id, cbsd_serial_number).call()
+        except Exception as e:
+            logger.error(f"Erro ao obter grants do CBSD {fcc_id}/{cbsd_serial_number}: {e}")
+            raise
+
+    def is_cbsd_registered(self, fcc_id, cbsd_serial_number):
+        """Verifica se um CBSD está registrado"""
+        try:
+            return self.contract.functions.isCBSDRegistered(fcc_id, cbsd_serial_number).call()
+        except Exception as e:
+            logger.error(f"Erro ao verificar registro do CBSD {fcc_id}/{cbsd_serial_number}: {e}")
+            raise
+
+    def get_total_cbsds(self):
+        """Obtém o total de CBSDs registrados"""
+        try:
+            return self.contract.functions.totalCbsds().call()
+        except Exception as e:
+            logger.error(f"Erro ao obter total de CBSDs: {e}")
+            raise
+
+    def get_total_grants(self):
+        """Obtém o total de grants criados"""
+        try:
+            return self.contract.functions.totalGrants().call()
+        except Exception as e:
+            logger.error(f"Erro ao obter total de grants: {e}")
+            raise
+
+    def is_fcc_id_authorized(self, fcc_id):
+        """Verifica se um FCC ID está autorizado"""
+        try:
+            return self.contract.functions.fccIds(fcc_id).call()
+        except Exception as e:
+            logger.error(f"Erro ao verificar FCC ID {fcc_id}: {e}")
+            raise
+
+    def is_user_id_authorized(self, user_id):
+        """Verifica se um User ID está autorizado"""
+        try:
+            return self.contract.functions.userIds(user_id).call()
+        except Exception as e:
+            logger.error(f"Erro ao verificar User ID {user_id}: {e}")
+            raise
+
+    def is_fcc_id_blacklisted(self, fcc_id):
+        """Verifica se um FCC ID está blacklistado"""
+        try:
+            return self.contract.functions.blacklistedFccIds(fcc_id).call()
+        except Exception as e:
+            logger.error(f"Erro ao verificar blacklist do FCC ID {fcc_id}: {e}")
             raise
 
     def is_authorized_sas(self, sas_address):

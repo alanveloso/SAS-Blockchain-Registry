@@ -2,145 +2,377 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("SASSharedRegistry", function () {
-  let SASSharedRegistry, sasSharedRegistry, owner, other;
+  let SASSharedRegistry, sasSharedRegistry, owner, sas1, sas2, user1;
 
   beforeEach(async function () {
-    [owner, other] = await ethers.getSigners();
+    [owner, sas1, sas2, user1] = await ethers.getSigners();
     SASSharedRegistry = await ethers.getContractFactory("SASSharedRegistry");
     sasSharedRegistry = await SASSharedRegistry.deploy();
-    // Parâmetros padrão para registro
-    this.defaultId = 1;
-    this.defaultAddress = other.address;
-    this.defaultGrant = 1000;
-    this.defaultFreq = 3600;
-    this.defaultBw = 20;
-    this.defaultExpiry = Math.floor(Date.now() / 1000) + 3600;
+    
+    // Autorizar SAS
+    await sasSharedRegistry.authorizeSAS(sas1.address);
+    await sasSharedRegistry.authorizeSAS(sas2.address);
+    
+    // Injetar FCC IDs e User IDs válidos
+    await sasSharedRegistry.InjectFccId(ethers.encodeBytes32String("FCC001"), 47);
+    await sasSharedRegistry.InjectFccId(ethers.encodeBytes32String("FCC002"), 47);
+    await sasSharedRegistry.InjectUserId(ethers.encodeBytes32String("USER001"));
+    await sasSharedRegistry.InjectUserId(ethers.encodeBytes32String("USER002"));
+    
+    // Dados padrão para testes
+    this.defaultRegistrationRequest = {
+      fccId: ethers.encodeBytes32String("FCC001"),
+      userId: ethers.encodeBytes32String("USER001"),
+      cbsdSerialNumber: ethers.encodeBytes32String("SERIAL001"),
+      callSign: ethers.encodeBytes32String("CALL001"),
+      cbsdCategory: ethers.encodeBytes32String("A"),
+      airInterface: ethers.encodeBytes32String("E_UTRA"),
+      measCapability: [ethers.encodeBytes32String("EUTRA_CARRIER_RSSI")],
+      eirpCapability: 47,
+      latitude: -23000000, // -23.0 graus em micrograus (exemplo SP)
+      longitude: -43000000, // -43.0 graus em micrograus (exemplo RJ)
+      height: 30,
+      heightType: ethers.encodeBytes32String("AGL"),
+      indoorDeployment: false,
+      antennaGain: 15,
+      antennaBeamwidth: 65,
+      antennaAzimuth: 180,
+      groupingParam: ethers.encodeBytes32String("GROUP1"),
+      cbsdAddress: user1.address
+    };
+    
+    this.defaultGrantRequest = {
+      fccId: ethers.encodeBytes32String("FCC001"),
+      cbsdSerialNumber: ethers.encodeBytes32String("SERIAL001"),
+      channelType: ethers.encodeBytes32String("GAA"),
+      maxEirp: 30,
+      lowFrequency: 3550000000, // 3.55 GHz
+      highFrequency: 3700000000, // 3.7 GHz
+      requestedMaxEirp: 30,
+      requestedLowFrequency: 3550000000,
+      requestedHighFrequency: 3700000000,
+      grantExpireTime: Math.floor(Date.now() / 1000) + 3600 // 1 hora
+    };
   });
 
-  it("deve definir o owner corretamente", async function () {
-    expect(await sasSharedRegistry.owner()).to.equal(owner.address);
+  describe("Configuração Inicial", function () {
+    it("deve definir o owner corretamente", async function () {
+      expect(await sasSharedRegistry.owner()).to.equal(owner.address);
+    });
+
+    it("deve autorizar o owner como SAS inicialmente", async function () {
+      expect(await sasSharedRegistry.authorizedSAS(owner.address)).to.be.true;
+    });
+
+    it("deve ter contadores zerados inicialmente", async function () {
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(0);
+      expect(await sasSharedRegistry.totalGrants()).to.equal(0);
+    });
   });
 
-  it("deve registrar um novo CBSD", async function () {
-    await expect(sasSharedRegistry.registerCBSD(
-      this.defaultId,
-      this.defaultAddress,
-      this.defaultGrant,
-      this.defaultFreq,
-      this.defaultBw,
-      this.defaultExpiry
-    ))
-      .to.emit(sasSharedRegistry, "CBSDRegistered")
-      .withArgs(this.defaultId, owner.address);
-    const info = await sasSharedRegistry.getCBSDInfo(this.defaultId);
-    expect(info[0]).to.equal(this.defaultAddress);
-    expect(info[1]).to.equal(this.defaultGrant);
-    expect(info[2]).to.equal("registered");
+  describe("Autorização SAS", function () {
+    it("deve permitir owner autorizar SAS", async function () {
+      await expect(sasSharedRegistry.authorizeSAS(sas1.address))
+        .to.emit(sasSharedRegistry, "SASAuthorized")
+        .withArgs(sas1.address);
+      expect(await sasSharedRegistry.authorizedSAS(sas1.address)).to.be.true;
+    });
+
+    it("não deve permitir não-owner autorizar SAS", async function () {
+      await expect(
+        sasSharedRegistry.connect(user1).authorizeSAS(sas1.address)
+      ).to.be.revertedWith("Not authorized");
+    });
+
+    it("deve permitir owner revogar SAS", async function () {
+      await sasSharedRegistry.authorizeSAS(sas1.address);
+      await expect(sasSharedRegistry.revokeSAS(sas1.address))
+        .to.emit(sasSharedRegistry, "SASRevoked")
+        .withArgs(sas1.address);
+      expect(await sasSharedRegistry.authorizedSAS(sas1.address)).to.be.false;
+    });
   });
 
-  it("não deve permitir registrar CBSD já registrado", async function () {
-    await sasSharedRegistry.registerCBSD(
-      this.defaultId,
-      this.defaultAddress,
-      this.defaultGrant,
-      this.defaultFreq,
-      this.defaultBw,
-      this.defaultExpiry
-    );
-    await expect(
-      sasSharedRegistry.registerCBSD(
-        this.defaultId,
-        this.defaultAddress,
-        this.defaultGrant,
-        this.defaultFreq,
-        this.defaultBw,
-        this.defaultExpiry
-      )
-    ).to.be.revertedWith("CBSD already exists");
+  describe("Injeção de IDs", function () {
+    it("deve permitir owner injetar FCC ID", async function () {
+      const fccId = ethers.encodeBytes32String("FCC003");
+      await expect(sasSharedRegistry.InjectFccId(fccId, 47))
+        .to.emit(sasSharedRegistry, "FCCIdInjected")
+        .withArgs(fccId, 47);
+      expect(await sasSharedRegistry.fccIds(fccId)).to.be.true;
+    });
+
+    it("deve permitir owner injetar User ID", async function () {
+      const userId = ethers.encodeBytes32String("USER003");
+      await expect(sasSharedRegistry.InjectUserId(userId))
+        .to.emit(sasSharedRegistry, "UserIdInjected")
+        .withArgs(userId);
+      expect(await sasSharedRegistry.userIds(userId)).to.be.true;
+    });
   });
 
-  it("não deve permitir registro por não-owner", async function () {
-    await expect(
-      sasSharedRegistry.connect(other).registerCBSD(
-        2,
-        this.defaultAddress,
-        this.defaultGrant,
-        this.defaultFreq,
-        this.defaultBw,
-        this.defaultExpiry
-      )
-    ).to.be.revertedWith("Not an authorized SAS");
+  describe("Registration", function () {
+    it("deve registrar um novo CBSD", async function () {
+      await expect(sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest))
+        .to.emit(sasSharedRegistry, "CBSDRegistered")
+        .withArgs(this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber, sas1.address);
+      
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(1);
+      
+      // Verificar dados do CBSD
+      const cbsdKey = ethers.keccak256(
+        ethers.AbiCoder.defaultAbiCoder().encode(
+          ["bytes32", "bytes32"],
+          [this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber]
+        )
+      );
+      const cbsd = await sasSharedRegistry.cbsds(cbsdKey);
+      expect(cbsd.fccId).to.equal(this.defaultRegistrationRequest.fccId);
+      expect(cbsd.userId).to.equal(this.defaultRegistrationRequest.userId);
+      expect(cbsd.cbsdAddress).to.equal(user1.address);
+      expect(cbsd.sasOrigin).to.equal(sas1.address);
+    });
+
+    it("deve registrar um novo CBSD com latitude/longitude negativos", async function () {
+      await expect(sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest))
+        .to.emit(sasSharedRegistry, "CBSDRegistered")
+        .withArgs(this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber, sas1.address);
+      
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(1);
+      
+      // Verificar dados do CBSD
+      const cbsd = await sasSharedRegistry.getCBSDInfo(this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber);
+      expect(cbsd.latitude).to.equal(this.defaultRegistrationRequest.latitude);
+      expect(cbsd.longitude).to.equal(this.defaultRegistrationRequest.longitude);
+    });
+
+    it("deve registrar um novo CBSD com latitude/longitude positivos", async function () {
+      const positiveRequest = { ...this.defaultRegistrationRequest, latitude: 40000000, longitude: 74000000 };
+      await expect(sasSharedRegistry.connect(sas1).Registration(positiveRequest))
+        .to.emit(sasSharedRegistry, "CBSDRegistered")
+        .withArgs(positiveRequest.fccId, positiveRequest.cbsdSerialNumber, sas1.address);
+      const cbsd = await sasSharedRegistry.getCBSDInfo(positiveRequest.fccId, positiveRequest.cbsdSerialNumber);
+      expect(cbsd.latitude).to.equal(positiveRequest.latitude);
+      expect(cbsd.longitude).to.equal(positiveRequest.longitude);
+    });
+
+    it("não deve permitir registrar CBSD já registrado", async function () {
+      await sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest);
+      await expect(
+        sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest)
+      ).to.be.revertedWith("CBSD already exists");
+    });
+
+    it("não deve permitir registro com FCC ID não autorizado", async function () {
+      const invalidRequest = { ...this.defaultRegistrationRequest };
+      invalidRequest.fccId = ethers.encodeBytes32String("INVALID");
+      await expect(
+        sasSharedRegistry.connect(sas1).Registration(invalidRequest)
+      ).to.be.revertedWith("FCC ID not authorized");
+    });
+
+    it("não deve permitir registro com User ID não autorizado", async function () {
+      const invalidRequest = { ...this.defaultRegistrationRequest };
+      invalidRequest.userId = ethers.encodeBytes32String("INVALID");
+      await expect(
+        sasSharedRegistry.connect(sas1).Registration(invalidRequest)
+      ).to.be.revertedWith("User ID not authorized");
+    });
+
+    it("não deve permitir registro por SAS não autorizado", async function () {
+      await expect(
+        sasSharedRegistry.connect(user1).Registration(this.defaultRegistrationRequest)
+      ).to.be.revertedWith("Not an authorized SAS");
+    });
   });
 
-  it("deve atualizar o grant amount de um CBSD", async function () {
-    await sasSharedRegistry.registerCBSD(
-      this.defaultId,
-      this.defaultAddress,
-      this.defaultGrant,
-      this.defaultFreq,
-      this.defaultBw,
-      this.defaultExpiry
-    );
-    await expect(sasSharedRegistry.updateGrantAmount(this.defaultId, 2000))
-      .to.emit(sasSharedRegistry, "GrantAmountUpdated")
-      .withArgs(this.defaultId, 2000, owner.address);
-    const info = await sasSharedRegistry.getCBSDInfo(this.defaultId);
-    expect(info[1]).to.equal(2000);
+  describe("GrantSpectrum", function () {
+    beforeEach(async function () {
+      await sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest);
+    });
+
+    it("deve criar um novo grant", async function () {
+      await expect(sasSharedRegistry.connect(sas1).GrantSpectrum(this.defaultGrantRequest))
+        .to.emit(sasSharedRegistry, "GrantCreated");
+      
+      expect(await sasSharedRegistry.totalGrants()).to.equal(1);
+      
+      // Verificar dados do grant
+      const cbsdKey = ethers.keccak256(
+        ethers.AbiCoder.defaultAbiCoder().encode(
+          ["bytes32", "bytes32"],
+          [this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber]
+        )
+      );
+      const grants = await sasSharedRegistry.getGrants(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber);
+      expect(grants.length).to.equal(1);
+      expect(grants[0].maxEirp).to.equal(this.defaultGrantRequest.maxEirp);
+      expect(grants[0].lowFrequency).to.equal(this.defaultGrantRequest.lowFrequency);
+      expect(grants[0].highFrequency).to.equal(this.defaultGrantRequest.highFrequency);
+      expect(grants[0].terminated).to.be.false;
+    });
+
+    it("não deve permitir grant para CBSD não registrado", async function () {
+      const invalidRequest = { ...this.defaultGrantRequest };
+      invalidRequest.cbsdSerialNumber = ethers.encodeBytes32String("INVALID");
+      await expect(
+        sasSharedRegistry.connect(sas1).GrantSpectrum(invalidRequest)
+      ).to.be.revertedWith("CBSD not registered");
+    });
   });
 
-  it("não deve permitir atualizar grant de CBSD inexistente", async function () {
-    await expect(
-      sasSharedRegistry.updateGrantAmount(99, 2000)
-    ).to.be.revertedWith("CBSD not registered");
+  describe("Heartbeat", function () {
+    let grantId;
+
+    beforeEach(async function () {
+      await sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest);
+      await sasSharedRegistry.connect(sas1).GrantSpectrum(this.defaultGrantRequest);
+      
+      // Obter o grant ID gerado
+      const grants = await sasSharedRegistry.getGrants(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber);
+      grantId = grants[0].grantId;
+    });
+
+    it("deve aceitar heartbeat válido", async function () {
+      await expect(
+        sasSharedRegistry.connect(sas1).Heartbeat(
+          this.defaultGrantRequest.fccId,
+          this.defaultGrantRequest.cbsdSerialNumber,
+          grantId
+        )
+      ).to.not.be.reverted;
+    });
+
+    it("não deve aceitar heartbeat para grant inexistente", async function () {
+      const invalidGrantId = ethers.encodeBytes32String("INVALID");
+      await expect(
+        sasSharedRegistry.connect(sas1).Heartbeat(
+          this.defaultGrantRequest.fccId,
+          this.defaultGrantRequest.cbsdSerialNumber,
+          invalidGrantId
+        )
+      ).to.be.revertedWith("Grant not found");
+    });
+
+    it("não deve aceitar heartbeat para CBSD não registrado", async function () {
+      await expect(
+        sasSharedRegistry.connect(sas1).Heartbeat(
+          this.defaultGrantRequest.fccId,
+          ethers.encodeBytes32String("INVALID"),
+          grantId
+        )
+      ).to.be.revertedWith("CBSD not registered");
+    });
   });
 
-  it("não deve permitir atualização de grant por não-owner", async function () {
-    await sasSharedRegistry.registerCBSD(
-      this.defaultId,
-      this.defaultAddress,
-      this.defaultGrant,
-      this.defaultFreq,
-      this.defaultBw,
-      this.defaultExpiry
-    );
-    await expect(
-      sasSharedRegistry.connect(other).updateGrantAmount(this.defaultId, 2000)
-    ).to.be.revertedWith("Not an authorized SAS");
+  describe("Relinquishment", function () {
+    let grantId;
+
+    beforeEach(async function () {
+      await sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest);
+      await sasSharedRegistry.connect(sas1).GrantSpectrum(this.defaultGrantRequest);
+      
+      const grants = await sasSharedRegistry.getGrants(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber);
+      grantId = grants[0].grantId;
+    });
+
+    it("deve terminar um grant", async function () {
+      await expect(
+        sasSharedRegistry.connect(sas1).Relinquishment(
+          this.defaultGrantRequest.fccId,
+          this.defaultGrantRequest.cbsdSerialNumber,
+          grantId
+        )
+      ).to.emit(sasSharedRegistry, "GrantTerminated")
+        .withArgs(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber, grantId, sas1.address);
+      
+      // Verificar se grant foi marcado como terminado
+      const grants = await sasSharedRegistry.getGrants(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber);
+      expect(grants[0].terminated).to.be.true;
+    });
   });
 
-  it("deve atualizar o status de um CBSD", async function () {
-    await sasSharedRegistry.registerCBSD(
-      this.defaultId,
-      this.defaultAddress,
-      this.defaultGrant,
-      this.defaultFreq,
-      this.defaultBw,
-      this.defaultExpiry
-    );
-    await expect(sasSharedRegistry.updateStatus(this.defaultId, "active"))
-      .to.emit(sasSharedRegistry, "StatusUpdated")
-      .withArgs(this.defaultId, "active", owner.address);
-    const info = await sasSharedRegistry.getCBSDInfo(this.defaultId);
-    expect(info[2]).to.equal("active");
+  describe("Deregistration", function () {
+    beforeEach(async function () {
+      await sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest);
+      await sasSharedRegistry.connect(sas1).GrantSpectrum(this.defaultGrantRequest);
+    });
+
+    it("deve remover registro do CBSD", async function () {
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(1);
+      expect(await sasSharedRegistry.totalGrants()).to.equal(1);
+      
+      await sasSharedRegistry.connect(sas1).Deregistration(
+        this.defaultRegistrationRequest.fccId,
+        this.defaultRegistrationRequest.cbsdSerialNumber
+      );
+      
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(0);
+      
+      // Verificar se CBSD foi removido
+      const cbsdKey = ethers.keccak256(
+        ethers.AbiCoder.defaultAbiCoder().encode(
+          ["bytes32", "bytes32"],
+          [this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber]
+        )
+      );
+      const cbsd = await sasSharedRegistry.cbsds(cbsdKey);
+      expect(cbsd.fccId).to.equal(ethers.ZeroHash);
+    });
+
+    it("não deve permitir deregistration de CBSD inexistente", async function () {
+      await expect(
+        sasSharedRegistry.connect(sas1).Deregistration(
+          this.defaultRegistrationRequest.fccId,
+          ethers.encodeBytes32String("INVALID")
+        )
+      ).to.be.revertedWith("CBSD not registered");
+    });
   });
 
-  it("não deve permitir atualizar status de CBSD inexistente", async function () {
-    await expect(
-      sasSharedRegistry.updateStatus(99, "inactive")
-    ).to.be.revertedWith("CBSD not registered");
+  describe("Blacklist", function () {
+    it("deve permitir owner blacklistar FCC ID", async function () {
+      const fccId = ethers.encodeBytes32String("FCC003");
+      await expect(sasSharedRegistry.BlacklistByFccId(fccId))
+        .to.emit(sasSharedRegistry, "FCCIdBlacklisted")
+        .withArgs(fccId);
+      expect(await sasSharedRegistry.blacklistedFccIds(fccId)).to.be.true;
+    });
+
+    it("deve permitir owner blacklistar Serial Number", async function () {
+      const fccId = ethers.encodeBytes32String("FCC003");
+      const serialNumber = ethers.encodeBytes32String("SERIAL003");
+      await expect(sasSharedRegistry.BlacklistByFccIdAndSerialNumber(fccId, serialNumber))
+        .to.emit(sasSharedRegistry, "SerialNumberBlacklisted")
+        .withArgs(fccId, serialNumber);
+      expect(await sasSharedRegistry.blacklistedSerialNumbers(
+        ethers.keccak256(
+          ethers.AbiCoder.defaultAbiCoder().encode(["bytes32", "bytes32"], [fccId, serialNumber])
+        )
+      )).to.be.true;
+    });
   });
 
-  it("não deve permitir atualização de status por não-owner", async function () {
-    await sasSharedRegistry.registerCBSD(
-      this.defaultId,
-      this.defaultAddress,
-      this.defaultGrant,
-      this.defaultFreq,
-      this.defaultBw,
-      this.defaultExpiry
-    );
-    await expect(
-      sasSharedRegistry.connect(other).updateStatus(this.defaultId, "inactive")
-    ).to.be.revertedWith("Not an authorized SAS");
+  describe("Reset", function () {
+    beforeEach(async function () {
+      await sasSharedRegistry.connect(sas1).Registration(this.defaultRegistrationRequest);
+      await sasSharedRegistry.connect(sas1).GrantSpectrum(this.defaultGrantRequest);
+    });
+
+    it("deve permitir owner resetar o SAS", async function () {
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(1);
+      expect(await sasSharedRegistry.totalGrants()).to.equal(1);
+      
+      await sasSharedRegistry.Reset();
+      
+      expect(await sasSharedRegistry.totalCbsds()).to.equal(0);
+      expect(await sasSharedRegistry.totalGrants()).to.equal(0);
+    });
+
+    it("não deve permitir não-owner resetar o SAS", async function () {
+      await expect(
+        sasSharedRegistry.connect(user1).Reset()
+      ).to.be.revertedWith("Not authorized");
+    });
   });
 }); 
