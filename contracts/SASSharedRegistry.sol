@@ -12,33 +12,33 @@ contract SASSharedRegistry {
     
     // Estrutura CBSD seguindo padrão WinnForum
     struct CBSD {
-        bytes32 fccId;
-        bytes32 userId;
-        bytes32 cbsdSerialNumber;
-        bytes32 callSign;
-        bytes32 cbsdCategory;
-        bytes32 airInterface;
-        bytes32[] measCapability; // array de capabilities como bytes32
+        string fccId;
+        string userId;
+        string cbsdSerialNumber;
+        string callSign;
+        string cbsdCategory;
+        string airInterface;
+        string[] measCapability; // array de capabilities como string
         uint256 eirpCapability;
         int256 latitude;
         int256 longitude;
         uint256 height;
-        bytes32 heightType;
+        string heightType;
         bool indoorDeployment;
         uint256 antennaGain;
         uint256 antennaBeamwidth;
         uint256 antennaAzimuth;
-        bytes32 groupingParam;
-        address cbsdAddress;
+        string groupingParam;
+        string cbsdAddress; // endereço de rede do CBSD
         address sasOrigin;
         uint256 registrationTimestamp;
     }
     
     // Estrutura Grant seguindo padrão WinnForum
     struct Grant {
-        bytes32 grantId;
-        bytes32 channelType;
-        uint256 grantExpireTime;
+        string grantId;
+        string channelType;
+        uint256 grantExpireTime; // agora uint256
         bool terminated;
         uint256 maxEirp;
         uint256 lowFrequency;
@@ -52,44 +52,44 @@ contract SASSharedRegistry {
     
     // Structs de input para evitar stack too deep
     struct RegistrationRequest {
-        bytes32 fccId;
-        bytes32 userId;
-        bytes32 cbsdSerialNumber;
-        bytes32 callSign;
-        bytes32 cbsdCategory;
-        bytes32 airInterface;
-        bytes32[] measCapability;
+        string fccId;
+        string userId;
+        string cbsdSerialNumber;
+        string callSign;
+        string cbsdCategory;
+        string airInterface;
+        string[] measCapability;
         uint256 eirpCapability;
         int256 latitude;
         int256 longitude;
         uint256 height;
-        bytes32 heightType;
+        string heightType;
         bool indoorDeployment;
         uint256 antennaGain;
         uint256 antennaBeamwidth;
         uint256 antennaAzimuth;
-        bytes32 groupingParam;
-        address cbsdAddress;
+        string groupingParam;
+        string cbsdAddress;
     }
     struct GrantRequest {
-        bytes32 fccId;
-        bytes32 cbsdSerialNumber;
-        bytes32 channelType;
+        string fccId;
+        string cbsdSerialNumber;
+        string channelType;
         uint256 maxEirp;
         uint256 lowFrequency;
         uint256 highFrequency;
         uint256 requestedMaxEirp;
         uint256 requestedLowFrequency;
         uint256 requestedHighFrequency;
-        uint256 grantExpireTime;
+        uint256 grantExpireTime; // agora uint256
     }
     
     // Mapeamentos
     mapping(bytes32 => CBSD) public cbsds;                    // fccId + serialNumber -> CBSD
     mapping(bytes32 => Grant[]) public grants;                // fccId + serialNumber -> Grants
-    mapping(bytes32 => bool) public fccIds;                   // FCC IDs válidos
-    mapping(bytes32 => bool) public userIds;                  // User IDs válidos
-    mapping(bytes32 => bool) public blacklistedFccIds;        // FCC IDs blacklistados
+    mapping(string => bool) public fccIds;                   // FCC IDs válidos
+    mapping(string => bool) public userIds;                  // User IDs válidos
+    mapping(string => bool) public blacklistedFccIds;        // FCC IDs blacklistados
     mapping(bytes32 => bool) public blacklistedSerialNumbers; // Serial numbers blacklistados
     
     // Contadores
@@ -99,13 +99,13 @@ contract SASSharedRegistry {
     // Eventos seguindo padrão WinnForum
     event SASAuthorized(address indexed sas);
     event SASRevoked(address indexed sas);
-    event CBSDRegistered(bytes32 indexed fccId, bytes32 indexed serialNumber, address indexed sasOrigin);
-    event GrantCreated(bytes32 indexed fccId, bytes32 indexed serialNumber, bytes32 grantId, address indexed sasOrigin);
-    event GrantTerminated(bytes32 indexed fccId, bytes32 indexed serialNumber, bytes32 grantId, address indexed sasOrigin);
-    event FCCIdInjected(bytes32 indexed fccId, uint256 maxEirp);
-    event UserIdInjected(bytes32 indexed userId);
-    event FCCIdBlacklisted(bytes32 indexed fccId);
-    event SerialNumberBlacklisted(bytes32 indexed fccId, bytes32 indexed serialNumber);
+    event CBSDRegistered(string indexed fccId, string indexed serialNumber, address indexed sasOrigin);
+    event GrantCreated(string indexed fccId, string indexed serialNumber, string grantId, address indexed sasOrigin);
+    event GrantTerminated(string indexed fccId, string indexed serialNumber, string grantId, address indexed sasOrigin);
+    event FCCIdInjected(string indexed fccId, uint256 maxEirp);
+    event UserIdInjected(string indexed userId);
+    event FCCIdBlacklisted(string indexed fccId);
+    event SerialNumberBlacklisted(string indexed fccId, string indexed serialNumber);
     
     modifier onlyOwner() {
         require(msg.sender == owner, "Not authorized");
@@ -134,15 +134,15 @@ contract SASSharedRegistry {
      * @param cbsdKey Chave única do CBSD
      */
     function _validateRegistration(
-        bytes32 fccId,
-        bytes32 userId,
+        string memory fccId,
+        string memory userId,
         bytes32 cbsdKey
     ) private view {
-        require(cbsds[cbsdKey].fccId == 0, "CBSD already exists");
+        require(bytes(cbsds[cbsdKey].fccId).length == 0, "CBSD already exists");
         require(fccIds[fccId], "FCC ID not authorized");
         require(userIds[userId], "User ID not authorized");
         require(!blacklistedFccIds[fccId], "FCC ID blacklisted");
-        require(!blacklistedSerialNumbers[cbsdKey], "Serial number blacklisted");
+        require(!blacklistedSerialNumbers[_generateCBSDKey(fccId, cbsds[cbsdKey].cbsdSerialNumber)], "Serial number blacklisted");
     }
     
     /**
@@ -154,15 +154,11 @@ contract SASSharedRegistry {
         RegistrationRequest calldata req,
         bytes32 cbsdKey
     ) private {
-        // Usar storage diretamente para evitar stack too deep
         CBSD storage newCbsd = cbsds[cbsdKey];
-        
         _setCBSDBasicInfo(newCbsd, req);
         _setCBSDLocationInfo(newCbsd, req);
         _setCBSDAntennaInfo(newCbsd, req);
         _setCBSDMetadata(newCbsd, req);
-        
-        // Copiar array de capabilities
         newCbsd.measCapability = req.measCapability;
     }
     
@@ -218,13 +214,11 @@ contract SASSharedRegistry {
     function _createGrant(
         GrantRequest calldata req,
         bytes32 cbsdKey,
-        bytes32 grantId
+        string memory grantId
     ) private {
-        // Usar storage diretamente
         Grant[] storage grantArray = grants[cbsdKey];
         grantArray.push();
         Grant storage newGrant = grantArray[grantArray.length - 1];
-        
         newGrant.grantId = grantId;
         newGrant.channelType = req.channelType;
         newGrant.grantExpireTime = req.grantExpireTime;
@@ -245,7 +239,7 @@ contract SASSharedRegistry {
      * @param serialNumber Serial number
      * @return Chave única
      */
-    function _generateCBSDKey(bytes32 fccId, bytes32 serialNumber) private pure returns (bytes32) {
+    function _generateCBSDKey(string memory fccId, string memory serialNumber) private pure returns (bytes32) {
         return keccak256(abi.encodePacked(fccId, serialNumber));
     }
     
@@ -258,6 +252,16 @@ contract SASSharedRegistry {
      */
     function _generateGrantId(bytes32 fccId, bytes32 serialNumber, uint256 grantIndex) private pure returns (bytes32) {
         return keccak256(abi.encodePacked("grant_", fccId, serialNumber, grantIndex));
+    }
+    
+    /**
+     * @dev Gera chave única para serial number
+     * @param fccId FCC ID
+     * @param serialNumber Serial number
+     * @return Chave única
+     */
+    function _getSerialKey(string memory fccId, string memory serialNumber) private pure returns (string memory) {
+        return string(abi.encodePacked(fccId, serialNumber));
     }
     
     // ============================================================================
@@ -287,13 +291,9 @@ contract SASSharedRegistry {
      */
     function GrantSpectrum(GrantRequest calldata req) external onlyAuthorizedSAS {
         bytes32 cbsdKey = _generateCBSDKey(req.fccId, req.cbsdSerialNumber);
-        require(cbsds[cbsdKey].fccId != 0, "CBSD not registered");
-        
-        bytes32 grantId = _generateGrantId(req.fccId, req.cbsdSerialNumber, grants[cbsdKey].length);
-        
-        // Criação usando função auxiliar
+        require(bytes(cbsds[cbsdKey].fccId).length != 0, "CBSD not registered");
+        string memory grantId = string(abi.encodePacked("grant_", req.fccId, req.cbsdSerialNumber, grants[cbsdKey].length));
         _createGrant(req, cbsdKey, grantId);
-        
         totalGrants++;
         emit GrantCreated(req.fccId, req.cbsdSerialNumber, grantId, msg.sender);
     }
@@ -305,18 +305,16 @@ contract SASSharedRegistry {
      * @param grantId ID do grant
      */
     function Heartbeat(
-        bytes32 fccId,
-        bytes32 cbsdSerialNumber,
-        bytes32 grantId
+        string memory fccId,
+        string memory cbsdSerialNumber,
+        string memory grantId
     ) external view onlyAuthorizedSAS {
         bytes32 cbsdKey = _generateCBSDKey(fccId, cbsdSerialNumber);
-        require(cbsds[cbsdKey].fccId != 0, "CBSD not registered");
-        
-        // Verificar se grant existe e não expirou
+        require(bytes(cbsds[cbsdKey].fccId).length != 0, "CBSD not registered");
         bool grantFound = false;
         Grant[] storage grantArray = grants[cbsdKey];
         for (uint i = 0; i < grantArray.length; i++) {
-            if (grantArray[i].grantId == grantId) {
+            if (keccak256(bytes(grantArray[i].grantId)) == keccak256(bytes(grantId))) {
                 require(!grantArray[i].terminated, "Grant terminated");
                 require(block.timestamp < grantArray[i].grantExpireTime, "Grant expired");
                 grantFound = true;
@@ -333,16 +331,16 @@ contract SASSharedRegistry {
      * @param grantId ID do grant
      */
     function Relinquishment(
-        bytes32 fccId,
-        bytes32 cbsdSerialNumber,
-        bytes32 grantId
+        string memory fccId,
+        string memory cbsdSerialNumber,
+        string memory grantId
     ) external onlyAuthorizedSAS {
         bytes32 cbsdKey = _generateCBSDKey(fccId, cbsdSerialNumber);
-        require(cbsds[cbsdKey].fccId != 0, "CBSD not registered");
+        require(bytes(cbsds[cbsdKey].fccId).length != 0, "CBSD not registered");
         
         Grant[] storage grantArray = grants[cbsdKey];
         for (uint i = 0; i < grantArray.length; i++) {
-            if (grantArray[i].grantId == grantId) {
+            if (keccak256(bytes(grantArray[i].grantId)) == keccak256(bytes(grantId))) {
                 grantArray[i].terminated = true;
                 emit GrantTerminated(fccId, cbsdSerialNumber, grantId, msg.sender);
                 break;
@@ -356,11 +354,11 @@ contract SASSharedRegistry {
      * @param cbsdSerialNumber Serial number do dispositivo
      */
     function Deregistration(
-        bytes32 fccId,
-        bytes32 cbsdSerialNumber
+        string memory fccId,
+        string memory cbsdSerialNumber
     ) external onlyAuthorizedSAS {
         bytes32 cbsdKey = _generateCBSDKey(fccId, cbsdSerialNumber);
-        require(cbsds[cbsdKey].fccId != 0, "CBSD not registered");
+        require(bytes(cbsds[cbsdKey].fccId).length != 0, "CBSD not registered");
         
         delete cbsds[cbsdKey];
         delete grants[cbsdKey];
@@ -385,7 +383,7 @@ contract SASSharedRegistry {
      * @param fccId FCC ID a ser injetado
      * @param maxEirp EIRP máximo (opcional, padrão 47)
      */
-    function InjectFccId(bytes32 fccId, uint256 maxEirp) external onlyOwner {
+    function InjectFccId(string memory fccId, uint256 maxEirp) external onlyOwner {
         fccIds[fccId] = true;
         emit FCCIdInjected(fccId, maxEirp);
     }
@@ -394,7 +392,7 @@ contract SASSharedRegistry {
      * @notice InjectUserId - Injeta User ID válido
      * @param userId User ID a ser injetado
      */
-    function InjectUserId(bytes32 userId) external onlyOwner {
+    function InjectUserId(string memory userId) external onlyOwner {
         userIds[userId] = true;
         emit UserIdInjected(userId);
     }
@@ -403,7 +401,7 @@ contract SASSharedRegistry {
      * @notice BlacklistByFccId - Blacklista FCC ID
      * @param fccId FCC ID a ser blacklistado
      */
-    function BlacklistByFccId(bytes32 fccId) external onlyOwner {
+    function BlacklistByFccId(string memory fccId) external onlyOwner {
         blacklistedFccIds[fccId] = true;
         emit FCCIdBlacklisted(fccId);
     }
@@ -413,7 +411,7 @@ contract SASSharedRegistry {
      * @param fccId FCC ID
      * @param serialNumber Serial number
      */
-    function BlacklistByFccIdAndSerialNumber(bytes32 fccId, bytes32 serialNumber) external onlyOwner {
+    function BlacklistByFccIdAndSerialNumber(string memory fccId, string memory serialNumber) external onlyOwner {
         bytes32 key = _generateCBSDKey(fccId, serialNumber);
         blacklistedSerialNumbers[key] = true;
         emit SerialNumberBlacklisted(fccId, serialNumber);
@@ -437,7 +435,7 @@ contract SASSharedRegistry {
      * @param cbsdSerialNumber Serial number
      * @return CBSD completo
      */
-    function getCBSDInfo(bytes32 fccId, bytes32 cbsdSerialNumber) 
+    function getCBSDInfo(string memory fccId, string memory cbsdSerialNumber) 
         external 
         view 
         returns (CBSD memory) 
@@ -452,7 +450,7 @@ contract SASSharedRegistry {
      * @param cbsdSerialNumber Serial number
      * @return Array de grants
      */
-    function getGrants(bytes32 fccId, bytes32 cbsdSerialNumber) 
+    function getGrants(string memory fccId, string memory cbsdSerialNumber) 
         external 
         view 
         returns (Grant[] memory) 
@@ -467,13 +465,13 @@ contract SASSharedRegistry {
      * @param cbsdSerialNumber Serial number
      * @return true se registrado
      */
-    function isCBSDRegistered(bytes32 fccId, bytes32 cbsdSerialNumber) 
+    function isCBSDRegistered(string memory fccId, string memory cbsdSerialNumber) 
         external 
         view 
         returns (bool) 
     {
         bytes32 cbsdKey = _generateCBSDKey(fccId, cbsdSerialNumber);
-        return cbsds[cbsdKey].fccId != 0;
+        return bytes(cbsds[cbsdKey].fccId).length != 0;
     }
     
     // ============================================================================
