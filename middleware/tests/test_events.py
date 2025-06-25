@@ -6,7 +6,8 @@ import asyncio
 import json
 import time
 from datetime import datetime
-from handlers import EVENT_HANDLERS
+from src.handlers.handlers import EVENT_HANDLERS
+from src.repository.repository import CBSDRepository
 
 def create_mock_event(event_name, **kwargs):
     """Cria um evento mock para teste"""
@@ -67,7 +68,6 @@ async def test_middleware_handlers():
     print("\n✅ Todos os handlers testados com sucesso!")
     
     # Mostrar dados do repositório
-    from repository import CBSDRepository
     repo = CBSDRepository()
     print(f"\n📋 Dados no repositório: {len(repo.cbsds)} registros")
     for cbsd_id, data in repo.cbsds.items():

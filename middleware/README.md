@@ -84,54 +84,49 @@ curl http://localhost:8000/ | jq
 curl http://localhost:8000/health | jq
 ```
 
-**Autorizar SAS**
+**Autorizar FCC ID**
 ```bash
-curl -X POST http://localhost:8000/sas/authorize -H "Content-Type: application/json" -d '{"sas_address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"}' | jq
+curl -s -X POST http://localhost:8000/v1.3/admin/injectFccId \
+  -H "Content-Type: application/json" \
+  -d '{"fccId": "TEST-FCC-ID", "maxEirp": 47}' | jq
+```
+
+**Autorizar User ID**
+```bash
+curl -s -X POST http://localhost:8000/v1.3/admin/injectUserId \
+  -H "Content-Type: application/json" \
+  -d '{"userId": "TEST-USER-ID"}' | jq
 ```
 
 **Registrar CBSD**
 ```bash
-curl -X POST http://localhost:8000/cbsd/register -H "Content-Type: application/json" -d '{"cbsd_id": 1, "cbsd_address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC", "grant_amount": 100000000000000000000, "frequency_hz": 3550000000, "bandwidth_hz": 10000000, "expiry_timestamp": 1750726000}' | jq
+curl -s -X POST http://localhost:8000/v1.3/registration \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fccId": "TEST-FCC-ID",
+    "userId": "TEST-USER-ID",
+    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
+    "callSign": "TESTCALL",
+    "cbsdCategory": "A",
+    "airInterface": "E_UTRA",
+    "measCapability": ["EUTRA_CARRIER_RSSI"],
+    "eirpCapability": 47,
+    "latitude": 10,
+    "longitude": 20,
+    "height": 5,
+    "heightType": "AGL",
+    "indoorDeployment": false,
+    "antennaGain": 10,
+    "antennaBeamwidth": 90,
+    "antennaAzimuth": 0,
+    "groupingParam": "GROUP1",
+    "cbsdAddress": "192.168.0.1"
+  }' | jq
 ```
 
 **Consultar CBSD**
 ```bash
-curl http://localhost:8000/cbsd/1 | jq
-```
-
-**Listar Todos os CBSDs**
-```bash
-curl http://localhost:8000/cbsd | jq
-```
-
-**Verificar Autorização SAS**
-```bash
-curl http://localhost:8000/sas/0x70997970C51812dc3A010C7d01b50e0d17dc79C8/authorized | jq
-```
-
-**Atualizar Grant Amount**
-```bash
-curl -X PUT http://localhost:8000/cbsd/grant-amount -H "Content-Type: application/json" -d '{"cbsd_id": 1, "new_grant_amount": 150000000000000000000}' | jq
-```
-
-**Atualizar Status do CBSD**
-```bash
-curl -X PUT http://localhost:8000/cbsd/status -H "Content-Type: application/json" -d '{"cbsd_id": 1, "new_status": "active"}' | jq
-```
-
-**Atualizar Detalhes do Grant**
-```bash
-curl -X PUT http://localhost:8000/cbsd/grant-details -H "Content-Type: application/json" -d '{"cbsd_id": 1, "frequency_hz": 3650000000, "bandwidth_hz": 20000000, "expiry_timestamp": 1750728000}' | jq
-```
-
-**Revogar SAS**
-```bash
-curl -X POST http://localhost:8000/sas/revoke -H "Content-Type: application/json" -d '{"sas_address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"}' | jq
-```
-
-**Eventos Recentes**
-```bash
-curl http://localhost:8000/events/recent | jq
+curl -s http://localhost:8000/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL | jq
 ```
 
 ## Configuração
@@ -201,3 +196,55 @@ fuser -k 8000/tcp
 - Ver eventos recentes
 - Health check da API
 - Status da conexão blockchain
+
+## Fluxo de Registro e Consulta (Exemplo Real)
+
+### 1. Health Check
+```bash
+curl -s http://localhost:8000/health | jq
+```
+
+### 2. Autorizar FCC ID
+```bash
+curl -s -X POST http://localhost:8000/v1.3/admin/injectFccId \
+  -H "Content-Type: application/json" \
+  -d '{"fccId": "TEST-FCC-ID", "maxEirp": 47}' | jq
+```
+
+### 3. Autorizar User ID
+```bash
+curl -s -X POST http://localhost:8000/v1.3/admin/injectUserId \
+  -H "Content-Type: application/json" \
+  -d '{"userId": "TEST-USER-ID"}' | jq
+```
+
+### 4. Registrar CBSD
+```bash
+curl -s -X POST http://localhost:8000/v1.3/registration \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fccId": "TEST-FCC-ID",
+    "userId": "TEST-USER-ID",
+    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
+    "callSign": "TESTCALL",
+    "cbsdCategory": "A",
+    "airInterface": "E_UTRA",
+    "measCapability": ["EUTRA_CARRIER_RSSI"],
+    "eirpCapability": 47,
+    "latitude": 10,
+    "longitude": 20,
+    "height": 5,
+    "heightType": "AGL",
+    "indoorDeployment": false,
+    "antennaGain": 10,
+    "antennaBeamwidth": 90,
+    "antennaAzimuth": 0,
+    "groupingParam": "GROUP1",
+    "cbsdAddress": "192.168.0.1"
+  }' | jq
+```
+
+### 5. Consultar CBSD
+```bash
+curl -s http://localhost:8000/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL | jq
+```
