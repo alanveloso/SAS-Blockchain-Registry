@@ -444,13 +444,13 @@ async def blacklist(blacklist_request: BlacklistRequest):
         logger.error(f"Erro ao blacklistar: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.post("/admin/reset")
 @app.post("/v1.3/admin/reset")
 async def reset():
     """Reset - Reseta o SAS"""
     try:
         tx = blockchain.contract.functions.Reset()
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": "SAS resetado",
@@ -494,6 +494,34 @@ async def get_full_activity_dump():
         
         return dump_data
         
+    except Exception as e:
+        logger.error(f"Erro ao gerar Full Activity Dump: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/v1.2/fullActivityDump")
+async def full_activity_dump():
+    """Full Activity Dump - compatível com WINNF v1.2 (POST)"""
+    try:
+        # Obter dados do blockchain (mesma lógica do GET /v1.3/dump)
+        total_cbsds = blockchain.get_total_cbsds()
+        total_grants = blockchain.get_total_grants()
+        generation_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        dump_data = {
+            "version": "1.2",
+            "generationDateTime": generation_datetime,
+            "cbsdRecords": [],
+            "escSensorDataRecords": [],
+            "coordinationEventRecords": [],
+            "ppaRecords": [],
+            "palRecords": [],
+            "zoneRecords": [],
+            "exclusionZoneRecords": [],
+            "fssRecords": [],
+            "wispRecords": [],
+            "sasAdministratorRecords": []
+        }
+        # TODO: Implementar conversão de dados do blockchain para formato WinnForum
+        return dump_data
     except Exception as e:
         logger.error(f"Erro ao gerar Full Activity Dump: {e}")
         raise HTTPException(status_code=400, detail=str(e))
