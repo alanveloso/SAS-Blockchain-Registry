@@ -43,8 +43,9 @@ O sistema é composto por um smart contract Solidity que garante transparência 
 npm install
 ```
 
-#### 2. Testar Contrato
+#### 2. Compilar e Testar Contrato
 ```bash
+npx hardhat compile
 npx hardhat test
 ```
 
@@ -58,58 +59,98 @@ npx hardhat node
 npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
 ```
 
-### Opção 2: Quorum Dev Quickstart (Recomendado para Produção)
-
-O [Quorum Dev Quickstart](https://docs.goquorum.consensys.io/tutorials/quorum-dev-quickstart/using-the-quickstart) oferece uma rede blockchain completa com múltiplos nós validadores, ideal para testes e desenvolvimento.
-
-#### 1. Gerar Rede Quorum
+#### 5. Teste de Integração Completo
 ```bash
-npx quorum-dev-quickstart
+node scripts/integration-test-sas-shared-registry.js.js
 ```
-Siga as instruções:
-- Escolha **Hyperledger Besu** como cliente
-- Responda **N** para transações privadas
-- Escolha **Loki** para logging
-- Use o diretório padrão `./quorum-test-network`
+Esse teste cobre:
+- Fluxos positivos (registro, grant, heartbeat, blacklist, etc)
+- Fluxos negativos (erros de autorização, blacklist, grant inexistente, etc)
 
-#### 2. Iniciar Rede
-```bash
-cd quorum-test-network
-./run.sh
-```
+O resultado exibirá no terminal o status de cada etapa, validando a robustez do contrato.
 
-#### 3. Verificar Conectividade
-```bash
-# Verificar versão do cliente
-curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":1}' -H 'Content-Type: application/json' http://localhost:8545
+### Opção 2: Deploy em Qualquer Rede Besu (Produção/Teste)
 
-# Verificar número de peers
-curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' -H 'Content-Type: application/json' http://localhost:8545
+Você pode usar qualquer rede compatível com Besu (ex: Hyperledger Besu local, testnet, mainnet privada, etc). Após iniciar sua rede Besu, siga os passos abaixo:
 
-# Verificar número do bloco
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' -H 'Content-Type: application/json' http://localhost:8545
+#### 1. Configure o ambiente para apontar para o RPC da sua rede Besu
+
+```env
+RPC_URL=http://127.0.0.1:8545 # ou o endpoint da sua rede
+CHAIN_ID=<chain_id_da_rede>
+OWNER_PRIVATE_KEY=<chave_privada_do_owner>
 ```
 
-#### 4. Deploy do Contrato na Rede Quorum
+#### 2. Compile e faça o deploy do contrato
+
 ```bash
-cd smart_contracts
-npm install --legacy-peer-deps
 npx hardhat compile
-node scripts/deploy-sas-shared-registry-quorum.js
+npx hardhat run scripts/deploy-sas-shared-registry.js --network <nome_da_rede_configurada_no_hardhat>
 ```
 
-**Configurações da Rede Quorum:**
-- **RPC URL:** `http://127.0.0.1:8545`
-- **Chain ID:** `1337`
-- **Contrato Deployado:** `0xBca0fDc68d9b21b5bfB16D784389807017B2bbbc`
-- **Chave Privada Owner:** `0x60bbe10a196a4e71451c0f6e9ec9beab454c2a5ac0542aa5b8b733ff5719fec3`
+#### 3. Copie o endereço do contrato e atualize o .env do middleware
 
-#### 5. Endpoints da Rede Quorum
-- **JSON-RPC HTTP:** http://localhost:8545
-- **JSON-RPC WebSocket:** ws://localhost:8546
-- **Block Explorer:** http://localhost:25000/explorer/nodes
-- **Prometheus:** http://localhost:9090/graph
-- **Grafana:** http://localhost:3000/d/XE4V0WGZz/besu-overview
+#### 4. Garanta que o ABI do contrato esteja disponível para o middleware
+
+---
+
+## Verificação de Conectividade com a Rede
+
+Antes de prosseguir, verifique se sua rede Besu está acessível e funcional:
+
+**Verificar versão do cliente:**
+```bash
+curl -X POST \
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":1}' \
+  -H 'Content-Type: application/json' \
+  http://localhost:8545
+```
+
+**Verificar número de peers:**
+```bash
+curl -X POST \
+  --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' \
+  -H 'Content-Type: application/json' \
+  http://localhost:8545
+```
+
+**Verificar número do bloco:**
+```bash
+curl -X POST \
+  --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' \
+  -H 'Content-Type: application/json' \
+  http://localhost:8545
+```
+
+---
+
+## Teste direto do contrato via cURL
+
+Você pode testar a comunicação com o contrato usando cURL e o método `eth_call` da JSON-RPC. Por exemplo, para consultar o owner do contrato:
+
+**Consultar owner do contrato:**
+
+1. Descubra o endereço do contrato (ex: `0x5FbDB2315678afecb367f032d93F642f64180aa3`).
+2. Descubra o selector da função (ex: `owner()` → `0x8da5cb5b`).
+
+```bash
+curl -X POST \
+  --data '{
+    "jsonrpc":"2.0",
+    "method":"eth_call",
+    "params":[{
+      "to": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "data": "0x8da5cb5b"
+    }, "latest"],
+    "id":1
+  }' \
+  -H 'Content-Type: application/json' \
+  http://localhost:8545
+```
+
+O resultado será o endereço do owner em hexadecimal.
+
+Você pode adaptar o `data` para outros métodos públicos do contrato, consultando o ABI e calculando o selector correspondente.
 
 ## Setup do Middleware
 
@@ -126,13 +167,15 @@ pip install -r requirements.txt
 cp env.example .env
 ```
 
-**Para Rede Quorum Dev Quickstart, configure:**
+**Ajuste as variáveis principais no `.env` conforme o deploy:**
 ```env
 RPC_URL=http://127.0.0.1:8545
-CONTRACT_ADDRESS=0xBca0fDc68d9b21b5bfB16D784389807017B2bbbc
-OWNER_PRIVATE_KEY=0x60bbe10a196a4e71451c0f6e9ec9beab454c2a5ac0542aa5b8b733ff5719fec3
-CHAIN_ID=1337
+CONTRACT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
+OWNER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+CHAIN_ID=31337
 ```
+
+Garanta que o ABI do contrato esteja em `middleware/src/blockchain/abi/SASSharedRegistry.json`.
 
 ### 7. Iniciar API
 ```bash
@@ -144,6 +187,20 @@ python3 run.py
 ./scripts/test_api.sh
 ./scripts/test_blockchain.sh
 ```
+
+## Testes de Integração do Contrato
+
+Após o deploy do contrato, execute o teste de integração completo:
+
+```bash
+node scripts/integration-test-sas-shared-registry.js.js
+```
+
+Esse teste cobre:
+- Fluxos positivos: registro, grant, heartbeat, blacklist, autorização de SAS, deregistration, etc.
+- Fluxos negativos: tentativas de operação com IDs não autorizados, grants inexistentes, SAS não autorizado, etc.
+
+O resultado exibirá no terminal o status de cada etapa, validando a robustez do contrato.
 
 ## Testes com cURL
 
@@ -238,11 +295,6 @@ npx hardhat test
 - **CBSD de Teste:** `0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC`
 - **Owner:** `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`
 
-### Endereços de Teste (Quorum Dev Quickstart)
-- **Contrato SASSharedRegistry:** `0xBca0fDc68d9b21b5bfB16D784389807017B2bbbc`
-- **Owner:** `0xC9C913c8c3C1Cd416d80A0abF475db2062F161f6`
-- **RPC Node:** `http://127.0.0.1:8545`
-
 ## Troubleshooting
 
 ### Verificar se o nó está rodando
@@ -258,28 +310,6 @@ curl -X POST -H "Content-Type: application/json" \
   --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
   http://127.0.0.1:8545
 ```
-
-### Problemas Comuns com Quorum Dev Quickstart
-
-#### Rede não inicia
-```bash
-# Parar e remover containers
-cd quorum-test-network
-./remove.sh
-
-# Reiniciar
-./run.sh
-```
-
-#### Contrato não faz deploy
-- Verifique se a rede está sincronizada (blocos > 0)
-- Confirme que a conta tem saldo suficiente
-- Use o script `deploy-sas-shared-registry-quorum.js` específico para Quorum
-
-#### Middleware não conecta
-- Verifique se o RPC_URL está correto
-- Confirme se o CONTRACT_ADDRESS é o correto do deploy
-- Teste a conectividade RPC primeiro
 
 ## Middleware
 

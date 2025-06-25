@@ -1,5 +1,13 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const { keccak256, solidityPacked } = require("ethers");
+
+// Função utilitária para gerar a chave do CBSD igual ao contrato
+function generateCBSDKey(fccId, serialNumber) {
+  return keccak256(
+    solidityPacked(["string", "string"], [fccId, serialNumber])
+  );
+}
 
 describe("SASSharedRegistry", function () {
   let SASSharedRegistry, sasSharedRegistry, owner, sas1, sas2, user1;
@@ -14,44 +22,44 @@ describe("SASSharedRegistry", function () {
     await sasSharedRegistry.authorizeSAS(sas2.address);
     
     // Injetar FCC IDs e User IDs válidos
-    await sasSharedRegistry.InjectFccId(ethers.encodeBytes32String("FCC001"), 47);
-    await sasSharedRegistry.InjectFccId(ethers.encodeBytes32String("FCC002"), 47);
-    await sasSharedRegistry.InjectUserId(ethers.encodeBytes32String("USER001"));
-    await sasSharedRegistry.InjectUserId(ethers.encodeBytes32String("USER002"));
+    await sasSharedRegistry.InjectFccId("FCC001", 47);
+    await sasSharedRegistry.InjectFccId("FCC002", 47);
+    await sasSharedRegistry.InjectUserId("USER001");
+    await sasSharedRegistry.InjectUserId("USER002");
     
     // Dados padrão para testes
     this.defaultRegistrationRequest = {
-      fccId: ethers.encodeBytes32String("FCC001"),
-      userId: ethers.encodeBytes32String("USER001"),
-      cbsdSerialNumber: ethers.encodeBytes32String("SERIAL001"),
-      callSign: ethers.encodeBytes32String("CALL001"),
-      cbsdCategory: ethers.encodeBytes32String("A"),
-      airInterface: ethers.encodeBytes32String("E_UTRA"),
-      measCapability: [ethers.encodeBytes32String("EUTRA_CARRIER_RSSI")],
+      fccId: "FCC001",
+      userId: "USER001",
+      cbsdSerialNumber: "SERIAL001",
+      callSign: "CALL001",
+      cbsdCategory: "A",
+      airInterface: "E_UTRA",
+      measCapability: ["EUTRA_CARRIER_RSSI"],
       eirpCapability: 47,
       latitude: -23000000, // -23.0 graus em micrograus (exemplo SP)
       longitude: -43000000, // -43.0 graus em micrograus (exemplo RJ)
       height: 30,
-      heightType: ethers.encodeBytes32String("AGL"),
+      heightType: "AGL",
       indoorDeployment: false,
       antennaGain: 15,
       antennaBeamwidth: 65,
       antennaAzimuth: 180,
-      groupingParam: ethers.encodeBytes32String("GROUP1"),
-      cbsdAddress: user1.address
+      groupingParam: "GROUP1",
+      cbsdAddress: "192.168.0.1" // Exemplo de endereço de rede
     };
     
     this.defaultGrantRequest = {
-      fccId: ethers.encodeBytes32String("FCC001"),
-      cbsdSerialNumber: ethers.encodeBytes32String("SERIAL001"),
-      channelType: ethers.encodeBytes32String("GAA"),
+      fccId: "FCC001",
+      cbsdSerialNumber: "SERIAL001",
+      channelType: "GAA",
       maxEirp: 30,
       lowFrequency: 3550000000, // 3.55 GHz
       highFrequency: 3700000000, // 3.7 GHz
       requestedMaxEirp: 30,
       requestedLowFrequency: 3550000000,
       requestedHighFrequency: 3700000000,
-      grantExpireTime: Math.floor(Date.now() / 1000) + 3600 // 1 hora
+      grantExpireTime: Math.floor(Date.now() / 1000) + 3600 // agora uint, não string
     };
   });
 
@@ -95,7 +103,7 @@ describe("SASSharedRegistry", function () {
 
   describe("Injeção de IDs", function () {
     it("deve permitir owner injetar FCC ID", async function () {
-      const fccId = ethers.encodeBytes32String("FCC003");
+      const fccId = "FCC003";
       await expect(sasSharedRegistry.InjectFccId(fccId, 47))
         .to.emit(sasSharedRegistry, "FCCIdInjected")
         .withArgs(fccId, 47);
@@ -103,7 +111,7 @@ describe("SASSharedRegistry", function () {
     });
 
     it("deve permitir owner injetar User ID", async function () {
-      const userId = ethers.encodeBytes32String("USER003");
+      const userId = "USER003";
       await expect(sasSharedRegistry.InjectUserId(userId))
         .to.emit(sasSharedRegistry, "UserIdInjected")
         .withArgs(userId);
@@ -120,16 +128,11 @@ describe("SASSharedRegistry", function () {
       expect(await sasSharedRegistry.totalCbsds()).to.equal(1);
       
       // Verificar dados do CBSD
-      const cbsdKey = ethers.keccak256(
-        ethers.AbiCoder.defaultAbiCoder().encode(
-          ["bytes32", "bytes32"],
-          [this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber]
-        )
-      );
+      const cbsdKey = generateCBSDKey(this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber);
       const cbsd = await sasSharedRegistry.cbsds(cbsdKey);
       expect(cbsd.fccId).to.equal(this.defaultRegistrationRequest.fccId);
       expect(cbsd.userId).to.equal(this.defaultRegistrationRequest.userId);
-      expect(cbsd.cbsdAddress).to.equal(user1.address);
+      expect(cbsd.cbsdAddress).to.equal(this.defaultRegistrationRequest.cbsdAddress);
       expect(cbsd.sasOrigin).to.equal(sas1.address);
     });
 
@@ -165,7 +168,7 @@ describe("SASSharedRegistry", function () {
 
     it("não deve permitir registro com FCC ID não autorizado", async function () {
       const invalidRequest = { ...this.defaultRegistrationRequest };
-      invalidRequest.fccId = ethers.encodeBytes32String("INVALID");
+      invalidRequest.fccId = "INVALID";
       await expect(
         sasSharedRegistry.connect(sas1).Registration(invalidRequest)
       ).to.be.revertedWith("FCC ID not authorized");
@@ -173,7 +176,7 @@ describe("SASSharedRegistry", function () {
 
     it("não deve permitir registro com User ID não autorizado", async function () {
       const invalidRequest = { ...this.defaultRegistrationRequest };
-      invalidRequest.userId = ethers.encodeBytes32String("INVALID");
+      invalidRequest.userId = "INVALID";
       await expect(
         sasSharedRegistry.connect(sas1).Registration(invalidRequest)
       ).to.be.revertedWith("User ID not authorized");
@@ -198,12 +201,7 @@ describe("SASSharedRegistry", function () {
       expect(await sasSharedRegistry.totalGrants()).to.equal(1);
       
       // Verificar dados do grant
-      const cbsdKey = ethers.keccak256(
-        ethers.AbiCoder.defaultAbiCoder().encode(
-          ["bytes32", "bytes32"],
-          [this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber]
-        )
-      );
+      const cbsdKey = generateCBSDKey(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber);
       const grants = await sasSharedRegistry.getGrants(this.defaultGrantRequest.fccId, this.defaultGrantRequest.cbsdSerialNumber);
       expect(grants.length).to.equal(1);
       expect(grants[0].maxEirp).to.equal(this.defaultGrantRequest.maxEirp);
@@ -214,7 +212,7 @@ describe("SASSharedRegistry", function () {
 
     it("não deve permitir grant para CBSD não registrado", async function () {
       const invalidRequest = { ...this.defaultGrantRequest };
-      invalidRequest.cbsdSerialNumber = ethers.encodeBytes32String("INVALID");
+      invalidRequest.cbsdSerialNumber = "INVALID";
       await expect(
         sasSharedRegistry.connect(sas1).GrantSpectrum(invalidRequest)
       ).to.be.revertedWith("CBSD not registered");
@@ -244,7 +242,7 @@ describe("SASSharedRegistry", function () {
     });
 
     it("não deve aceitar heartbeat para grant inexistente", async function () {
-      const invalidGrantId = ethers.encodeBytes32String("INVALID");
+      const invalidGrantId = "INVALID";
       await expect(
         sasSharedRegistry.connect(sas1).Heartbeat(
           this.defaultGrantRequest.fccId,
@@ -258,7 +256,7 @@ describe("SASSharedRegistry", function () {
       await expect(
         sasSharedRegistry.connect(sas1).Heartbeat(
           this.defaultGrantRequest.fccId,
-          ethers.encodeBytes32String("INVALID"),
+          "INVALID",
           grantId
         )
       ).to.be.revertedWith("CBSD not registered");
@@ -310,21 +308,16 @@ describe("SASSharedRegistry", function () {
       expect(await sasSharedRegistry.totalCbsds()).to.equal(0);
       
       // Verificar se CBSD foi removido
-      const cbsdKey = ethers.keccak256(
-        ethers.AbiCoder.defaultAbiCoder().encode(
-          ["bytes32", "bytes32"],
-          [this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber]
-        )
-      );
+      const cbsdKey = generateCBSDKey(this.defaultRegistrationRequest.fccId, this.defaultRegistrationRequest.cbsdSerialNumber);
       const cbsd = await sasSharedRegistry.cbsds(cbsdKey);
-      expect(cbsd.fccId).to.equal(ethers.ZeroHash);
+      expect(cbsd.fccId).to.equal("");
     });
 
     it("não deve permitir deregistration de CBSD inexistente", async function () {
       await expect(
         sasSharedRegistry.connect(sas1).Deregistration(
           this.defaultRegistrationRequest.fccId,
-          ethers.encodeBytes32String("INVALID")
+          "INVALID"
         )
       ).to.be.revertedWith("CBSD not registered");
     });
@@ -332,7 +325,7 @@ describe("SASSharedRegistry", function () {
 
   describe("Blacklist", function () {
     it("deve permitir owner blacklistar FCC ID", async function () {
-      const fccId = ethers.encodeBytes32String("FCC003");
+      const fccId = "FCC003";
       await expect(sasSharedRegistry.BlacklistByFccId(fccId))
         .to.emit(sasSharedRegistry, "FCCIdBlacklisted")
         .withArgs(fccId);
@@ -340,16 +333,13 @@ describe("SASSharedRegistry", function () {
     });
 
     it("deve permitir owner blacklistar Serial Number", async function () {
-      const fccId = ethers.encodeBytes32String("FCC003");
-      const serialNumber = ethers.encodeBytes32String("SERIAL003");
+      const fccId = "FCC003";
+      const serialNumber = "SERIAL003";
       await expect(sasSharedRegistry.BlacklistByFccIdAndSerialNumber(fccId, serialNumber))
         .to.emit(sasSharedRegistry, "SerialNumberBlacklisted")
         .withArgs(fccId, serialNumber);
-      expect(await sasSharedRegistry.blacklistedSerialNumbers(
-        ethers.keccak256(
-          ethers.AbiCoder.defaultAbiCoder().encode(["bytes32", "bytes32"], [fccId, serialNumber])
-        )
-      )).to.be.true;
+      const serialKey = generateCBSDKey(fccId, serialNumber);
+      expect(await sasSharedRegistry.blacklistedSerialNumbers(serialKey)).to.be.true;
     });
   });
 

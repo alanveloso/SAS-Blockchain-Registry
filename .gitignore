@@ -95,3 +95,9 @@ middleware/venv/
 
 # OS
 Thumbs.db
+
+# Certificados e chaves sensíveis
+middleware/keys/*.pem
+middleware/keys/*.key
+middleware/keys/*.crt
+middleware/keys/*.csr

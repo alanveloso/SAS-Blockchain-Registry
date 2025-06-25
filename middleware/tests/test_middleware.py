@@ -15,28 +15,28 @@ def test_imports():
     print("🧪 Testando imports...")
     
     try:
-        from config import settings
+        from src.config.settings import settings
         print("✅ Config importado com sucesso")
     except Exception as e:
         print(f"❌ Erro ao importar config: {e}")
         return False
     
     try:
-        from blockchain import Blockchain
+        from src.blockchain.blockchain import Blockchain
         print("✅ Blockchain importado com sucesso")
     except Exception as e:
         print(f"❌ Erro ao importar blockchain: {e}")
         return False
     
     try:
-        from handlers import EVENT_HANDLERS
+        from src.handlers.handlers import EVENT_HANDLERS
         print("✅ Handlers importado com sucesso")
     except Exception as e:
         print(f"❌ Erro ao importar handlers: {e}")
         return False
     
     try:
-        from repository import CBSDRepository
+        from src.repository.repository import CBSDRepository
         print("✅ Repository importado com sucesso")
     except Exception as e:
         print(f"❌ Erro ao importar repository: {e}")
@@ -49,7 +49,7 @@ def test_config():
     print("\n🔧 Testando configurações...")
     
     try:
-        from config import settings
+        from src.config.settings import settings
         
         # Verificar se as variáveis de ambiente estão definidas
         required_vars = ['RPC_URL', 'CONTRACT_ADDRESS', 'OWNER_PRIVATE_KEY', 'CHAIN_ID']
@@ -97,7 +97,7 @@ async def test_blockchain_connection():
     print("\n🔗 Testando conexão com blockchain...")
     
     try:
-        from blockchain import Blockchain
+        from src.blockchain.blockchain import Blockchain
         
         # Tentar criar instância (vai falhar se não conseguir conectar)
         bc = Blockchain()

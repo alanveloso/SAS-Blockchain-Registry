@@ -15,13 +15,6 @@ from datetime import datetime, timezone
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Função utilitária para converter string para bytes32
-def to_bytes32(text):
-    # Converter string para bytes e preencher com zeros até 32 bytes
-    result = text.encode('utf-8').ljust(32, b'\0')
-    logger.info(f"to_bytes32: '{text}' -> {result} (length: {len(result)})")
-    return result
-
 # Inicializar FastAPI
 app = FastAPI(
     title="SAS Shared Registry API",
@@ -150,43 +143,29 @@ async def health_check():
 async def registration(reg_request: RegistrationRequest):
     """Registration - Registra um CBSD"""
     try:
-        # Converter strings para bytes32
-        fcc_id = to_bytes32(reg_request.fccId)
-        user_id = to_bytes32(reg_request.userId)
-        cbsd_serial = to_bytes32(reg_request.cbsdSerialNumber)
-        call_sign = to_bytes32(reg_request.callSign)
-        air_interface = to_bytes32(reg_request.airInterface)
-        grouping_param = to_bytes32(reg_request.groupingParam)
-        cbsd_address = to_bytes32(reg_request.cbsdAddress)
-        
-        # Converter lista de measCapability para bytes32[]
-        meas_capability = [to_bytes32(cap) for cap in reg_request.measCapability]
-        
-        # Criar tupla com os parâmetros na ordem da struct RegistrationRequest
+        # Parâmetros já são string, passar diretamente
         registration_params = (
-            fcc_id,                    # fccId
-            user_id,                   # userId
-            cbsd_serial,               # cbsdSerialNumber
-            call_sign,                 # callSign
-            to_bytes32(reg_request.cbsdCategory),  # cbsdCategory
-            air_interface,             # airInterface
-            meas_capability,           # measCapability
-            reg_request.eirpCapability, # eirpCapability
-            reg_request.latitude,      # latitude
-            reg_request.longitude,     # longitude
-            reg_request.height,        # height
-            to_bytes32(reg_request.heightType),  # heightType
-            reg_request.indoorDeployment, # indoorDeployment
-            reg_request.antennaGain,   # antennaGain
-            reg_request.antennaBeamwidth, # antennaBeamwidth
-            reg_request.antennaAzimuth, # antennaAzimuth
-            grouping_param,            # groupingParam
-            reg_request.cbsdAddress    # cbsdAddress
+            reg_request.fccId,                    # fccId
+            reg_request.userId,                   # userId
+            reg_request.cbsdSerialNumber,         # cbsdSerialNumber
+            reg_request.callSign,                 # callSign
+            reg_request.cbsdCategory,             # cbsdCategory
+            reg_request.airInterface,             # airInterface
+            reg_request.measCapability,           # measCapability (list of str)
+            reg_request.eirpCapability,           # eirpCapability
+            reg_request.latitude,                 # latitude
+            reg_request.longitude,                # longitude
+            reg_request.height,                   # height
+            reg_request.heightType,               # heightType
+            reg_request.indoorDeployment,         # indoorDeployment
+            reg_request.antennaGain,              # antennaGain
+            reg_request.antennaBeamwidth,         # antennaBeamwidth
+            reg_request.antennaAzimuth,           # antennaAzimuth
+            reg_request.groupingParam,            # groupingParam
+            reg_request.cbsdAddress               # cbsdAddress
         )
-        
         tx = blockchain.contract.functions.Registration(registration_params)
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"CBSD {reg_request.fccId}/{reg_request.cbsdSerialNumber} registrado",
@@ -201,28 +180,20 @@ async def registration(reg_request: RegistrationRequest):
 async def grant_spectrum(grant_request: GrantRequest):
     """Grant - Solicita espectro"""
     try:
-        # Converter strings para bytes32
-        fcc_id = to_bytes32(grant_request.fccId)
-        cbsd_serial = to_bytes32(grant_request.cbsdSerialNumber)
-        channel_type = to_bytes32(grant_request.channelType)
-        
-        # Criar tupla com os parâmetros na ordem da struct GrantRequest
         grant_params = (
-            fcc_id,                    # fccId
-            cbsd_serial,               # cbsdSerialNumber
-            channel_type,              # channelType
-            grant_request.maxEirp,     # maxEirp
-            grant_request.lowFrequency, # lowFrequency
-            grant_request.highFrequency, # highFrequency
-            grant_request.requestedMaxEirp, # requestedMaxEirp
-            grant_request.requestedLowFrequency, # requestedLowFrequency
-            grant_request.requestedHighFrequency, # requestedHighFrequency
-            grant_request.grantExpireTime # grantExpireTime
+            grant_request.fccId,                    # fccId
+            grant_request.cbsdSerialNumber,         # cbsdSerialNumber
+            grant_request.channelType,              # channelType
+            grant_request.maxEirp,                  # maxEirp
+            grant_request.lowFrequency,             # lowFrequency
+            grant_request.highFrequency,            # highFrequency
+            grant_request.requestedMaxEirp,         # requestedMaxEirp
+            grant_request.requestedLowFrequency,    # requestedLowFrequency
+            grant_request.requestedHighFrequency,   # requestedHighFrequency
+            grant_request.grantExpireTime           # grantExpireTime
         )
-        
         tx = blockchain.contract.functions.GrantSpectrum(grant_params)
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"Grant solicitado para {grant_request.fccId}/{grant_request.cbsdSerialNumber}",
@@ -237,13 +208,12 @@ async def grant_spectrum(grant_request: GrantRequest):
 async def heartbeat(heartbeat_request: HeartbeatRequest):
     """Heartbeat - Renova um grant"""
     try:
-        fcc_id = to_bytes32(heartbeat_request.fccId)
-        cbsd_serial = to_bytes32(heartbeat_request.cbsdSerialNumber)
-        grant_id = to_bytes32(heartbeat_request.grantId)
-        
-        tx = blockchain.contract.functions.Heartbeat(fcc_id, cbsd_serial, grant_id)
+        tx = blockchain.contract.functions.Heartbeat(
+            heartbeat_request.fccId,
+            heartbeat_request.cbsdSerialNumber,
+            heartbeat_request.grantId
+        )
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"Heartbeat enviado para grant {heartbeat_request.grantId}",
@@ -258,13 +228,12 @@ async def heartbeat(heartbeat_request: HeartbeatRequest):
 async def relinquishment(relinquishment_request: RelinquishmentRequest):
     """Relinquishment - Relinquishes um grant"""
     try:
-        fcc_id = to_bytes32(relinquishment_request.fccId)
-        cbsd_serial = to_bytes32(relinquishment_request.cbsdSerialNumber)
-        grant_id = to_bytes32(relinquishment_request.grantId)
-        
-        tx = blockchain.contract.functions.Relinquishment(fcc_id, cbsd_serial, grant_id)
+        tx = blockchain.contract.functions.Relinquishment(
+            relinquishment_request.fccId,
+            relinquishment_request.cbsdSerialNumber,
+            relinquishment_request.grantId
+        )
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"Grant {relinquishment_request.grantId} relinquished",
@@ -279,12 +248,11 @@ async def relinquishment(relinquishment_request: RelinquishmentRequest):
 async def deregistration(dereg_request: DeregistrationRequest):
     """Deregistration - Desregistra um CBSD"""
     try:
-        fcc_id = to_bytes32(dereg_request.fccId)
-        cbsd_serial = to_bytes32(dereg_request.cbsdSerialNumber)
-        
-        tx = blockchain.contract.functions.Deregistration(fcc_id, cbsd_serial)
+        tx = blockchain.contract.functions.Deregistration(
+            dereg_request.fccId,
+            dereg_request.cbsdSerialNumber
+        )
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"CBSD {dereg_request.fccId}/{dereg_request.cbsdSerialNumber} desregistrado",
@@ -301,20 +269,16 @@ async def deregistration(dereg_request: DeregistrationRequest):
 async def get_cbsd_info(fcc_id: str, serial_number: str):
     """Obtém informações completas de um CBSD"""
     try:
-        fcc_id_bytes = to_bytes32(fcc_id)
-        serial_number_bytes = to_bytes32(serial_number)
-        
-        cbsd_info = blockchain.get_cbsd_info(fcc_id_bytes, serial_number_bytes)
-        grants = blockchain.get_grants(fcc_id_bytes, serial_number_bytes)
-        
+        cbsd_info = blockchain.get_cbsd_info(fcc_id, serial_number)
+        grants = blockchain.get_grants(fcc_id, serial_number)
         return {
             "success": True,
             "cbsd": {
                 "fccId": fcc_id,
                 "serialNumber": serial_number,
-                "userId": cbsd_info[1].decode('utf-8').rstrip('\x00'),
-                "callSign": cbsd_info[3].decode('utf-8').rstrip('\x00'),
-                "category": cbsd_info[4].decode('utf-8').rstrip('\x00'),
+                "userId": cbsd_info[1],
+                "callSign": cbsd_info[3],
+                "category": cbsd_info[4],
                 "latitude": cbsd_info[8],
                 "longitude": cbsd_info[9],
                 "height": cbsd_info[10],
@@ -326,8 +290,8 @@ async def get_cbsd_info(fcc_id: str, serial_number: str):
             },
             "grants": [
                 {
-                    "grantId": grant[0].hex(),
-                    "channelType": grant[1].decode('utf-8').rstrip('\x00'),
+                    "grantId": grant[0],
+                    "channelType": grant[1],
                     "maxEirp": grant[4],
                     "lowFrequency": grant[5],
                     "highFrequency": grant[6],
@@ -345,11 +309,7 @@ async def get_cbsd_info(fcc_id: str, serial_number: str):
 async def is_cbsd_registered(fcc_id: str, serial_number: str):
     """Verifica se um CBSD está registrado"""
     try:
-        fcc_id_bytes = to_bytes32(fcc_id)
-        serial_number_bytes = to_bytes32(serial_number)
-        
-        is_registered = blockchain.is_cbsd_registered(fcc_id_bytes, serial_number_bytes)
-        
+        is_registered = blockchain.is_cbsd_registered(fcc_id, serial_number)
         return {
             "success": True,
             "fccId": fcc_id,
@@ -365,7 +325,6 @@ async def check_sas_authorization(sas_address: str):
     """Verifica se um endereço é um SAS autorizado"""
     try:
         is_authorized = blockchain.is_authorized_sas(sas_address)
-        
         return {
             "success": True,
             "sas_address": sas_address,
@@ -433,11 +392,8 @@ async def revoke_sas(sas_auth: SASAuthorization):
 async def inject_fcc_id(fcc_injection: FCCIdInjection):
     """InjectFccId - Injeta FCC ID válido"""
     try:
-        fcc_id = to_bytes32(fcc_injection.fccId)
-        
-        tx = blockchain.contract.functions.InjectFccId(fcc_id, fcc_injection.maxEirp)
+        tx = blockchain.contract.functions.InjectFccId(fcc_injection.fccId, fcc_injection.maxEirp)
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"FCC ID {fcc_injection.fccId} injetado",
@@ -452,11 +408,8 @@ async def inject_fcc_id(fcc_injection: FCCIdInjection):
 async def inject_user_id(user_injection: UserIdInjection):
     """InjectUserId - Injeta User ID válido"""
     try:
-        user_id = to_bytes32(user_injection.userId)
-        
-        tx = blockchain.contract.functions.InjectUserId(user_id)
+        tx = blockchain.contract.functions.InjectUserId(user_injection.userId)
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": f"User ID {user_injection.userId} injetado",
@@ -471,20 +424,16 @@ async def inject_user_id(user_injection: UserIdInjection):
 async def blacklist(blacklist_request: BlacklistRequest):
     """Blacklist - Blacklista FCC ID ou Serial Number"""
     try:
-        fcc_id = to_bytes32(blacklist_request.fccId)
-        
         if blacklist_request.serialNumber:
-            # Blacklist por FCC ID + Serial Number
-            serial_number = to_bytes32(blacklist_request.serialNumber)
-            tx = blockchain.contract.functions.BlacklistByFccIdAndSerialNumber(fcc_id, serial_number)
+            tx = blockchain.contract.functions.BlacklistByFccIdAndSerialNumber(
+                blacklist_request.fccId,
+                blacklist_request.serialNumber
+            )
             message = f"Serial number {blacklist_request.serialNumber} blacklistado"
         else:
-            # Blacklist apenas por FCC ID
-            tx = blockchain.contract.functions.BlacklistByFccId(fcc_id)
+            tx = blockchain.contract.functions.BlacklistByFccId(blacklist_request.fccId)
             message = f"FCC ID {blacklist_request.fccId} blacklistado"
-        
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": message,
@@ -495,13 +444,13 @@ async def blacklist(blacklist_request: BlacklistRequest):
         logger.error(f"Erro ao blacklistar: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.post("/admin/reset")
 @app.post("/v1.3/admin/reset")
 async def reset():
     """Reset - Reseta o SAS"""
     try:
         tx = blockchain.contract.functions.Reset()
         receipt = blockchain.send_transaction(tx)
-        
         return {
             "success": True,
             "message": "SAS resetado",
@@ -545,6 +494,34 @@ async def get_full_activity_dump():
         
         return dump_data
         
+    except Exception as e:
+        logger.error(f"Erro ao gerar Full Activity Dump: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/v1.2/fullActivityDump")
+async def full_activity_dump():
+    """Full Activity Dump - compatível com WINNF v1.2 (POST)"""
+    try:
+        # Obter dados do blockchain (mesma lógica do GET /v1.3/dump)
+        total_cbsds = blockchain.get_total_cbsds()
+        total_grants = blockchain.get_total_grants()
+        generation_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        dump_data = {
+            "version": "1.2",
+            "generationDateTime": generation_datetime,
+            "cbsdRecords": [],
+            "escSensorDataRecords": [],
+            "coordinationEventRecords": [],
+            "ppaRecords": [],
+            "palRecords": [],
+            "zoneRecords": [],
+            "exclusionZoneRecords": [],
+            "fssRecords": [],
+            "wispRecords": [],
+            "sasAdministratorRecords": []
+        }
+        # TODO: Implementar conversão de dados do blockchain para formato WinnForum
+        return dump_data
     except Exception as e:
         logger.error(f"Erro ao gerar Full Activity Dump: {e}")
         raise HTTPException(status_code=400, detail=str(e))
