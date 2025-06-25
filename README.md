@@ -1,8 +1,8 @@
 # SAS Blockchain Registry
 
-Sistema completo de gestão de espectro radioelétrico baseado em blockchain para CBRS (Citizen Broadband Radio Service). O projeto implementa um registro descentralizado que permite a autorização de SAS (Spectrum Access System), registro de CBSD (Citizen Broadband Radio Service Device), gestão de grants de espectro e monitoramento de eventos em tempo real.
+Sistema de registro descentralizado baseado em blockchain para comunicação SAS-SAS (Spectrum Access System). O projeto implementa um contrato inteligente que serve como repositório descentralizado de dados para substituir APIs REST tradicionais na comunicação entre sistemas SAS.
 
-O sistema é composto por um smart contract Solidity que garante transparência e imutabilidade das operações, e um middleware Python que fornece uma API REST para integração com sistemas SAS existentes.
+O sistema é composto por um smart contract Solidity que garante transparência e imutabilidade das operações SAS-SAS, e um middleware Python que fornece uma API REST para integração com sistemas SAS existentes.
 
 ## Arquitetura
 
@@ -19,6 +19,7 @@ O sistema é composto por um smart contract Solidity que garante transparência 
                               │                  │  Smart Contract │
                               │                  │  SASShared      │
                               │                  │  Registry.sol   │
+                              │                  │  (SAS-SAS)      │
                               │                  └─────────────────┘
                               │
                               ▼
@@ -31,8 +32,27 @@ O sistema é composto por um smart contract Solidity que garante transparência 
 **Fluxo de Dados:**
 1. **SAS System** ↔ **Python API**: Comunicação via REST
 2. **Python API** ↔ **EVM Blockchain**: Interação via Web3
-3. **EVM Blockchain** ↔ **Smart Contract**: Execução de transações
+3. **EVM Blockchain** ↔ **Smart Contract**: Execução de transações SAS-SAS
 4. **Python API** ↔ **Local Cache**: Armazenamento de estado
+
+## Funcionalidades do Smart Contract (SAS-SAS)
+
+### Interface SAS-SAS
+O contrato implementa a interface padrão SAS-SAS com as seguintes operações:
+
+- **Registration**: Registro de dispositivos CBSD
+- **Grant**: Criação de grants de espectro
+- **Heartbeat**: Manutenção de grants ativos
+- **Relinquishment**: Liberação de grants
+- **Deregistration**: Remoção de dispositivos
+
+### Gestão de Autorização
+- **Autorizar SAS**: Permitir que um endereço execute operações SAS-SAS
+- **Verificar autorização**: Consultar se um SAS está autorizado
+- **Revogar SAS**: Remover autorização de um SAS
+
+### Eventos
+Cada operação SAS-SAS emite eventos com payloads JSON que podem ser consumidos por outros sistemas SAS para sincronização.
 
 ## Setup do Smart Contract
 
@@ -59,15 +79,16 @@ npx hardhat node
 npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
 ```
 
-#### 5. Teste de Integração Completo
+#### 5. Teste de Integração SAS-SAS
 ```bash
-node scripts/integration-test-sas-shared-registry.js.js
+node scripts/integration-test-sas-simplified.js
 ```
-Esse teste cobre:
-- Fluxos positivos (registro, grant, heartbeat, blacklist, etc)
-- Fluxos negativos (erros de autorização, blacklist, grant inexistente, etc)
 
-O resultado exibirá no terminal o status de cada etapa, validando a robustez do contrato.
+Esse teste cobre:
+- Autorização e revogação de SAS
+- Todas as operações SAS-SAS (registration, grant, heartbeat, relinquishment, deregistration)
+- Verificação de acesso negado para SAS não autorizado
+- Emissão de eventos
 
 ### Opção 2: Deploy em Qualquer Rede Besu (Produção/Teste)
 
@@ -190,17 +211,17 @@ python3 run.py
 
 ## Testes de Integração do Contrato
 
-Após o deploy do contrato, execute o teste de integração completo:
+Após o deploy do contrato, execute o teste de integração SAS-SAS:
 
 ```bash
-node scripts/integration-test-sas-shared-registry.js.js
+node scripts/integration-test-sas-simplified.js
 ```
 
 Esse teste cobre:
-- Fluxos positivos: registro, grant, heartbeat, blacklist, autorização de SAS, deregistration, etc.
-- Fluxos negativos: tentativas de operação com IDs não autorizados, grants inexistentes, SAS não autorizado, etc.
-
-O resultado exibirá no terminal o status de cada etapa, validando a robustez do contrato.
+- Autorização e revogação de SAS
+- Todas as operações SAS-SAS (registration, grant, heartbeat, relinquishment, deregistration)
+- Verificação de acesso negado para SAS não autorizado
+- Emissão de eventos com payloads JSON
 
 ## Testes com cURL
 
@@ -221,28 +242,30 @@ curl -X POST http://localhost:8000/sas/authorize \
 curl http://localhost:8000/sas/0x70997970C51812dc3A010C7d01b50e0d17dc79C8/authorized | jq
 ```
 
-### Registrar CBSD
+### Operação SAS-SAS (Registration)
 ```bash
-curl -X POST http://localhost:8000/cbsd/register \
+curl -X POST http://localhost:8000/sas/registration \
   -H "Content-Type: application/json" \
   -d '{
-    "cbsd_id": 1,
-    "cbsd_address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-    "grant_amount": 100000000000000000000,
-    "frequency_hz": 3550000000,
-    "bandwidth_hz": 10000000,
-    "expiry_timestamp": 1750726000
+    "fccId": "TEST-FCC-001",
+    "userId": "TEST-USER-001",
+    "cbsdSerialNumber": "TEST-SN-001",
+    "callSign": "TESTCALL",
+    "cbsdCategory": "A",
+    "airInterface": "E_UTRA",
+    "measCapability": ["EUTRA_CARRIER_RSSI"],
+    "eirpCapability": 47,
+    "latitude": 375000000,
+    "longitude": 1224000000,
+    "height": 30,
+    "heightType": "AGL",
+    "indoorDeployment": false,
+    "antennaGain": 15,
+    "antennaBeamwidth": 360,
+    "antennaAzimuth": 0,
+    "groupingParam": "",
+    "cbsdAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
   }' | jq
-```
-
-### Consultar CBSD
-```bash
-curl http://localhost:8000/cbsd/1 | jq
-```
-
-### Listar Todos os CBSDs
-```bash
-curl http://localhost:8000/cbsd | jq
 ```
 
 ### Eventos Recentes
@@ -250,31 +273,17 @@ curl http://localhost:8000/cbsd | jq
 curl http://localhost:8000/events/recent | jq
 ```
 
-## Funcionalidades do Smart Contract
-
-### Gestão de SAS
-- Autorizar SAS
-- Verificar autorização
-- Revogar SAS
-
-### Gestão de CBSD
-- Registrar CBSD
-- Atualizar grant amount
-- Atualizar status
-- Atualizar detalhes do grant
-- Consultar informações
-
 ## Estrutura do Projeto
 
 ```
 SAS-Blockchain-Registry/
 ├── contracts/
-│   ├── SASSharedRegistry.sol    # Smart contract principal
+│   ├── SASSharedRegistry.sol    # Smart contract SAS-SAS
 │   └── Lock.sol                 # Contrato de exemplo
 ├── middleware/                  # API Python (documentação separada)
 ├── scripts/
 │   ├── deploy-sas-shared-registry.js           # Deploy Hardhat
-│   └── deploy-sas-shared-registry-quorum.js    # Deploy Quorum
+│   └── integration-test-sas-simplified.js      # Teste SAS-SAS
 ├── test/
 │   └── SASSharedRegistry.js     # Testes unitários
 ├── hardhat.config.js            # Configuração Hardhat
@@ -288,11 +297,15 @@ SAS-Blockchain-Registry/
 npx hardhat test
 ```
 
+### Testes de Integração (SAS-SAS)
+```bash
+node scripts/integration-test-sas-simplified.js
+```
+
 ## Configurações
 
 ### Endereços de Teste (Hardhat)
 - **SAS de Teste:** `0x70997970C51812dc3A010C7d01b50e0d17dc79C8`
-- **CBSD de Teste:** `0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC`
 - **Owner:** `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`
 
 ## Troubleshooting
