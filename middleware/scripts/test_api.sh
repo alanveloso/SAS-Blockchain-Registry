@@ -19,39 +19,39 @@ wait_a_bit() {
 # 1. Health Check
 echo "1️⃣ Health Check"
 echo "---------------"
-curl -s http://localhost:8000/health | jq '.'
+curl -s http://localhost:9000/health | jq '.'
 echo ""
 
 wait_a_bit
 
-# 2. Listar todos os CBSDs (funciona sem blockchain)
-echo "2️⃣ Listar todos os CBSDs"
-echo "------------------------"
-curl -s http://localhost:8000/cbsd | jq '.'
-echo ""
-
-wait_a_bit
-
-# 3. Ver eventos recentes (funciona sem blockchain)
-echo "3️⃣ Ver eventos recentes"
-echo "----------------------"
-curl -s http://localhost:8000/events/recent | jq '.'
-echo ""
-
-wait_a_bit
-
-# 4. Teste de erro - CBSD inexistente (funciona sem blockchain)
-echo "4️⃣ Teste de erro - CBSD inexistente"
-echo "------------------------------------"
-curl -s http://localhost:8000/cbsd/999 | jq '.'
-echo ""
-
-wait_a_bit
-
-# 5. Endpoint raiz
-echo "5️⃣ Endpoint raiz"
+# 2. Endpoint raiz
+echo "2️⃣ Endpoint raiz"
 echo "----------------"
-curl -s http://localhost:8000/ | jq '.'
+curl -s http://localhost:9000/ | jq '.'
+echo ""
+
+wait_a_bit
+
+# 3. Ver estatísticas
+echo "3️⃣ Ver estatísticas"
+echo "-------------------"
+curl -s http://localhost:9000/stats | jq '.'
+echo ""
+
+wait_a_bit
+
+# 4. Ver eventos recentes
+echo "4️⃣ Ver eventos recentes"
+echo "----------------------"
+curl -s http://localhost:9000/events/recent | jq '.'
+echo ""
+
+wait_a_bit
+
+# 5. Verificar SAS não autorizado
+echo "5️⃣ Verificar SAS não autorizado"
+echo "-------------------------------"
+curl -s http://localhost:9000/sas/0x1234567890123456789012345678901234567890/authorized | jq '.'
 echo ""
 
 echo "✅ Teste básico concluído!"
@@ -65,7 +65,7 @@ echo "   1. Iniciar Hardhat: npx hardhat node"
 echo "   2. Deploy contrato: npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost"
 echo "   3. Atualizar .env com endereço do contrato"
 echo "   4. Reiniciar API: python3 run.py"
-echo "   5. Executar teste completo: ./scripts/test_blockchain.sh"
+echo "   5. Executar teste completo: ./scripts/test_sas_sas.sh"
 echo ""
 echo "📚 Documentação disponível em:"
 echo "   - docs/API_DOCS.md"
