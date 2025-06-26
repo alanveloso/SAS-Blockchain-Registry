@@ -132,74 +132,83 @@ class Blockchain:
             logger.error(f"Erro na chamada da função: {e}")
             raise
 
-    def get_cbsd_info(self, fcc_id, cbsd_serial_number):
-        """Obtém informações completas de um CBSD"""
+    # Funções SAS-SAS
+    def registration(self, payload: str):
+        """Executa operação SAS-SAS Registration"""
         try:
-            return self.contract.functions.getCBSDInfo(fcc_id, cbsd_serial_number).call()
+            tx = self.contract.functions.registration(payload)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao obter info do CBSD {fcc_id}/{cbsd_serial_number}: {e}")
+            logger.error(f"Erro na operação registration: {e}")
             raise
 
-    def get_grants(self, fcc_id, cbsd_serial_number):
-        """Obtém todos os grants de um CBSD"""
+    def grant(self, payload: str):
+        """Executa operação SAS-SAS Grant"""
         try:
-            return self.contract.functions.getGrants(fcc_id, cbsd_serial_number).call()
+            tx = self.contract.functions.grant(payload)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao obter grants do CBSD {fcc_id}/{cbsd_serial_number}: {e}")
+            logger.error(f"Erro na operação grant: {e}")
             raise
 
-    def is_cbsd_registered(self, fcc_id, cbsd_serial_number):
-        """Verifica se um CBSD está registrado"""
+    def heartbeat(self, payload: str):
+        """Executa operação SAS-SAS Heartbeat"""
         try:
-            return self.contract.functions.isCBSDRegistered(fcc_id, cbsd_serial_number).call()
+            tx = self.contract.functions.heartbeat(payload)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao verificar registro do CBSD {fcc_id}/{cbsd_serial_number}: {e}")
+            logger.error(f"Erro na operação heartbeat: {e}")
             raise
 
-    def get_total_cbsds(self):
-        """Obtém o total de CBSDs registrados"""
+    def relinquishment(self, payload: str):
+        """Executa operação SAS-SAS Relinquishment"""
         try:
-            return self.contract.functions.totalCbsds().call()
+            tx = self.contract.functions.relinquishment(payload)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao obter total de CBSDs: {e}")
+            logger.error(f"Erro na operação relinquishment: {e}")
             raise
 
-    def get_total_grants(self):
-        """Obtém o total de grants criados"""
+    def deregistration(self, payload: str):
+        """Executa operação SAS-SAS Deregistration"""
         try:
-            return self.contract.functions.totalGrants().call()
+            tx = self.contract.functions.deregistration(payload)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao obter total de grants: {e}")
+            logger.error(f"Erro na operação deregistration: {e}")
             raise
 
-    def is_fcc_id_authorized(self, fcc_id):
-        """Verifica se um FCC ID está autorizado"""
+    # Funções de autorização SAS
+    def authorize_sas(self, sas_address: str):
+        """Autoriza um endereço como SAS"""
         try:
-            return self.contract.functions.fccIds(fcc_id).call()
+            tx = self.contract.functions.authorizeSAS(sas_address)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao verificar FCC ID {fcc_id}: {e}")
+            logger.error(f"Erro ao autorizar SAS {sas_address}: {e}")
             raise
 
-    def is_user_id_authorized(self, user_id):
-        """Verifica se um User ID está autorizado"""
+    def revoke_sas(self, sas_address: str):
+        """Revoga autorização de um SAS"""
         try:
-            return self.contract.functions.userIds(user_id).call()
+            tx = self.contract.functions.revokeSAS(sas_address)
+            return self.send_transaction(tx)
         except Exception as e:
-            logger.error(f"Erro ao verificar User ID {user_id}: {e}")
+            logger.error(f"Erro ao revogar SAS {sas_address}: {e}")
             raise
 
-    def is_fcc_id_blacklisted(self, fcc_id):
-        """Verifica se um FCC ID está blacklistado"""
-        try:
-            return self.contract.functions.blacklistedFccIds(fcc_id).call()
-        except Exception as e:
-            logger.error(f"Erro ao verificar blacklist do FCC ID {fcc_id}: {e}")
-            raise
-
-    def is_authorized_sas(self, sas_address):
+    def is_authorized_sas(self, sas_address: str):
         """Verifica se um endereço é um SAS autorizado"""
         try:
             return self.contract.functions.authorizedSAS(sas_address).call()
         except Exception as e:
             logger.error(f"Erro ao verificar SAS {sas_address}: {e}")
+            raise
+
+    def get_owner(self):
+        """Obtém o endereço do owner do contrato"""
+        try:
+            return self.contract.functions.owner().call()
+        except Exception as e:
+            logger.error(f"Erro ao obter owner: {e}")
             raise 
