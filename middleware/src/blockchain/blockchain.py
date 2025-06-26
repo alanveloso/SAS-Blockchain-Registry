@@ -182,7 +182,9 @@ class Blockchain:
     def authorize_sas(self, sas_address: str):
         """Autoriza um endereço como SAS"""
         try:
-            tx = self.contract.functions.authorizeSAS(sas_address)
+            # Converter endereço para o tipo correto
+            address = self.web3.to_checksum_address(sas_address)
+            tx = self.contract.functions.authorizeSAS(address)
             return self.send_transaction(tx)
         except Exception as e:
             logger.error(f"Erro ao autorizar SAS {sas_address}: {e}")
@@ -191,7 +193,9 @@ class Blockchain:
     def revoke_sas(self, sas_address: str):
         """Revoga autorização de um SAS"""
         try:
-            tx = self.contract.functions.revokeSAS(sas_address)
+            # Converter endereço para o tipo correto
+            address = self.web3.to_checksum_address(sas_address)
+            tx = self.contract.functions.revokeSAS(address)
             return self.send_transaction(tx)
         except Exception as e:
             logger.error(f"Erro ao revogar SAS {sas_address}: {e}")
@@ -200,7 +204,9 @@ class Blockchain:
     def is_authorized_sas(self, sas_address: str):
         """Verifica se um endereço é um SAS autorizado"""
         try:
-            return self.contract.functions.authorizedSAS(sas_address).call()
+            # Converter endereço para o tipo correto
+            address = self.web3.to_checksum_address(sas_address)
+            return self.contract.functions.authorizedSAS(address).call()
         except Exception as e:
             logger.error(f"Erro ao verificar SAS {sas_address}: {e}")
             raise
