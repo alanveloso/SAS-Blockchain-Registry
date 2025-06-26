@@ -1,0 +1,2 @@
+# Ignorar arquivos de planos JMeter gerados automaticamente
+plans/*.jmx 
