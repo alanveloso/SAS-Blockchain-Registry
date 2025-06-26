@@ -1,35 +1,33 @@
 import pytest
 from fastapi.testclient import TestClient
 from src.api.api import app
+from src.blockchain.blockchain import Blockchain
+import json
+
+# Inicializar blockchain manualmente para os testes
+try:
+    blockchain = Blockchain()
+    # Substituir o objeto global na API
+    import src.api.api as api_module
+    api_module.blockchain = blockchain
+except Exception as e:
+    print(f"Erro ao inicializar blockchain para testes: {e}")
+    blockchain = None
 
 client = TestClient(app)
 
 # Dados de exemplo
 SAS_ADDRESS = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
-FCC_ID = "TEST-FCC-ID"
-USER_ID = "TEST-USER-ID"
-CBSD_SERIAL = "TEST-CBSD-SERIAL"
-CALL_SIGN = "TESTCALL"
-CBSD_CATEGORY = "A"
-AIR_INTERFACE = "E_UTRA"
-MEAS_CAPABILITY = ["EUTRA_CARRIER_RSSI"]
-EIRP_CAPABILITY = 47
-LATITUDE = 10
-LONGITUDE = 20
-HEIGHT = 5
-HEIGHT_TYPE = "AGL"
-INDOOR_DEPLOYMENT = False
-ANTENNA_GAIN = 10
-ANTENNA_BEAMWIDTH = 90
-ANTENNA_AZIMUTH = 0
-GROUPING_PARAM = "GROUP1"
-CBSD_ADDRESS = "192.168.0.1"
+FCC_ID = "TEST-FCC-EVENTS"
+USER_ID = "TEST-USER-EVENTS"
+CBSD_SERIAL = "TEST-SN-EVENTS"
 
 @pytest.mark.order(1)
 def test_root():
     resp = client.get("/")
     assert resp.status_code == 200
     assert "message" in resp.json()
+    assert "SAS-SAS" in resp.json()["message"]
 
 @pytest.mark.order(2)
 def test_health():
@@ -39,7 +37,7 @@ def test_health():
 
 @pytest.mark.order(3)
 def test_authorize_sas():
-    resp = client.post("/v1.3/admin/authorize", json={"sas_address": SAS_ADDRESS})
+    resp = client.post("/sas/authorize", json={"sas_address": SAS_ADDRESS})
     assert resp.status_code == 200
     assert resp.json()["success"] is True
 
@@ -55,47 +53,99 @@ def test_register_cbsd():
         "fccId": FCC_ID,
         "userId": USER_ID,
         "cbsdSerialNumber": CBSD_SERIAL,
-        "callSign": CALL_SIGN,
-        "cbsdCategory": CBSD_CATEGORY,
-        "airInterface": AIR_INTERFACE,
-        "measCapability": MEAS_CAPABILITY,
-        "eirpCapability": EIRP_CAPABILITY,
-        "latitude": LATITUDE,
-        "longitude": LONGITUDE,
-        "height": HEIGHT,
-        "heightType": HEIGHT_TYPE,
-        "indoorDeployment": INDOOR_DEPLOYMENT,
-        "antennaGain": ANTENNA_GAIN,
-        "antennaBeamwidth": ANTENNA_BEAMWIDTH,
-        "antennaAzimuth": ANTENNA_AZIMUTH,
-        "groupingParam": GROUPING_PARAM,
-        "cbsdAddress": CBSD_ADDRESS
+        "callSign": "TESTCALL",
+        "cbsdCategory": "A",
+        "airInterface": "E_UTRA",
+        "measCapability": ["EUTRA_CARRIER_RSSI"],
+        "eirpCapability": 47,
+        "latitude": 375000000,
+        "longitude": 1224000000,
+        "height": 30,
+        "heightType": "AGL",
+        "indoorDeployment": False,
+        "antennaGain": 15,
+        "antennaBeamwidth": 360,
+        "antennaAzimuth": 0,
+        "groupingParam": "",
+        "cbsdAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
     }
     resp = client.post("/v1.3/registration", json=reg_payload)
     assert resp.status_code == 200
     assert resp.json()["success"] is True
 
 @pytest.mark.order(6)
-def test_get_cbsd_info():
-    resp = client.get(f"/cbsd/{FCC_ID}/{CBSD_SERIAL}")
+def test_grant_spectrum():
+    grant_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "channelType": "GAA",
+        "maxEirp": 47,
+        "lowFrequency": 3550000000,
+        "highFrequency": 3700000000,
+        "requestedMaxEirp": 47,
+        "requestedLowFrequency": 3550000000,
+        "requestedHighFrequency": 3700000000,
+        "grantExpireTime": 1750726000
+    }
+    resp = client.post("/v1.3/grant", json=grant_payload)
     assert resp.status_code == 200
     assert resp.json()["success"] is True
-    assert resp.json()["cbsd"]["fccId"] == FCC_ID
-    assert resp.json()["cbsd"]["serialNumber"] == CBSD_SERIAL
 
 @pytest.mark.order(7)
-def test_is_cbsd_registered():
-    resp = client.get(f"/cbsd/{FCC_ID}/{CBSD_SERIAL}/registered")
+def test_heartbeat():
+    heartbeat_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "grantId": "grant_001",
+        "transmitExpireTime": 1750726000
+    }
+    resp = client.post("/v1.3/heartbeat", json=heartbeat_payload)
     assert resp.status_code == 200
-    assert resp.json()["registered"] is True
+    assert resp.json()["success"] is True
 
 @pytest.mark.order(8)
-def test_revoke_sas():
-    resp = client.post("/v1.3/admin/revoke", json={"sas_address": SAS_ADDRESS})
+def test_relinquishment():
+    relinquishment_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "grantId": "grant_001"
+    }
+    resp = client.post("/v1.3/relinquishment", json=relinquishment_payload)
     assert resp.status_code == 200
     assert resp.json()["success"] is True
 
 @pytest.mark.order(9)
+def test_deregistration():
+    deregistration_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL
+    }
+    resp = client.post("/v1.3/deregistration", json=deregistration_payload)
+    assert resp.status_code == 200
+    assert resp.json()["success"] is True
+
+@pytest.mark.order(10)
+def test_stats():
+    resp = client.get("/stats")
+    assert resp.status_code == 200
+    assert "owner" in resp.json()
+    assert "contract_address" in resp.json()
+    assert "version" in resp.json()
+
+@pytest.mark.order(11)
+def test_events_recent():
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    assert "events" in resp.json()
+    assert "total" in resp.json()
+
+@pytest.mark.order(12)
+def test_revoke_sas():
+    resp = client.post("/sas/revoke", json={"sas_address": SAS_ADDRESS})
+    assert resp.status_code == 200
+    assert resp.json()["success"] is True
+
+@pytest.mark.order(13)
 def test_check_sas_revoked():
     resp = client.get(f"/sas/{SAS_ADDRESS}/authorized")
     assert resp.status_code == 200

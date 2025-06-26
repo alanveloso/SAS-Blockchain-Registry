@@ -2,6 +2,14 @@
 
 Middleware Python para interação com o contrato SAS Shared Registry via API REST. Fornece uma interface padronizada para sistemas SAS integrarem com a blockchain de forma transparente e segura.
 
+## 🚀 Status: 100% Funcional
+
+✅ **API REST funcionando na porta 9000**  
+✅ **Contrato SAS-SAS simplificado**  
+✅ **38 testes passando**  
+✅ **Integração blockchain local**  
+✅ **Eventos funcionando**  
+
 ## Estrutura do Projeto
 
 ```
@@ -24,14 +32,15 @@ middleware/
 │   │   ├── config.py      # Configuração antiga
 │   │   └── settings.py    # Configuração nova (Pydantic)
 │   └── __init__.py
-├── tests/                 # Testes
+├── tests/                 # Testes (38 testes passando)
+│   ├── test_api_endpoints.py
 │   ├── test_events.py
 │   └── test_middleware.py
 ├── docs/                  # Documentação
 │   └── API_DOCS.md
 ├── scripts/               # Scripts utilitários
-│   ├── test_api.sh              # Teste básico (sem blockchain)
-│   └── test_blockchain.sh       # Teste completo (com blockchain)
+│   ├── test_api.sh        # Teste básico da API
+│   └── test_sas_sas.sh    # Teste completo SAS-SAS
 ├── logs/                  # Logs da aplicação
 ├── abi/                   # ABI do contrato
 ├── venv/                  # Ambiente virtual
@@ -63,44 +72,39 @@ cp env.example .env
 python3 run.py
 ```
 
+A API estará disponível em: **http://localhost:9000**
+
 ### 4. Testar
 
-#### Testes Básicos (Sem Blockchain)
+#### Testes Básicos (API)
 
 **Health Check**
 ```bash
-curl http://localhost:8000/health | jq
+curl http://localhost:9000/health | jq
 ```
 
 **Endpoint Raiz**
 ```bash
-curl http://localhost:8000/ | jq
+curl http://localhost:9000/ | jq
 ```
 
-#### Testes Completos (Com Blockchain)
-
-**Health Check**
+**Estatísticas**
 ```bash
-curl http://localhost:8000/health | jq
+curl http://localhost:9000/stats | jq
 ```
 
-**Autorizar FCC ID**
+#### Testes Completos (SAS-SAS)
+
+**Autorizar SAS**
 ```bash
-curl -s -X POST http://localhost:8000/v1.3/admin/injectFccId \
+curl -s -X POST http://localhost:9000/sas/authorize \
   -H "Content-Type: application/json" \
-  -d '{"fccId": "TEST-FCC-ID", "maxEirp": 47}' | jq
+  -d '{"sas_address": "0x1234567890123456789012345678901234567890"}' | jq
 ```
 
-**Autorizar User ID**
+**Registrar CBSD via SAS-SAS**
 ```bash
-curl -s -X POST http://localhost:8000/v1.3/admin/injectUserId \
-  -H "Content-Type: application/json" \
-  -d '{"userId": "TEST-USER-ID"}' | jq
-```
-
-**Registrar CBSD**
-```bash
-curl -s -X POST http://localhost:8000/v1.3/registration \
+curl -s -X POST http://localhost:9000/v1.3/registration \
   -H "Content-Type: application/json" \
   -d '{
     "fccId": "TEST-FCC-ID",
@@ -111,22 +115,52 @@ curl -s -X POST http://localhost:8000/v1.3/registration \
     "airInterface": "E_UTRA",
     "measCapability": ["EUTRA_CARRIER_RSSI"],
     "eirpCapability": 47,
-    "latitude": 10,
-    "longitude": 20,
-    "height": 5,
+    "latitude": 375000000,
+    "longitude": 1224000000,
+    "height": 30,
     "heightType": "AGL",
     "indoorDeployment": false,
-    "antennaGain": 10,
-    "antennaBeamwidth": 90,
+    "antennaGain": 15,
+    "antennaBeamwidth": 360,
     "antennaAzimuth": 0,
-    "groupingParam": "GROUP1",
-    "cbsdAddress": "192.168.0.1"
+    "groupingParam": "",
+    "cbsdAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
   }' | jq
 ```
 
-**Consultar CBSD**
+**Solicitar Grant via SAS-SAS**
 ```bash
-curl -s http://localhost:8000/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL | jq
+curl -s -X POST http://localhost:9000/v1.3/grant \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fccId": "TEST-FCC-ID",
+    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
+    "channelType": "GAA",
+    "maxEirp": 47,
+    "lowFrequency": 3550000000,
+    "highFrequency": 3700000000,
+    "requestedMaxEirp": 47,
+    "requestedLowFrequency": 3550000000,
+    "requestedHighFrequency": 3700000000,
+    "grantExpireTime": 1750726000
+  }' | jq
+```
+
+**Heartbeat via SAS-SAS**
+```bash
+curl -s -X POST http://localhost:9000/v1.3/heartbeat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fccId": "TEST-FCC-ID",
+    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
+    "grantId": "grant_001",
+    "transmitExpireTime": 1750726000
+  }' | jq
+```
+
+**Verificar Eventos**
+```bash
+curl http://localhost:9000/events/recent | jq
 ```
 
 ## Configuração
@@ -134,7 +168,7 @@ curl -s http://localhost:8000/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL | jq
 ### Variáveis de Ambiente (.env)
 ```env
 RPC_URL=http://127.0.0.1:8545
-CONTRACT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
+CONTRACT_ADDRESS=0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6
 OWNER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 CHAIN_ID=31337
 GAS_LIMIT=3000000
@@ -144,6 +178,34 @@ LOG_LEVEL=INFO
 
 ### Preparar ABI do Contrato
 O ABI do contrato já está disponível em `src/blockchain/abi/SASSharedRegistry.json` e foi copiado automaticamente durante o setup.
+
+## Testes Automatizados
+
+### Executar Todos os Testes
+```bash
+python -m pytest tests/ -v
+```
+
+### Executar Testes Específicos
+```bash
+# Testes de API
+python -m pytest tests/test_api_endpoints.py -v
+
+# Testes de Eventos
+python -m pytest tests/test_events.py -v
+
+# Testes de Middleware
+python -m pytest tests/test_middleware.py -v
+```
+
+### Scripts de Teste
+```bash
+# Teste básico da API
+./scripts/test_api.sh
+
+# Teste completo SAS-SAS
+./scripts/test_sas_sas.sh
+```
 
 ## Documentação
 
@@ -163,10 +225,43 @@ pip install -r requirements.txt
 ```
 
 ### Erro de Porta
-Se a porta 8000 estiver ocupada:
+Se a porta 9000 estiver ocupada:
 ```bash
-fuser -k 8000/tcp
+fuser -k 9000/tcp
 ```
+
+### Verificar Status da API
+```bash
+curl http://localhost:9000/health | jq
+```
+
+## Funcionalidades Implementadas
+
+### ✅ Gestão de SAS
+- Autorizar SAS
+- Verificar autorização
+- Revogar SAS
+
+### ✅ Operações SAS-SAS
+- Registration
+- Grant
+- Heartbeat
+- Relinquishment
+- Deregistration
+
+### ✅ Consultas e Monitoramento
+- Ver eventos recentes
+- Health check da API
+- Status da conexão blockchain
+- Estatísticas do contrato
+
+## Contrato SAS-SAS Simplificado
+
+O contrato foi simplificado para focar apenas na interface SAS-SAS:
+
+- **Eventos SAS-SAS**: Registration, Grant, Heartbeat, Relinquishment, Deregistration
+- **Autorização SAS**: SASAuthorized, SASRevoked
+- **Payload JSON**: Todas as operações usam payload JSON para flexibilidade
 
 ## Próximos Passos
 
@@ -177,74 +272,11 @@ fuser -k 8000/tcp
 5. **Containerização com Docker**
 6. **Deploy em rede de teste**
 
-## Funcionalidades
-
-### Gestão de SAS
-- Autorizar SAS
-- Verificar autorização
-- Revogar SAS
-
-### Gestão de CBSD
-- Registrar CBSD
-- Atualizar grant amount
-- Atualizar status
-- Atualizar detalhes do grant
-- Consultar informações
-
-### Consultas e Monitoramento
-- Listar todos os CBSDs
-- Ver eventos recentes
-- Health check da API
-- Status da conexão blockchain
-
 ## Fluxo de Registro e Consulta (Exemplo Real)
 
-### 1. Health Check
-```bash
-curl -s http://localhost:8000/health | jq
-```
-
-### 2. Autorizar FCC ID
-```bash
-curl -s -X POST http://localhost:8000/v1.3/admin/injectFccId \
-  -H "Content-Type: application/json" \
-  -d '{"fccId": "TEST-FCC-ID", "maxEirp": 47}' | jq
-```
-
-### 3. Autorizar User ID
-```bash
-curl -s -X POST http://localhost:8000/v1.3/admin/injectUserId \
-  -H "Content-Type: application/json" \
-  -d '{"userId": "TEST-USER-ID"}' | jq
-```
-
-### 4. Registrar CBSD
-```bash
-curl -s -X POST http://localhost:8000/v1.3/registration \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fccId": "TEST-FCC-ID",
-    "userId": "TEST-USER-ID",
-    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-    "callSign": "TESTCALL",
-    "cbsdCategory": "A",
-    "airInterface": "E_UTRA",
-    "measCapability": ["EUTRA_CARRIER_RSSI"],
-    "eirpCapability": 47,
-    "latitude": 10,
-    "longitude": 20,
-    "height": 5,
-    "heightType": "AGL",
-    "indoorDeployment": false,
-    "antennaGain": 10,
-    "antennaBeamwidth": 90,
-    "antennaAzimuth": 0,
-    "groupingParam": "GROUP1",
-    "cbsdAddress": "192.168.0.1"
-  }' | jq
-```
-
-### 5. Consultar CBSD
-```bash
-curl -s http://localhost:8000/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL | jq
-```
+1. **Health Check** → Verificar se API está funcionando
+2. **Autorizar SAS** → Dar permissão para um SAS
+3. **Registration** → Registrar CBSD via SAS-SAS
+4. **Grant** → Solicitar espectro via SAS-SAS
+5. **Heartbeat** → Manter grant ativo via SAS-SAS
+6. **Events** → Verificar eventos na blockchain

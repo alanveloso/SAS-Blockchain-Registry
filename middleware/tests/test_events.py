@@ -1,77 +1,222 @@
-#!/usr/bin/env python3
-"""
-Script para testar o middleware simulando eventos do contrato
-"""
-import asyncio
+import pytest
+from fastapi.testclient import TestClient
+from src.api.api import app
+from src.blockchain.blockchain import Blockchain
 import json
-import time
-from datetime import datetime
-from src.handlers.handlers import EVENT_HANDLERS
-from src.repository.repository import CBSDRepository
 
-def create_mock_event(event_name, **kwargs):
-    """Cria um evento mock para teste"""
-    base_event = {
-        'blockNumber': int(time.time()),
-        'transactionHash': f"0x{hash(event_name + str(time.time())):064x}",
-        'args': kwargs
+# Inicializar blockchain manualmente para os testes
+try:
+    blockchain = Blockchain()
+    # Substituir o objeto global na API
+    import src.api.api as api_module
+    api_module.blockchain = blockchain
+except Exception as e:
+    print(f"Erro ao inicializar blockchain para testes: {e}")
+    blockchain = None
+
+client = TestClient(app)
+
+# Dados de exemplo
+SAS_ADDRESS = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+FCC_ID = "TEST-FCC-EVENTS"
+USER_ID = "TEST-USER-EVENTS"
+CBSD_SERIAL = "TEST-SN-EVENTS"
+
+@pytest.mark.order(1)
+def test_events_recent_empty():
+    """Testa eventos recentes quando não há eventos"""
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert "events" in data
+    assert "total" in data
+    assert isinstance(data["events"], list)
+    assert isinstance(data["total"], int)
+
+@pytest.mark.order(2)
+def test_events_after_registration():
+    """Testa eventos após registration"""
+    # Fazer registration
+    reg_payload = {
+        "fccId": FCC_ID,
+        "userId": USER_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "callSign": "TESTCALL",
+        "cbsdCategory": "A",
+        "airInterface": "E_UTRA",
+        "measCapability": ["EUTRA_CARRIER_RSSI"],
+        "eirpCapability": 47,
+        "latitude": 375000000,
+        "longitude": 1224000000,
+        "height": 30,
+        "heightType": "AGL",
+        "indoorDeployment": False,
+        "antennaGain": 15,
+        "antennaBeamwidth": 360,
+        "antennaAzimuth": 0,
+        "groupingParam": "",
+        "cbsdAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
     }
-    return base_event
+    
+    resp = client.post("/v1.3/registration", json=reg_payload)
+    assert resp.status_code == 200
+    
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["total"] > 0
+    
+    # Verificar se há evento de Registration
+    registration_events = [e for e in data["events"] if e["event"] == "Registration"]
+    assert len(registration_events) > 0
 
-async def test_middleware_handlers():
-    """Testa todos os handlers do middleware"""
-    print("🧪 Testando handlers do middleware...")
+@pytest.mark.order(3)
+def test_events_after_grant():
+    """Testa eventos após grant"""
+    # Fazer grant
+    grant_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "channelType": "GAA",
+        "maxEirp": 47,
+        "lowFrequency": 3550000000,
+        "highFrequency": 3700000000,
+        "requestedMaxEirp": 47,
+        "requestedLowFrequency": 3550000000,
+        "requestedHighFrequency": 3700000000,
+        "grantExpireTime": 1750726000
+    }
     
-    # Teste 1: SASAuthorized
-    print("\n🔐 Testando SASAuthorized...")
-    sas_event = create_mock_event('SASAuthorized', sas='0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-    EVENT_HANDLERS['SASAuthorized'](sas_event)
+    resp = client.post("/v1.3/grant", json=grant_payload)
+    assert resp.status_code == 200
     
-    # Teste 2: CBSDRegistered
-    print("\n📡 Testando CBSDRegistered...")
-    cbsd_event = create_mock_event('CBSDRegistered', 
-                                  cbsdId=1, 
-                                  sasOrigin='0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-    EVENT_HANDLERS['CBSDRegistered'](cbsd_event)
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
     
-    # Teste 3: GrantAmountUpdated
-    print("\n💰 Testando GrantAmountUpdated...")
-    grant_event = create_mock_event('GrantAmountUpdated',
-                                   cbsdId=1,
-                                   newGrantAmount=150000000000000000000,  # 150 ETH
-                                   sasOrigin='0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-    EVENT_HANDLERS['GrantAmountUpdated'](grant_event)
-    
-    # Teste 4: StatusUpdated
-    print("\n📊 Testando StatusUpdated...")
-    status_event = create_mock_event('StatusUpdated',
-                                    cbsdId=1,
-                                    newStatus='active',
-                                    sasOrigin='0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-    EVENT_HANDLERS['StatusUpdated'](status_event)
-    
-    # Teste 5: GrantDetailsUpdated
-    print("\n⚙️ Testando GrantDetailsUpdated...")
-    details_event = create_mock_event('GrantDetailsUpdated',
-                                     cbsdId=1,
-                                     frequencyHz=3650000000,  # 3.65 GHz
-                                     bandwidthHz=20000000,    # 20 MHz
-                                     expiryTimestamp=int(time.time()) + 7200,
-                                     sasOrigin='0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-    EVENT_HANDLERS['GrantDetailsUpdated'](details_event)
-    
-    # Teste 6: SASRevoked
-    print("\n🚫 Testando SASRevoked...")
-    revoke_event = create_mock_event('SASRevoked', sas='0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-    EVENT_HANDLERS['SASRevoked'](revoke_event)
-    
-    print("\n✅ Todos os handlers testados com sucesso!")
-    
-    # Mostrar dados do repositório
-    repo = CBSDRepository()
-    print(f"\n📋 Dados no repositório: {len(repo.cbsds)} registros")
-    for cbsd_id, data in repo.cbsds.items():
-        print(f"  CBSD {cbsd_id}: {data}")
+    # Verificar se há evento de Grant
+    grant_events = [e for e in data["events"] if e["event"] == "Grant"]
+    assert len(grant_events) > 0
 
-if __name__ == "__main__":
-    asyncio.run(test_middleware_handlers()) 
+@pytest.mark.order(4)
+def test_events_after_heartbeat():
+    """Testa eventos após heartbeat"""
+    # Fazer heartbeat
+    heartbeat_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "grantId": "grant_001",
+        "transmitExpireTime": 1750726000
+    }
+    
+    resp = client.post("/v1.3/heartbeat", json=heartbeat_payload)
+    assert resp.status_code == 200
+    
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    
+    # Verificar se há evento de Heartbeat
+    heartbeat_events = [e for e in data["events"] if e["event"] == "Heartbeat"]
+    assert len(heartbeat_events) > 0
+
+@pytest.mark.order(5)
+def test_events_after_relinquishment():
+    """Testa eventos após relinquishment"""
+    # Fazer relinquishment
+    relinquishment_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL,
+        "grantId": "grant_001"
+    }
+    
+    resp = client.post("/v1.3/relinquishment", json=relinquishment_payload)
+    assert resp.status_code == 200
+    
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    
+    # Verificar se há evento de Relinquishment
+    relinquishment_events = [e for e in data["events"] if e["event"] == "Relinquishment"]
+    assert len(relinquishment_events) > 0
+
+@pytest.mark.order(6)
+def test_events_after_deregistration():
+    """Testa eventos após deregistration"""
+    # Fazer deregistration
+    deregistration_payload = {
+        "fccId": FCC_ID,
+        "cbsdSerialNumber": CBSD_SERIAL
+    }
+    
+    resp = client.post("/v1.3/deregistration", json=deregistration_payload)
+    assert resp.status_code == 200
+    
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    
+    # Verificar se há evento de Deregistration
+    deregistration_events = [e for e in data["events"] if e["event"] == "Deregistration"]
+    assert len(deregistration_events) > 0
+
+@pytest.mark.order(7)
+def test_events_after_sas_authorization():
+    """Testa eventos após autorização de SAS"""
+    # Autorizar SAS
+    resp = client.post("/sas/authorize", json={"sas_address": SAS_ADDRESS})
+    assert resp.status_code == 200
+    
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    
+    # Verificar se há evento de SASAuthorized
+    sas_authorized_events = [e for e in data["events"] if e["event"] == "SASAuthorized"]
+    assert len(sas_authorized_events) > 0
+
+@pytest.mark.order(8)
+def test_events_after_sas_revocation():
+    """Testa eventos após revogação de SAS"""
+    # Revogar SAS
+    resp = client.post("/sas/revoke", json={"sas_address": SAS_ADDRESS})
+    assert resp.status_code == 200
+    
+    # Verificar eventos
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    
+    # Verificar se há evento de SASRevoked
+    sas_revoked_events = [e for e in data["events"] if e["event"] == "SASRevoked"]
+    assert len(sas_revoked_events) > 0
+
+@pytest.mark.order(9)
+def test_event_structure():
+    """Testa a estrutura dos eventos"""
+    resp = client.get("/events/recent")
+    assert resp.status_code == 200
+    data = resp.json()
+    
+    if data["total"] > 0:
+        event = data["events"][0]
+        
+        # Verificar campos obrigatórios
+        assert "event" in event
+        assert "block_number" in event
+        assert "transaction_hash" in event
+        
+        # Verificar campos específicos por tipo de evento
+        if event["event"] in ["Registration", "Grant", "Heartbeat", "Relinquishment", "Deregistration"]:
+            assert "from" in event
+            assert "payload" in event
+            assert "timestamp" in event
+        elif event["event"] in ["SASAuthorized", "SASRevoked"]:
+            assert "sas" in event 

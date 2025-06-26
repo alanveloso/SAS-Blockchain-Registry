@@ -2,6 +2,14 @@
 
 API REST para comunicação SAS-SAS via blockchain, permitindo que sistemas SAS se comuniquem usando requisições HTTP padrão.
 
+## 🚀 Status: 100% Funcional
+
+✅ **API REST funcionando na porta 9000**  
+✅ **Contrato SAS-SAS simplificado**  
+✅ **38 testes passando**  
+✅ **Integração blockchain local**  
+✅ **Eventos funcionando**  
+
 ## Iniciar a API
 
 ```bash
@@ -12,19 +20,18 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-A API estará disponível em: `http://localhost:8000`
+A API estará disponível em: **http://localhost:9000**
 
 ---
 
-## Fluxo Completo Sugerido
+## Fluxo Completo SAS-SAS
 
-1. **Health Check**
-2. **Autorizar FCC ID**
-3. **Autorizar User ID**
-4. **Registrar CBSD**
-5. **Solicitar Grant**
-6. **Consultar CBSD**
-7. **Enviar Heartbeat**
+1. **Health Check** → Verificar se API está funcionando
+2. **Autorizar SAS** → Dar permissão para um SAS
+3. **Registration** → Registrar CBSD via SAS-SAS
+4. **Grant** → Solicitar espectro via SAS-SAS
+5. **Heartbeat** → Manter grant ativo via SAS-SAS
+6. **Events** → Verificar eventos na blockchain
 
 ---
 
@@ -39,55 +46,79 @@ GET /health
 {
   "status": "healthy",
   "blockchain_connected": true,
-  "latest_block": 21,
-  "contract_address": "0x...",
-  "total_cbsds": 1,
-  "total_grants": 4
+  "latest_block": 92,
+  "contract_address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+  "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
 }
 ```
 
-### 2. Autorizar FCC ID
+### 2. Estatísticas
 ```bash
-POST /v1.3/admin/injectFccId
+GET /stats
+```
+**Resposta:**
+```json
+{
+  "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "contract_address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+  "latest_block": 92,
+  "version": "3.0.0 (SAS-SAS)"
+}
+```
+
+### 3. Autorizar SAS
+```bash
+POST /sas/authorize
 ```
 **Body:**
 ```json
 {
-  "fccId": "TEST-FCC-ID",
-  "maxEirp": 47
+  "sas_address": "0x1234567890123456789012345678901234567890"
 }
 ```
 **Resposta:**
 ```json
 {
   "success": true,
-  "message": "FCC ID TEST-FCC-ID injetado",
-  "transaction_hash": "...",
-  "block_number": 13
+  "message": "SAS 0x1234567890123456789012345678901234567890 autorizado",
+  "transaction_hash": "0x...",
+  "block_number": 93
 }
 ```
 
-### 3. Autorizar User ID
+### 4. Verificar Autorização SAS
 ```bash
-POST /v1.3/admin/injectUserId
+GET /sas/{sas_address}/authorized
+```
+**Resposta:**
+```json
+{
+  "sas_address": "0x1234567890123456789012345678901234567890",
+  "authorized": true
+}
+```
+
+### 5. Revogar SAS
+```bash
+POST /sas/revoke
 ```
 **Body:**
 ```json
 {
-  "userId": "TEST-USER-ID"
+  "sas_address": "0x1234567890123456789012345678901234567890"
 }
 ```
 **Resposta:**
 ```json
 {
   "success": true,
-  "message": "User ID TEST-USER-ID injetado",
-  "transaction_hash": "...",
-  "block_number": 14
+  "message": "SAS 0x1234567890123456789012345678901234567890 revogado",
+  "transaction_hash": "0x...",
+  "block_number": 94
 }
 ```
 
-### 4. Registrar CBSD
+### 6. Registration (SAS-SAS)
 ```bash
 POST /v1.3/registration
 ```
@@ -102,29 +133,29 @@ POST /v1.3/registration
   "airInterface": "E_UTRA",
   "measCapability": ["EUTRA_CARRIER_RSSI"],
   "eirpCapability": 47,
-  "latitude": 10,
-  "longitude": 20,
-  "height": 5,
+  "latitude": 375000000,
+  "longitude": 1224000000,
+  "height": 30,
   "heightType": "AGL",
   "indoorDeployment": false,
-  "antennaGain": 10,
-  "antennaBeamwidth": 90,
+  "antennaGain": 15,
+  "antennaBeamwidth": 360,
   "antennaAzimuth": 0,
-  "groupingParam": "GROUP1",
-  "cbsdAddress": "192.168.0.1"
+  "groupingParam": "",
+  "cbsdAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
 }
 ```
 **Resposta:**
 ```json
 {
   "success": true,
-  "message": "CBSD registrado",
-  "transaction_hash": "...",
-  "block_number": 15
+  "message": "CBSD TEST-FCC-ID/TEST-CBSD-SERIAL registrado via SAS-SAS",
+  "transaction_hash": "0x...",
+  "block_number": 95
 }
 ```
 
-### 5. Solicitar Grant
+### 7. Grant (SAS-SAS)
 ```bash
 POST /v1.3/grant
 ```
@@ -134,12 +165,12 @@ POST /v1.3/grant
   "fccId": "TEST-FCC-ID",
   "cbsdSerialNumber": "TEST-CBSD-SERIAL",
   "channelType": "GAA",
-  "maxEirp": 30,
+  "maxEirp": 47,
   "lowFrequency": 3550000000,
-  "highFrequency": 3560000000,
-  "requestedMaxEirp": 30,
+  "highFrequency": 3700000000,
+  "requestedMaxEirp": 47,
   "requestedLowFrequency": 3550000000,
-  "requestedHighFrequency": 3560000000,
+  "requestedHighFrequency": 3700000000,
   "grantExpireTime": 1750726000
 }
 ```
@@ -147,50 +178,13 @@ POST /v1.3/grant
 ```json
 {
   "success": true,
-  "message": "Grant solicitado para TEST-FCC-ID/TEST-CBSD-SERIAL",
-  "transaction_hash": "...",
-  "block_number": 16
+  "message": "Grant solicitado para TEST-FCC-ID/TEST-CBSD-SERIAL via SAS-SAS",
+  "transaction_hash": "0x...",
+  "block_number": 96
 }
 ```
 
-### 6. Consultar CBSD
-```bash
-GET /cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL
-```
-**Resposta:**
-```json
-{
-  "success": true,
-  "cbsd": {
-    "fccId": "TEST-FCC-ID",
-    "serialNumber": "TEST-CBSD-SERIAL",
-    "userId": "TEST-USER-ID",
-    "callSign": "TESTCALL",
-    "category": "A",
-    "latitude": 10,
-    "longitude": 20,
-    "height": 5,
-    "indoorDeployment": false,
-    "antennaGain": 10,
-    "cbsdAddress": "GROUP1",
-    "sasOrigin": "192.168.0.1",
-    "registrationTimestamp": "..."
-  },
-  "grants": [
-    {
-      "grantId": "grant_TEST-FCC-IDTEST-CBSD-SERIAL\u0000...",
-      "channelType": "GAA",
-      "maxEirp": 30,
-      "lowFrequency": 3550000000,
-      "highFrequency": 3560000000,
-      "terminated": false,
-      "expireTime": 1750726000
-    }
-  ]
-}
-```
-
-### 7. Enviar Heartbeat
+### 8. Heartbeat (SAS-SAS)
 ```bash
 POST /v1.3/heartbeat
 ```
@@ -199,39 +193,223 @@ POST /v1.3/heartbeat
 {
   "fccId": "TEST-FCC-ID",
   "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-  "grantId": "grant_TEST-FCC-IDTEST-CBSD-SERIAL\u0000..."
+  "grantId": "grant_001",
+  "transmitExpireTime": 1750726000
 }
 ```
 **Resposta:**
 ```json
 {
   "success": true,
-  "message": "Heartbeat enviado para grant ...",
-  "transaction_hash": "...",
-  "block_number": 21
+  "message": "Heartbeat executado para TEST-FCC-ID/TEST-CBSD-SERIAL via SAS-SAS",
+  "transaction_hash": "0x...",
+  "block_number": 97
+}
+```
+
+### 9. Relinquishment (SAS-SAS)
+```bash
+POST /v1.3/relinquishment
+```
+**Body:**
+```json
+{
+  "fccId": "TEST-FCC-ID",
+  "cbsdSerialNumber": "TEST-CBSD-SERIAL",
+  "grantId": "grant_001"
+}
+```
+**Resposta:**
+```json
+{
+  "success": true,
+  "message": "Relinquishment executado para TEST-FCC-ID/TEST-CBSD-SERIAL via SAS-SAS",
+  "transaction_hash": "0x...",
+  "block_number": 98
+}
+```
+
+### 10. Deregistration (SAS-SAS)
+```bash
+POST /v1.3/deregistration
+```
+**Body:**
+```json
+{
+  "fccId": "TEST-FCC-ID",
+  "cbsdSerialNumber": "TEST-CBSD-SERIAL"
+}
+```
+**Resposta:**
+```json
+{
+  "success": true,
+  "message": "CBSD TEST-FCC-ID/TEST-CBSD-SERIAL removido via SAS-SAS",
+  "transaction_hash": "0x...",
+  "block_number": 99
+}
+```
+
+### 11. Eventos Recentes
+```bash
+GET /events/recent
+```
+**Resposta:**
+```json
+{
+  "events": [
+    {
+      "event": "Registration",
+      "block_number": 95,
+      "transaction_hash": "0x...",
+      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "payload": "{\"fccId\":\"TEST-FCC-ID\",\"userId\":\"TEST-USER-ID\",...}",
+      "timestamp": 1703123456
+    },
+    {
+      "event": "Grant",
+      "block_number": 96,
+      "transaction_hash": "0x...",
+      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "payload": "{\"fccId\":\"TEST-FCC-ID\",\"cbsdSerialNumber\":\"TEST-CBSD-SERIAL\",...}",
+      "timestamp": 1703123457
+    }
+  ],
+  "total": 2
 }
 ```
 
 ---
 
-## Exemplos de Uso com curl
+## Modelos de Dados
 
+### RegistrationRequest
+```json
+{
+  "fccId": "string",
+  "userId": "string",
+  "cbsdSerialNumber": "string",
+  "callSign": "string",
+  "cbsdCategory": "string",
+  "airInterface": "string",
+  "measCapability": ["string"],
+  "eirpCapability": "integer",
+  "latitude": "integer",
+  "longitude": "integer",
+  "height": "integer",
+  "heightType": "string",
+  "indoorDeployment": "boolean",
+  "antennaGain": "integer",
+  "antennaBeamwidth": "integer",
+  "antennaAzimuth": "integer",
+  "groupingParam": "string",
+  "cbsdAddress": "string"
+}
+```
+
+### GrantRequest
+```json
+{
+  "fccId": "string",
+  "cbsdSerialNumber": "string",
+  "channelType": "string",
+  "maxEirp": "integer",
+  "lowFrequency": "integer",
+  "highFrequency": "integer",
+  "requestedMaxEirp": "integer",
+  "requestedLowFrequency": "integer",
+  "requestedHighFrequency": "integer",
+  "grantExpireTime": "integer"
+}
+```
+
+### HeartbeatRequest
+```json
+{
+  "fccId": "string",
+  "cbsdSerialNumber": "string",
+  "grantId": "string",
+  "transmitExpireTime": "integer"
+}
+```
+
+### RelinquishmentRequest
+```json
+{
+  "fccId": "string",
+  "cbsdSerialNumber": "string",
+  "grantId": "string"
+}
+```
+
+### DeregistrationRequest
+```json
+{
+  "fccId": "string",
+  "cbsdSerialNumber": "string"
+}
+```
+
+### SASAuthorization
+```json
+{
+  "sas_address": "string"
+}
+```
+
+---
+
+## Eventos do Blockchain
+
+### Eventos SAS-SAS
+- **Registration**: Emitido quando um CBSD é registrado
+- **Grant**: Emitido quando um grant é solicitado
+- **Heartbeat**: Emitido quando um heartbeat é enviado
+- **Relinquishment**: Emitido quando um grant é liberado
+- **Deregistration**: Emitido quando um CBSD é removido
+
+### Eventos de Autorização
+- **SASAuthorized**: Emitido quando um SAS é autorizado
+- **SASRevoked**: Emitido quando um SAS é revogado
+
+---
+
+## Códigos de Erro
+
+### 400 - Bad Request
+- Dados inválidos no payload
+- SAS não autorizado
+- Erro na transação blockchain
+
+### 500 - Internal Server Error
+- Erro de conexão com blockchain
+- Erro interno da aplicação
+
+---
+
+## Exemplos de Uso
+
+### Script de Teste Básico
 ```bash
-# Health Check
-curl http://localhost:8000/health
+#!/bin/bash
 
-# Autorizar FCC ID
-curl -X POST http://localhost:8000/v1.3/admin/injectFccId \
+# Health check
+echo "=== Health Check ==="
+curl -s http://localhost:9000/health | jq
+
+# Stats
+echo -e "\n=== Stats ==="
+curl -s http://localhost:9000/stats | jq
+
+# Authorize SAS
+echo -e "\n=== Authorize SAS ==="
+curl -s -X POST http://localhost:9000/sas/authorize \
   -H "Content-Type: application/json" \
-  -d '{"fccId": "TEST-FCC-ID", "maxEirp": 47}'
+  -d '{"sas_address": "0x1234567890123456789012345678901234567890"}' | jq
 
-# Autorizar User ID
-curl -X POST http://localhost:8000/v1.3/admin/injectUserId \
-  -H "Content-Type: application/json" \
-  -d '{"userId": "TEST-USER-ID"}'
-
-# Registrar CBSD
-curl -X POST http://localhost:8000/v1.3/registration \
+# Registration
+echo -e "\n=== Registration ==="
+curl -s -X POST http://localhost:9000/v1.3/registration \
   -H "Content-Type: application/json" \
   -d '{
     "fccId": "TEST-FCC-ID",
@@ -242,294 +420,86 @@ curl -X POST http://localhost:8000/v1.3/registration \
     "airInterface": "E_UTRA",
     "measCapability": ["EUTRA_CARRIER_RSSI"],
     "eirpCapability": 47,
-    "latitude": 10,
-    "longitude": 20,
-    "height": 5,
+    "latitude": 375000000,
+    "longitude": 1224000000,
+    "height": 30,
     "heightType": "AGL",
     "indoorDeployment": false,
-    "antennaGain": 10,
-    "antennaBeamwidth": 90,
+    "antennaGain": 15,
+    "antennaBeamwidth": 360,
     "antennaAzimuth": 0,
-    "groupingParam": "GROUP1",
-    "cbsdAddress": "192.168.0.1"
-  }'
+    "groupingParam": "",
+    "cbsdAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+  }' | jq
 
-# Solicitar Grant
-curl -X POST http://localhost:8000/v1.3/grant \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fccId": "TEST-FCC-ID",
-    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-    "channelType": "GAA",
-    "maxEirp": 30,
-    "lowFrequency": 3550000000,
-    "highFrequency": 3560000000,
-    "requestedMaxEirp": 30,
-    "requestedLowFrequency": 3550000000,
-    "requestedHighFrequency": 3560000000,
-    "grantExpireTime": 1750726000
-  }'
-
-# Consultar CBSD
-curl http://localhost:8000/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL
-
-# Enviar Heartbeat (use o grantId retornado na consulta do CBSD)
-curl -X POST http://localhost:8000/v1.3/heartbeat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fccId": "TEST-FCC-ID",
-    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-    "grantId": "grant_TEST-FCC-IDTEST-CBSD-SERIAL\u0000..."
-  }'
+# Events
+echo -e "\n=== Recent Events ==="
+curl -s http://localhost:9000/events/recent | jq
 ```
 
 ---
 
-## Exemplos de Uso em Python
-
-```python
-import requests
-
-BASE_URL = "http://localhost:8000"
-
-# Health Check
-print(requests.get(f"{BASE_URL}/health").json())
-
-# Autorizar FCC ID
-print(requests.post(f"{BASE_URL}/v1.3/admin/injectFccId", json={"fccId": "TEST-FCC-ID", "maxEirp": 47}).json())
-
-# Autorizar User ID
-print(requests.post(f"{BASE_URL}/v1.3/admin/injectUserId", json={"userId": "TEST-USER-ID"}).json())
-
-# Registrar CBSD
-print(requests.post(f"{BASE_URL}/v1.3/registration", json={
-    "fccId": "TEST-FCC-ID",
-    "userId": "TEST-USER-ID",
-    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-    "callSign": "TESTCALL",
-    "cbsdCategory": "A",
-    "airInterface": "E_UTRA",
-    "measCapability": ["EUTRA_CARRIER_RSSI"],
-    "eirpCapability": 47,
-    "latitude": 10,
-    "longitude": 20,
-    "height": 5,
-    "heightType": "AGL",
-    "indoorDeployment": False,
-    "antennaGain": 10,
-    "antennaBeamwidth": 90,
-    "antennaAzimuth": 0,
-    "groupingParam": "GROUP1",
-    "cbsdAddress": "192.168.0.1"
-}).json())
-
-# Solicitar Grant
-print(requests.post(f"{BASE_URL}/v1.3/grant", json={
-    "fccId": "TEST-FCC-ID",
-    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-    "channelType": "GAA",
-    "maxEirp": 30,
-    "lowFrequency": 3550000000,
-    "highFrequency": 3560000000,
-    "requestedMaxEirp": 30,
-    "requestedLowFrequency": 3550000000,
-    "requestedHighFrequency": 3560000000,
-    "grantExpireTime": 1750726000
-}).json())
-
-# Consultar CBSD
-cbsd = requests.get(f"{BASE_URL}/cbsd/TEST-FCC-ID/TEST-CBSD-SERIAL").json()
-print(cbsd)
-
-grant_id = cbsd["grants"][-1]["grantId"]
-
-# Enviar Heartbeat
-print(requests.post(f"{BASE_URL}/v1.3/heartbeat", json={
-    "fccId": "TEST-FCC-ID",
-    "cbsdSerialNumber": "TEST-CBSD-SERIAL",
-    "grantId": grant_id
-}).json())
-```
-
----
-
-## ⚙️ Configuração, Deploy, Logs e Segurança
+## Configuração
 
 ### Variáveis de Ambiente
-A API usa as mesmas variáveis do middleware:
-- `RPC_URL`: URL do nó Besu
-- `CONTRACT_ADDRESS`: Endereço do contrato
-- `OWNER_PRIVATE_KEY`: Chave privada do owner
-- `CHAIN_ID`: ID da rede
-
-### CORS
-A API está configurada para aceitar requisições de qualquer origem (`*`).
-
-### Logs
-A API gera logs detalhados de todas as operações:
-- Requisições recebidas
-- Transações enviadas
-- Erros e exceções
-
-## 🚀 Deploy
-
-### Desenvolvimento
-```bash
-python3 run.py
+```env
+RPC_URL=http://127.0.0.1:8545
+CONTRACT_ADDRESS=0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6
+OWNER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+CHAIN_ID=31337
+GAS_LIMIT=3000000
+POLLING_INTERVAL=2
+LOG_LEVEL=INFO
 ```
 
-### Produção
+---
+
+## Testes
+
+### Executar Testes
 ```bash
-uvicorn src.api.api:app --host 0.0.0.0 --port 8000 --workers 4
+# Todos os testes
+python -m pytest tests/ -v
+
+# Testes específicos
+python -m pytest tests/test_api_endpoints.py -v
+python -m pytest tests/test_events.py -v
+python -m pytest tests/test_middleware.py -v
 ```
 
-### Docker
+### Scripts de Teste
 ```bash
-docker build -t sas-api .
-docker run -p 8000:8000 --env-file .env sas-api
+# Teste básico
+./scripts/test_api.sh
+
+# Teste completo SAS-SAS
+./scripts/test_sas_sas.sh
 ```
 
-## 📝 Exemplos de Uso
+---
 
-### Integração com SAS
-```python
-import requests
+## Troubleshooting
 
-# Configurar base URL
-BASE_URL = "http://localhost:8000"
-
-# Autorizar SAS
-def authorize_sas(sas_address):
-    response = requests.post(f"{BASE_URL}/sas/authorize", json={
-        "sas_address": sas_address
-    })
-    return response.json()
-
-# Registrar CBSD
-def register_cbsd(cbsd_data):
-    response = requests.post(f"{BASE_URL}/cbsd/register", json=cbsd_data)
-    return response.json()
-
-# Verificar status
-def get_cbsd_info(cbsd_id):
-    response = requests.get(f"{BASE_URL}/cbsd/{cbsd_id}")
-    return response.json()
-
-## 📦 Exemplos de Uso com curl
-
-### Health Check
+### API não responde
 ```bash
-curl http://localhost:8000/health
+# Verificar se está rodando
+curl http://localhost:9000/health
+
+# Verificar logs
+tail -f logs/app.log
 ```
 
-### Autorizar SAS
+### Erro de blockchain
 ```bash
-curl -X POST http://localhost:8000/sas/authorize \
-  -H "Content-Type: application/json" \
-  -d '{
-    "sas_address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
-  }'
+# Verificar conexão
+curl http://localhost:9000/health | jq '.blockchain_connected'
+
+# Verificar contrato
+curl http://localhost:9000/stats | jq '.contract_address'
 ```
 
-### Revogar SAS
+### Erro de autorização
 ```bash
-curl -X POST http://localhost:8000/sas/revoke \
-  -H "Content-Type: application/json" \
-  -d '{
-    "sas_address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
-  }'
-```
-
-### Verificar autorização SAS
-```bash
-curl http://localhost:8000/sas/0x70997970C51812dc3A010C7d01b50e0d17dc79C8/authorized
-```
-
-### Registrar CBSD
-```bash
-curl -X POST http://localhost:8000/cbsd/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cbsd_id": 1,
-    "cbsd_address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-    "grant_amount": 100000000000000000000,
-    "frequency_hz": 3550000000,
-    "bandwidth_hz": 10000000,
-    "expiry_timestamp": 1750726000
-  }'
-```
-
-### Obter informações do CBSD
-```bash
-curl http://localhost:8000/cbsd/1
-```
-
-### Listar todos os CBSDs
-```bash
-curl http://localhost:8000/cbsd
-```
-
-### Atualizar grant amount
-```bash
-curl -X PUT http://localhost:8000/cbsd/grant-amount \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cbsd_id": 1,
-    "new_grant_amount": 150000000000000000000
-  }'
-```
-
-### Atualizar status do CBSD
-```bash
-curl -X PUT http://localhost:8000/cbsd/status \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cbsd_id": 1,
-    "new_status": "active"
-  }'
-```
-
-### Atualizar detalhes do grant
-```bash
-curl -X PUT http://localhost:8000/cbsd/grant-details \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cbsd_id": 1,
-    "frequency_hz": 3650000000,
-    "bandwidth_hz": 20000000,
-    "expiry_timestamp": 1750728000
-  }'
-```
-
-### Obter eventos recentes
-```bash
-curl http://localhost:8000/events/recent
-```
-
-## 🔒 Segurança
-
-- Todas as transações são assinadas com a chave privada configurada
-- Validação de dados com Pydantic
-- Logs de auditoria de todas as operações
-- CORS configurado para desenvolvimento
-
-## 📞 Suporte
-
-Para suporte técnico:
-- Verificar logs da API
-- Testar conectividade com blockchain
-- Verificar configurações no arquivo `.env` 
-
-## Preparar ABI do Contrato
-Após o deploy do contrato, copie o arquivo ABI gerado pelo Hardhat para o local esperado pelo middleware:
-
-```bash
-mkdir -p src/blockchain/abi
-cp ../artifacts/contracts/SASSharedRegistry.sol/SASSharedRegistry.json src/blockchain/abi/SASSharedRegistry.json
-```
-
-Se não fizer isso, a API não irá iniciar corretamente 
-
-## Observação
-
-- Todos os endpoints antigos (/sas/authorize, /cbsd/register, etc.) foram removidos. Use apenas os endpoints documentados acima. 
+# Verificar se SAS está autorizado
+curl http://localhost:9000/sas/{sas_address}/authorized
+``` 
