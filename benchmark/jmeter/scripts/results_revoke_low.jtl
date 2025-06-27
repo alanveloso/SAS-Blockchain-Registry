@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1751047782027,57,Revoke SAS,200,OK,Revoke Thread Group - Low 1-1,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,53,0,20
+1751047782085,31,Revoke SAS,200,OK,Revoke Thread Group - Low 1-1,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,31,0,0
+1751047782117,32,Revoke SAS,200,OK,Revoke Thread Group - Low 1-1,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,32,0,0
+1751047782149,29,Revoke SAS,200,OK,Revoke Thread Group - Low 1-1,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,29,0,0
+1751047782179,33,Revoke SAS,200,OK,Revoke Thread Group - Low 1-1,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,33,0,0
+1751047786917,33,Revoke SAS,200,OK,Revoke Thread Group - Low 1-2,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,33,0,1
+1751047786951,32,Revoke SAS,200,OK,Revoke Thread Group - Low 1-2,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,31,0,0
+1751047786984,30,Revoke SAS,200,OK,Revoke Thread Group - Low 1-2,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,30,0,0
+1751047787015,31,Revoke SAS,200,OK,Revoke Thread Group - Low 1-2,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,31,0,0
+1751047787047,26,Revoke SAS,200,OK,Revoke Thread Group - Low 1-2,text,true,,314,239,1,1,http://localhost:9000/sas/revoke,26,0,0

@@ -3,12 +3,15 @@
 # Script para gerar TODOS os planos de carga
 # SAS Blockchain Registry - Performance Testing
 
+# Adicionar criação do diretório 'plans'
+mkdir -p plans
+
 echo "🔧 Gerando TODOS os planos de carga para SAS Blockchain Registry"
 echo "================================================================"
 echo ""
 
 # Lista de endpoints SAS (incluindo health check)
-ENDPOINTS=("health_check" "authorize" "revoke" "grant" "heartbeat" "registration")
+ENDPOINTS=("health_check" "authorize" "revoke" "grant" "registration")
 # Lista de TODOS os níveis de carga
 LEVELS=("low" "medium" "high" "stress" "endurance")
 
@@ -70,15 +73,11 @@ generate_plan() {
             ;;
         "grant")
             api_path="/v1.3/grant"
-            payload='{"fccId":"TEST-FCC-${__threadNum}","cbsdSerialNumber":"TEST-CBSD-${__threadNum}-${__time(yyyyMMdd_HHmmss)}","channelType":"GAA","maxEirp":47,"lowFrequency":3550000000,"highFrequency":3700000000,"requestedMaxEirp":47,"requestedLowFrequency":3550000000,"requestedHighFrequency":3700000000,"grantExpireTime":1750726000}'
-            ;;
-        "heartbeat")
-            api_path="/v1.3/heartbeat"
-            payload='{"fccId":"TEST-FCC-${__threadNum}","cbsdSerialNumber":"TEST-CBSD-${__threadNum}-${__time(yyyyMMdd_HHmmss)}","grantId":"grant_001","transmitExpireTime":1750726000}'
+            payload='{"fccId":"TEST-FCC-${__threadNum}-${__UUID}","cbsdSerialNumber":"TEST-CBSD-${__threadNum}-${__UUID}","channelType":"GAA","maxEirp":47,"lowFrequency":3550000000,"highFrequency":3700000000,"requestedMaxEirp":47,"requestedLowFrequency":3550000000,"requestedHighFrequency":3700000000,"grantExpireTime":1750726000}'
             ;;
         "registration")
             api_path="/v1.3/registration"
-            payload='{"fccId":"TEST-FCC-${__threadNum}","cbsdSerialNumber":"TEST-CBSD-${__threadNum}-${__time(yyyyMMdd_HHmmss)}","userId":"TEST-USER-${__threadNum}","callSign":"TESTCALL${__threadNum}","cbsdCategory":"A","airInterface":"E_UTRA","measCapability":["EUTRA_CARRIER_RSSI"],"eirpCapability":47,"latitude":375000000,"longitude":1224000000,"height":30,"heightType":"AGL","indoorDeployment":false,"antennaGain":15,"antennaBeamwidth":360,"antennaAzimuth":0,"groupingParam":"","cbsdAddress":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"}'
+            payload='{"fccId":"TEST-FCC-${__threadNum}-${__UUID}","cbsdSerialNumber":"TEST-CBSD-${__threadNum}-${__UUID}","userId":"TEST-USER-${__threadNum}","callSign":"TESTCALL${__threadNum}","cbsdCategory":"A","airInterface":"E_UTRA","measCapability":["EUTRA_CARRIER_RSSI"],"eirpCapability":47,"latitude":375000000,"longitude":1224000000,"height":30,"heightType":"AGL","indoorDeployment":false,"antennaGain":15,"antennaBeamwidth":360,"antennaAzimuth":0,"groupingParam":"","cbsdAddress":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"}'
             ;;
     esac
     
