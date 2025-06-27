@@ -1,0 +1,227 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.3, pluggy-1.6.0 -- /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/alanveloso/repos/SAS-Blockchain-Registry/gateway
+plugins: asyncio-0.21.1, anyio-4.9.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 34 items
+
+tests/test_api_endpoints.py::test_root PASSED                            [  2%]
+tests/test_api_endpoints.py::test_health PASSED                          [  5%]
+tests/test_api_endpoints.py::test_authorize_sas PASSED                   [  8%]
+tests/test_api_endpoints.py::test_check_sas_authorized PASSED            [ 11%]
+tests/test_api_endpoints.py::test_register_cbsd PASSED                   [ 14%]
+tests/test_api_endpoints.py::test_grant_spectrum PASSED                  [ 17%]
+tests/test_api_endpoints.py::test_relinquishment PASSED                  [ 20%]
+tests/test_api_endpoints.py::test_deregistration PASSED                  [ 23%]
+tests/test_api_endpoints.py::test_stats PASSED                           [ 26%]
+tests/test_api_endpoints.py::test_events_recent PASSED                   [ 29%]
+tests/test_api_endpoints.py::test_revoke_sas PASSED                      [ 32%]
+tests/test_api_endpoints.py::test_check_sas_revoked PASSED               [ 35%]
+tests/test_events.py::test_events_recent_empty PASSED                    [ 38%]
+tests/test_events.py::test_events_after_registration PASSED              [ 41%]
+tests/test_events.py::test_events_after_grant PASSED                     [ 44%]
+tests/test_events.py::test_events_after_relinquishment PASSED            [ 47%]
+tests/test_events.py::test_events_after_sas_authorization PASSED         [ 50%]
+tests/test_events.py::test_events_after_sas_revocation PASSED            [ 52%]
+tests/test_events.py::test_event_structure PASSED                        [ 55%]
+tests/test_middleware.py::test_imports PASSED                            [ 58%]
+tests/test_middleware.py::test_config PASSED                             [ 61%]
+tests/test_middleware.py::test_abi PASSED                                [ 64%]
+tests/test_middleware.py::test_blockchain_connection PASSED              [ 67%]
+tests/test_middleware.py::test_sas_authorization PASSED                  [ 70%]
+tests/test_middleware.py::test_sas_revocation PASSED                     [ 73%]
+tests/test_middleware.py::test_registration PASSED                       [ 76%]
+tests/test_middleware.py::test_grant PASSED                              [ 79%]
+tests/test_middleware.py::test_relinquishment PASSED                     [ 82%]
+tests/test_middleware.py::test_deregistration PASSED                     [ 85%]
+tests/test_middleware.py::test_get_latest_block PASSED                   [ 88%]
+tests/test_middleware.py::test_get_owner PASSED                          [ 91%]
+tests/test_middleware.py::test_unauthorized_sas_access PASSED            [ 94%]
+tests/test_middleware.py::test_repository_operations PASSED              [ 97%]
+tests/test_middleware.py::test_settings_configuration PASSED             [100%]
+
+=============================== warnings summary ===============================
+venv/lib/python3.12/site-packages/websockets/legacy/__init__.py:6
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/lib/python3.12/site-packages/websockets/legacy/__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions
+    warnings.warn(  # deprecated in 14.0 - 2024-11-09
+
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:323
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:323: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+src/api/api.py:89
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/src/api/api.py:89: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+venv/lib/python3.12/site-packages/fastapi/applications.py:4495
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/lib/python3.12/site-packages/fastapi/applications.py:4495: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)
+
+tests/test_api_endpoints.py:25
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:25: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(1)
+
+tests/test_api_endpoints.py:32
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:32: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(2)
+
+tests/test_api_endpoints.py:38
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:38: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(3)
+
+tests/test_api_endpoints.py:44
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:44: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(4)
+
+tests/test_api_endpoints.py:50
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:50: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(5)
+
+tests/test_api_endpoints.py:76
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:76: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(6)
+
+tests/test_api_endpoints.py:94
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:94: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(8)
+
+tests/test_api_endpoints.py:105
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:105: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(9)
+
+tests/test_api_endpoints.py:115
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:115: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(10)
+
+tests/test_api_endpoints.py:123
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:123: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(11)
+
+tests/test_api_endpoints.py:130
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:130: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(12)
+
+tests/test_api_endpoints.py:136
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_api_endpoints.py:136: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(13)
+
+tests/test_events.py:25
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:25: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(1)
+
+tests/test_events.py:36
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:36: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(2)
+
+tests/test_events.py:79
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:79: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(3)
+
+tests/test_events.py:114
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:114: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(4)
+
+tests/test_events.py:149
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:149: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(5)
+
+tests/test_events.py:165
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:165: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(6)
+
+tests/test_events.py:181
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_events.py:181: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(7)
+
+tests/test_middleware.py:101
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:101: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(1)
+
+tests/test_middleware.py:112
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:112: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(2)
+
+tests/test_middleware.py:126
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:126: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(3)
+
+tests/test_middleware.py:140
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:140: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(4)
+
+tests/test_middleware.py:169
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:169: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(5)
+
+tests/test_middleware.py:188
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:188: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(6)
+
+tests/test_middleware.py:200
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:200: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(7)
+
+tests/test_middleware.py:211
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:211: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(8)
+
+tests/test_middleware.py:220
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:220: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(9)
+
+tests/test_middleware.py:229
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:229: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(10)
+
+tests/test_middleware.py:241
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:241: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(11)
+
+tests/test_middleware.py:265
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/tests/test_middleware.py:265: PytestUnknownMarkWarning: Unknown pytest.mark.order - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.order(12)
+
+tests/test_api_endpoints.py::test_register_cbsd
+tests/test_events.py::test_events_after_registration
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/src/api/api.py:134: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    receipt = blockchain.registration(reg_request.dict())
+
+tests/test_api_endpoints.py::test_grant_spectrum
+tests/test_events.py::test_events_after_grant
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/src/api/api.py:149: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    receipt = blockchain.grant(grant_request.dict())
+
+tests/test_api_endpoints.py::test_relinquishment
+tests/test_events.py::test_events_after_relinquishment
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/src/api/api.py:164: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    receipt = blockchain.relinquishment(relinquishment_request.dict())
+
+tests/test_api_endpoints.py::test_deregistration
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/src/api/api.py:179: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    receipt = blockchain.deregistration(dereg_request.dict())
+
+tests/test_middleware.py::test_imports
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_middleware.py::test_imports returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+tests/test_middleware.py::test_config
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_middleware.py::test_config returned True, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+tests/test_middleware.py::test_abi
+  /home/alanveloso/repos/SAS-Blockchain-Registry/gateway/venv/lib/python3.12/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_middleware.py::test_abi returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 34 passed, 45 warnings in 2.15s ========================
