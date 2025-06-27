@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 
 describe("SASSharedRegistry (Simplificado)", function () {
   let SASSharedRegistry, sasSharedRegistry, owner, sas1, sas2, user1;
@@ -34,48 +35,105 @@ describe("SASSharedRegistry (Simplificado)", function () {
   });
 
   describe("Funções SAS-SAS", function () {
-    const payload = '{"example": "data"}';
+    // Exemplo de dados para RegistrationRequest
+    const registrationRequest = {
+      fccId: "FCC123",
+      userId: "USR1",
+      cbsdSerialNumber: "SN123",
+      callSign: "CALL1",
+      cbsdCategory: "A",
+      airInterface: "E-UTRA",
+      measCapability: ["RECEIVED_POWER_WITHOUT_GRANT"],
+      eirpCapability: 30,
+      latitude: 12345,
+      longitude: 67890,
+      height: 10,
+      heightType: "AGL",
+      indoorDeployment: true,
+      antennaGain: 5,
+      antennaBeamwidth: 60,
+      antennaAzimuth: 90,
+      groupingParam: "group1",
+      cbsdAddress: "192.168.0.1"
+    };
+    // Exemplo de dados para GrantRequest
+    const grantRequest = {
+      fccId: "FCC123",
+      cbsdSerialNumber: "SN123",
+      channelType: "GAA",
+      maxEirp: 30,
+      lowFrequency: 3550000000,
+      highFrequency: 3570000000,
+      requestedMaxEirp: 30,
+      requestedLowFrequency: 3550000000,
+      requestedHighFrequency: 3570000000,
+      grantExpireTime: 2000000000
+    };
 
-    it("deve emitir evento Registration", async function () {
-      await expect(sasSharedRegistry.connect(sas1).registration(payload))
-        .to.emit(sasSharedRegistry, "Registration");
+    it("deve registrar um CBSD e emitir evento CBSDRegistered", async function () {
+      await expect(sasSharedRegistry.connect(sas1).registration(registrationRequest))
+        .to.emit(sasSharedRegistry, "CBSDRegistered")
+        .withArgs(
+          registrationRequest.fccId,
+          registrationRequest.cbsdSerialNumber,
+          sas1.address
+        );
     });
 
-    it("deve emitir evento Grant", async function () {
-      await expect(sasSharedRegistry.connect(sas1).grant(payload))
-        .to.emit(sasSharedRegistry, "Grant");
+    it("deve criar um grant e emitir evento GrantCreated", async function () {
+      await sasSharedRegistry.connect(sas1).registration(registrationRequest);
+      await expect(sasSharedRegistry.connect(sas1).grant(grantRequest))
+        .to.emit(sasSharedRegistry, "GrantCreated")
+        .withArgs(
+          grantRequest.fccId,
+          grantRequest.cbsdSerialNumber,
+          anyValue,
+          sas1.address
+        );
     });
 
-    it("deve emitir evento Heartbeat", async function () {
-      await expect(sasSharedRegistry.connect(sas1).heartbeat(payload))
-        .to.emit(sasSharedRegistry, "Heartbeat");
+    it("deve terminar um grant e emitir evento GrantTerminated", async function () {
+      await sasSharedRegistry.connect(sas1).registration(registrationRequest);
+      // Executa a transação de grant e aguarda o receipt
+      const tx = await sasSharedRegistry.connect(sas1).grant(grantRequest);
+      const receipt = await tx.wait();
+      // Decodifica o evento GrantCreated manualmente
+      const iface = sasSharedRegistry.interface;
+      let grantId;
+      for (const log of receipt.logs) {
+        try {
+          const parsed = iface.parseLog(log);
+          if (parsed.name === "GrantCreated") {
+            grantId = parsed.args.grantId;
+            break;
+          }
+        } catch (e) {}
+      }
+      expect(grantId).to.not.be.undefined;
+      await expect(
+        sasSharedRegistry.connect(sas1).relinquishment(grantRequest.fccId, grantRequest.cbsdSerialNumber, grantId)
+      ).to.emit(sasSharedRegistry, "GrantTerminated");
     });
 
-    it("deve emitir evento Relinquishment", async function () {
-      await expect(sasSharedRegistry.connect(sas1).relinquishment(payload))
-        .to.emit(sasSharedRegistry, "Relinquishment");
-    });
-
-    it("deve emitir evento Deregistration", async function () {
-      await expect(sasSharedRegistry.connect(sas1).deregistration(payload))
-        .to.emit(sasSharedRegistry, "Deregistration");
+    it("deve permitir deregistration de CBSD", async function () {
+      await sasSharedRegistry.connect(sas1).registration(registrationRequest);
+      await expect(
+        sasSharedRegistry.connect(sas1).deregistration(registrationRequest.fccId, registrationRequest.cbsdSerialNumber)
+      ).not.to.be.reverted;
     });
 
     it("não deve permitir chamada por SAS não autorizado", async function () {
       await expect(
-        sasSharedRegistry.connect(user1).registration(payload)
+        sasSharedRegistry.connect(user1).registration(registrationRequest)
       ).to.be.revertedWith("Not an authorized SAS");
       await expect(
-        sasSharedRegistry.connect(user1).grant(payload)
+        sasSharedRegistry.connect(user1).grant(grantRequest)
       ).to.be.revertedWith("Not an authorized SAS");
       await expect(
-        sasSharedRegistry.connect(user1).heartbeat(payload)
+        sasSharedRegistry.connect(user1).relinquishment(grantRequest.fccId, grantRequest.cbsdSerialNumber, "grantId")
       ).to.be.revertedWith("Not an authorized SAS");
       await expect(
-        sasSharedRegistry.connect(user1).relinquishment(payload)
-      ).to.be.revertedWith("Not an authorized SAS");
-      await expect(
-        sasSharedRegistry.connect(user1).deregistration(payload)
+        sasSharedRegistry.connect(user1).deregistration(registrationRequest.fccId, registrationRequest.cbsdSerialNumber)
       ).to.be.revertedWith("Not an authorized SAS");
     });
   });
