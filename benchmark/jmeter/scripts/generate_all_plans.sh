@@ -13,7 +13,7 @@ echo ""
 # Lista de endpoints SAS (incluindo health check)
 ENDPOINTS=("health_check" "authorize" "revoke" "grant" "registration")
 # Lista de TODOS os níveis de carga
-LEVELS=("low" "medium" "high" "stress" "endurance")
+LEVELS=("low" "medium" "high" "stress")
 
 # Configurações por nível
 declare -A CONFIG
@@ -33,6 +33,10 @@ CONFIG[endurance_threads]="10"
 CONFIG[endurance_loops]="50"
 CONFIG[endurance_ramp]="60"
 CONFIG[endurance_duration]="1800"
+
+# Permitir configuração dinâmica do host e porta via variáveis de ambiente
+API_HOST="${API_HOST:-localhost}"
+API_PORT="${API_PORT:-9000}"
 
 echo "📋 Gerando planos para:"
 echo "   Endpoints: ${ENDPOINTS[@]}"
@@ -65,11 +69,11 @@ generate_plan() {
             ;;
         "authorize")
             api_path="/sas/authorize"
-            payload='{"sas_address":"0x123456789012345678901234567890123456789${__threadNum}"}'
+            payload='{"sas_address":"0x${__RandomString(40,abcdef0123456789,)}"}'
             ;;
         "revoke")
             api_path="/sas/revoke"
-            payload='{"sas_address":"0x123456789012345678901234567890123456789${__threadNum}"}'
+            payload='{"sas_address":"0x${__RandomString(40,abcdef0123456789,)}"}'
             ;;
         "grant")
             api_path="/v1.3/grant"
@@ -130,8 +134,8 @@ EOF
     cat >> "plans/$filename" << EOF
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.domain">${API_HOST}</stringProp>
+          <stringProp name="HTTPSampler.port">${API_PORT}</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">${api_path}</stringProp>
