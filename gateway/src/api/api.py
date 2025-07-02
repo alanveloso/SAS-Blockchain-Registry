@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Any
@@ -203,13 +203,24 @@ async def check_sas_authorization(sas_address: str):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/sas/authorize")
-async def authorize_sas(sas_auth: SASAuthorization):
-    """Autoriza um endereço como SAS"""
+async def authorize_sas(request: Request):
+    body = await request.body()
+    # print("DEBUG: Corpo cru recebido em /sas/authorize:", body)
+    import json
     try:
-        receipt = blockchain.authorize_sas(sas_auth.sas_address)
+        data = json.loads(body)
+    except Exception as e:
+        # print("DEBUG: Falha ao parsear JSON:", e)
+        raise HTTPException(status_code=400, detail="JSON inválido")
+    if "sas_address" not in data:
+        # print("DEBUG: Campo 'sas_address' ausente no JSON recebido")
+        raise HTTPException(status_code=422, detail="Campo 'sas_address' ausente")
+    sas_address = data["sas_address"]
+    try:
+        receipt = blockchain.authorize_sas(sas_address)
         return {
             "success": True,
-            "message": f"SAS {sas_auth.sas_address} autorizado",
+            "message": f"SAS {sas_address} autorizado",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }
