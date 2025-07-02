@@ -1,6 +1,6 @@
 # SAS Blockchain Registry Gateway
 
-Gateway Python para interação com o contrato SAS Shared Registry robusto via API REST. Fornece uma interface padronizada para sistemas SAS integrarem com a blockchain de forma transparente e segura, alinhada ao padrão WINNF-TS-0096.
+Gateway Python para integração REST com o contrato SASSharedRegistry (Solidity), alinhado ao padrão WINNF-TS-0096. Suporte completo a registro, grant, relinquishment, deregistration e autorização SAS, com eventos robustos e interface estruturada.
 
 ## 🚀 Status: 100% Funcional
 
@@ -16,41 +16,58 @@ Gateway Python para interação com o contrato SAS Shared Registry robusto via A
 gateway/
 ├── src/                    # Código fonte principal
 │   ├── api/               # API REST FastAPI
-│   │   ├── __init__.py
 │   │   └── api.py         # Endpoints da API
 │   ├── blockchain/        # Interação com blockchain
-│   │   ├── __init__.py
 │   │   └── blockchain.py  # Cliente Web3
 │   ├── handlers/          # Handlers de eventos
-│   │   ├── __init__.py
 │   │   └── handlers.py    # Processamento de eventos
 │   ├── repository/        # Repositório de dados
-│   │   ├── __init__.py
 │   │   └── repository.py  # Cache local
 │   ├── config/            # Configurações
-│   │   ├── __init__.py
-│   │   ├── config.py      # Configuração antiga
-│   │   └── settings.py    # Configuração nova (Pydantic)
-│   └── __init__.py
+│   │   └── settings.py    # Configuração (Pydantic)
 ├── tests/                 # Testes automatizados
-│   ├── test_api_endpoints.py
-│   ├── test_events.py
-│   └── test_gateway.py
 ├── docs/                  # Documentação
-│   └── API_DOCS.md
 ├── scripts/               # Scripts utilitários
-│   ├── test_api.sh        # Teste básico da API
-│   └── test_sas_sas.sh    # Teste completo SAS-SAS
 ├── logs/                  # Logs da aplicação
 ├── abi/                   # ABI do contrato
 ├── venv/                  # Ambiente virtual
 ├── .env                   # Variáveis de ambiente
 ├── requirements.txt       # Dependências Python
 ├── run.py                 # Ponto de entrada principal
-├── app.py                 # Ponto de entrada alternativo
-├── setup.sh               # Script de instalação
 └── README.md              # Este arquivo
 ```
+
+## Principais Endpoints
+
+- `/v1.3/registration` — Registra CBSD (payload: struct, sem payload genérico)
+- `/v1.3/grant` — Solicita grant (payload: struct)
+- `/v1.3/relinquishment` — Libera grant (payload: struct, grantId real)
+- `/v1.3/deregistration` — Remove CBSD (payload: struct)
+- `/sas/authorize` e `/sas/revoke` — Gerencia SAS autorizados
+- `/events/recent` — Lista eventos recentes (nomes: `CBSDRegistered`, `GrantCreated`, `GrantTerminated`, `SASAuthorized`, `SASRevoked`)
+
+## Exemplo de Evento Retornado
+```json
+{
+  "event": "GrantCreated",
+  "block_number": 123,
+  "transaction_hash": "0x...",
+  "sasOrigin": "0x...",
+  "fccId": "TEST-FCC-ID",
+  "serialNumber": "TEST-CBSD-SERIAL",
+  "grantId": "grant_TEST-FCC-IDTEST-CBSD-SERIAL0",
+  "timestamp": 123
+}
+```
+> Todos os campos são serializáveis em JSON. Não há mais campo `payload` genérico.
+
+## Fluxo de Uso
+1. **Autorize SAS** (se necessário)
+2. **Registre CBSD**
+3. **Solicite Grant**
+4. **Libere Grant** (usando o `grantId` retornado no evento `GrantCreated`)
+5. **Deregistre CBSD** (opcional)
+6. **Consulte eventos para auditoria**
 
 ## Setup
 
@@ -71,25 +88,14 @@ cp env.example .env
 ```bash
 python3 run.py
 ```
-
 A API estará disponível em: **http://localhost:9000**
 
 ### 4. Testar
 
 #### Testes Básicos (API)
-
-**Health Check**
 ```bash
 curl http://localhost:9000/health | jq
-```
-
-**Endpoint Raiz**
-```bash
 curl http://localhost:9000/ | jq
-```
-
-**Estatísticas**
-```bash
 curl http://localhost:9000/stats | jq
 ```
 
@@ -148,6 +154,7 @@ curl -s -X POST http://localhost:9000/v1.3/grant \
 
 **Relinquishment via SAS-SAS**
 ```bash
+# Use o grantId retornado no evento GrantCreated
 curl -s -X POST http://localhost:9000/v1.3/relinquishment \
   -H "Content-Type: application/json" \
   -d '{
@@ -192,92 +199,17 @@ O ABI do contrato já está disponível em `src/blockchain/abi/SASSharedRegistry
 
 ### Executar Todos os Testes
 ```bash
-python -m pytest tests/ -v
-```
-
-### Executar Testes Específicos
-```bash
-# Testes de API
-python -m pytest tests/test_api_endpoints.py -v
-
-# Testes de Eventos
-python -m pytest tests/test_events.py -v
-
-# Testes de Gateway
-python -m pytest tests/test_gateway.py -v
-```
-
-### Scripts de Teste
-```bash
-# Teste básico da API
-./scripts/test_api.sh
-
-# Teste completo SAS-SAS
-./scripts/test_sas_sas.sh
-```
-
-## Documentação
-
-- **[API_DOCS.md](docs/API_DOCS.md)** - Documentação técnica da API
-- **README.md** - Guia principal do projeto
-
-## Troubleshooting
-
-### Erro de Importação
-Se houver problemas com imports:
-```bash
-# Verificar se está no ambiente virtual
 source venv/bin/activate
-
-# Reinstalar dependências
-pip install -r requirements.txt
+PYTHONPATH=src pytest tests -v
 ```
 
-### Erro de Porta
-Se a porta 9000 estiver ocupada:
-```bash
-fuser -k 9000/tcp
-```
+## Dicas e Observações
+- O contrato Solidity **não emite evento para deregistration** (isso é esperado pelo padrão).
+- Todos os eventos relevantes são: `CBSDRegistered`, `GrantCreated`, `GrantTerminated`, `SASAuthorized`, `SASRevoked`.
+- O campo `grantId` deve ser obtido do evento `GrantCreated` para operações de relinquishment.
+- O gateway não usa mais heartbeat nem payloads genéricos.
 
-### Verificar Status da API
-```bash
-curl http://localhost:9000/health | jq
-```
-
-## Funcionalidades Implementadas
-
-### ✅ Gestão de SAS
-- Autorizar SAS
-- Verificar autorização
-- Revogar SAS
-
-### ✅ Operações SAS-SAS
-- Registration
-- Grant
-- Relinquishment
-- Deregistration
-
-### ✅ Consultas e Monitoramento
-- Ver eventos recentes
-- Health check da API
-- Status da conexão blockchain
-- Estatísticas do contrato
-
-## Próximos Passos
-
-1. **Implementar autenticação JWT**
-2. **Adicionar rate limiting**
-3. **Implementar cache Redis**
-4. **Adicionar métricas Prometheus**
-5. **Containerização com Docker**
-6. **Deploy em rede de teste**
-
-## Fluxo de Registro e Consulta (Exemplo Real)
-
-1. **Health Check** → Verificar se API está funcionando
-2. **Autorizar SAS** → Dar permissão para um SAS
-3. **Registration** → Registrar CBSD via SAS-SAS
-4. **Grant** → Solicitar espectro via SAS-SAS
-5. **Relinquishment** → Revogar permissão via SAS-SAS
-6. **Deregistration** → Remover CBSD da blockchain
-7. **Events** → Verificar eventos na blockchain
+## Referências
+- WINNF-TS-0096: [Especificação oficial](https://winnforum.org/standards)
+- Solidity Contract: `contracts/SASSharedRegistry.sol`
+- ABI: `gateway/src/blockchain/abi/SASSharedRegistry.json`

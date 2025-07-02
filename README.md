@@ -1,6 +1,6 @@
 # SAS Blockchain Registry
 
-Sistema de registro descentralizado baseado em blockchain para comunicação SAS-SAS (Spectrum Access System). O projeto implementa um contrato inteligente que serve como repositório descentralizado de dados para substituir APIs REST tradicionais na comunicação entre sistemas SAS.
+Sistema de registro descentralizado baseado em blockchain para comunicação SAS-SAS (Spectrum Access System). O projeto implementa um contrato inteligente robusto, alinhado ao padrão WINNF-TS-0096, que serve como repositório descentralizado de dados para substituir APIs REST tradicionais na comunicação entre sistemas SAS.
 
 O sistema é composto por um smart contract Solidity que garante transparência e imutabilidade das operações SAS-SAS, e um middleware Python que fornece uma API REST para integração com sistemas SAS existentes.
 
@@ -37,22 +37,21 @@ O sistema é composto por um smart contract Solidity que garante transparência 
 
 ## Funcionalidades do Smart Contract (SAS-SAS)
 
-### Interface SAS-SAS
-O contrato implementa a interface padrão SAS-SAS com as seguintes operações:
+### Interface SAS-SAS (WINNF-TS-0096)
+O contrato implementa a interface robusta SAS-SAS, incluindo:
 
-- **Registration**: Registro de dispositivos CBSD
-- **Grant**: Criação de grants de espectro
-- **Heartbeat**: Manutenção de grants ativos
-- **Relinquishment**: Liberação de grants
-- **Deregistration**: Remoção de dispositivos
+- **registration**: Registro de dispositivos CBSD (struct RegistrationRequest)
+- **grant**: Criação de grants de espectro (struct GrantRequest)
+- **relinquishment**: Liberação de grants
+- **deregistration**: Remoção de dispositivos
+- **authorizeSAS / revokeSAS**: Gestão de autorização de SAS
 
-### Gestão de Autorização
-- **Autorizar SAS**: Permitir que um endereço execute operações SAS-SAS
-- **Verificar autorização**: Consultar se um SAS está autorizado
-- **Revogar SAS**: Remover autorização de um SAS
+> **Nota:** Não há mais função heartbeat nem payloads genéricos. Todos os dados são passados via structs tipados (arrays ordenados ao chamar via ethers.js).
 
 ### Eventos
-Cada operação SAS-SAS emite eventos com payloads JSON que podem ser consumidos por outros sistemas SAS para sincronização.
+Cada operação SAS-SAS emite eventos específicos (ex: `CBSDRegistered`, `GrantCreated`, `GrantTerminated`).
+
+---
 
 ## Setup do Smart Contract
 
@@ -81,13 +80,13 @@ npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
 
 #### 5. Teste de Integração SAS-SAS
 ```bash
-node scripts/integration-test-sas-simplified.js
+node scripts/integration-test-sas-shared-registry.js
 ```
 
 Esse teste cobre:
 - Autorização e revogação de SAS
-- Todas as operações SAS-SAS (registration, grant, heartbeat, relinquishment, deregistration)
-- Verificação de acesso negado para SAS não autorizado
+- Todas as operações SAS-SAS (registration, grant, relinquishment, deregistration)
+- Restrições de acesso para SAS não autorizado
 - Emissão de eventos
 
 ### Opção 2: Deploy em Qualquer Rede Besu (Produção/Teste)
@@ -114,6 +113,57 @@ npx hardhat run scripts/deploy-sas-shared-registry.js --network <nome_da_rede_co
 #### 4. Garanta que o ABI do contrato esteja disponível para o middleware
 
 ---
+
+## Exemplo de chamada via ethers.js
+
+```js
+// Exemplo de chamada para registration
+const registrationArgs = [
+  "FCC123", "USR1", "SN123", "CALL", "A", "E-UTRA", ["RECEIVED_POWER_WITHOUT_GRANT"],
+  30, 12345, 67890, 10, "AGL", false, 5, 60, 90, "group1", "0x..."
+];
+await contract.registration(registrationArgs);
+```
+
+---
+
+## Testes Automatizados
+
+Os testes cobrem:
+- Autorização e revogação de SAS
+- Registro, grant, relinquishment, deregistration
+- Restrições de acesso para SAS não autorizado
+- Emissão de eventos
+
+Execute:
+```bash
+npx hardhat test
+```
+
+---
+
+## Scripts Disponíveis
+
+- **Deploy do contrato:**
+  ```bash
+  npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
+  ```
+- **Teste de integração:**
+  ```bash
+  node scripts/integration-test-sas-shared-registry.js
+  ```
+
+---
+
+## Variáveis de Ambiente (.env)
+```env
+RPC_URL=http://127.0.0.1:8545
+CONTRACT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
+OWNER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+CHAIN_ID=31337
+```
+
+Garanta que o ABI do contrato esteja em `middleware/src/blockchain/abi/SASSharedRegistry.json`.
 
 ## Verificação de Conectividade com a Rede
 
@@ -214,14 +264,14 @@ python3 run.py
 Após o deploy do contrato, execute o teste de integração SAS-SAS:
 
 ```bash
-node scripts/integration-test-sas-simplified.js
+node scripts/integration-test-sas-shared-registry.js
 ```
 
 Esse teste cobre:
 - Autorização e revogação de SAS
-- Todas as operações SAS-SAS (registration, grant, heartbeat, relinquishment, deregistration)
+- Todas as operações SAS-SAS (registration, grant, relinquishment, deregistration)
 - Verificação de acesso negado para SAS não autorizado
-- Emissão de eventos com payloads JSON
+- Emissão de eventos específicos
 
 ## Testes com cURL
 
@@ -283,7 +333,7 @@ SAS-Blockchain-Registry/
 ├── middleware/                  # API Python (documentação separada)
 ├── scripts/
 │   ├── deploy-sas-shared-registry.js           # Deploy Hardhat
-│   └── integration-test-sas-simplified.js      # Teste SAS-SAS
+│   └── integration-test-sas-shared-registry.js  # Teste SAS-SAS
 ├── test/
 │   └── SASSharedRegistry.js     # Testes unitários
 ├── hardhat.config.js            # Configuração Hardhat
@@ -299,7 +349,7 @@ npx hardhat test
 
 ### Testes de Integração (SAS-SAS)
 ```bash
-node scripts/integration-test-sas-simplified.js
+node scripts/integration-test-sas-shared-registry.js
 ```
 
 ## Configurações
