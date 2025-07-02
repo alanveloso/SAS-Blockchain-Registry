@@ -401,8 +401,8 @@ curl -s http://localhost:9000/health | jq
 echo -e "\n=== Stats ==="
 curl -s http://localhost:9000/stats | jq
 
-# Authorize SAS
-echo -e "\n=== Authorize SAS ==="
+# Authorize 
+echo -e "\n=== Authorize  ==="
 curl -s -X POST http://localhost:9000/sas/authorize \
   -H "Content-Type: application/json" \
   -d '{"sas_address": "0x1234567890123456789012345678901234567890"}' | jq

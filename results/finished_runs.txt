@@ -1,0 +1,8 @@
+sas_full_flow_high/run_1_20250702_105545.jtl
+sas_full_flow_high/run_2_20250702_105744.jtl
+sas_full_flow_low/run_1_20250702_105955.jtl
+sas_full_flow_low/run_2_20250702_110021.jtl
+sas_full_flow_medium/run_1_20250702_110047.jtl
+sas_full_flow_medium/run_2_20250702_110119.jtl
+sas_full_flow_stress/run_1_20250702_110151.jtl
+sas_full_flow_stress/run_2_20250702_110609.jtl

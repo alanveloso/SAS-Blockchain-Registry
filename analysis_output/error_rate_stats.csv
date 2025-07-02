@@ -1,0 +1,25 @@
+scenario,request_type,error_rate_mean,error_rate_std,error_rate_min,error_rate_max
+Low,Revoke,0.0,0.0,False,False
+Low,Authorize ,0.0,0.0,False,False
+Low,Deregistration,0.4,0.5026246899500346,False,True
+Low,Grant,0.7,0.4701623459816272,False,True
+Low,Registration,0.4,0.5026246899500346,False,True
+Low,Relinquishment,0.4,0.5026246899500346,False,True
+Medium,Revoke,0.0,0.0,False,False
+Medium,Relinquishment,0.0,0.0,False,False
+Medium,Registration,0.0,0.0,False,False
+Medium,Grant,0.0,0.0,False,False
+Medium,Deregistration,0.0,0.0,False,False
+Medium,Authorize ,0.0,0.0,False,False
+High,Authorize ,0.0,0.0,False,False
+High,Revoke,0.0,0.0,False,False
+High,Relinquishment,0.69,0.46268606923653416,False,True
+High,Registration,0.7033333333333334,0.4569787524663779,False,True
+High,Grant,0.7083333333333334,0.45471917725561695,False,True
+High,Deregistration,0.705,0.45623289781375853,False,True
+Stress,Authorize ,0.0,0.0,False,False
+Stress,Deregistration,0.741,0.4381586405988633,False,True
+Stress,Grant,0.7543333333333333,0.4305535363592383,False,True
+Stress,Registration,0.741,0.4381586405988629,False,True
+Stress,Relinquishment,0.7513333333333333,0.4323122176237031,False,True
+Stress,Revoke,0.0,0.0,False,False
