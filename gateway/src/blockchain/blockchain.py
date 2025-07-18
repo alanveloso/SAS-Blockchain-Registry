@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Blockchain:
-    def __init__(self):
+    def __init__(self, private_key=None):
         self.web3 = Web3(Web3.HTTPProvider(settings.RPC_URL))
         
         # Verificar conexão com Besu
@@ -16,7 +16,8 @@ class Blockchain:
             raise ConnectionError(f"Não foi possível conectar ao Besu em {settings.RPC_URL}")
         
         # Configurar conta
-        self.account = self.web3.eth.account.from_key(settings.OWNER_PRIVATE_KEY)
+        key = private_key or settings.OWNER_PRIVATE_KEY
+        self.account = self.web3.eth.account.from_key(key)
         self.web3.eth.default_account = self.account.address
         
         # Carregar ABI
@@ -109,7 +110,7 @@ class Blockchain:
             tx = self.build_transaction(function_call, gas_limit)
             
             # Assinar transação
-            signed_tx = self.web3.eth.account.sign_transaction(tx, settings.OWNER_PRIVATE_KEY)
+            signed_tx = self.web3.eth.account.sign_transaction(tx, self.account.key)
             
             # Enviar transação
             tx_hash = self.web3.eth.send_raw_transaction(signed_tx.raw_transaction)

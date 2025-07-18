@@ -1,0 +1,221 @@
+timeStamp,label,responseCode,responseMessage,failureMessage,scenario,request_type,run
+2025-07-10 17:00:02.034,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Deregistration,1
+2025-07-10 17:00:10.050,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Revoke,1
+2025-07-10 17:00:18.090,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Relinquishment,1
+2025-07-10 17:00:26.098,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,1
+2025-07-10 17:00:34.097,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,1
+2025-07-10 18:59:56.058,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Deregistration,2
+2025-07-10 19:00:04.072,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Relinquishment,2
+2025-07-10 19:00:12.087,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Relinquishment,2
+2025-07-10 19:00:20.098,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,2
+2025-07-10 19:00:36.096,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,2
+2025-07-10 20:59:50.090,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,3
+2025-07-10 20:59:58.079,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Revoke,3
+2025-07-10 21:00:06.085,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Revoke,3
+2025-07-10 21:00:14.081,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Deregistration,3
+2025-07-10 21:00:22.067,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,3
+2025-07-10 21:00:30.057,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,3
+2025-07-10 22:56:14.042,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,3
+2025-07-10 22:59:40.059,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,4
+2025-07-10 22:59:48.047,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,4
+2025-07-10 22:59:56.039,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,4
+2025-07-10 23:00:04.033,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Deregistration,4
+2025-07-10 23:00:12.029,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,4
+2025-07-11 00:59:34.049,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Deregistration,5
+2025-07-11 00:59:42.049,Authorize,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Authorize,5
+2025-07-11 00:59:50.046,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,5
+2025-07-11 00:59:58.036,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Relinquishment,5
+2025-07-11 01:00:06.029,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,5
+2025-07-11 01:00:14.122,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Grant,5
+2025-07-11 02:58:04.129,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_high,Deregistration,5
+2025-07-11 03:09:40.052,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,1
+2025-07-11 03:09:54.045,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,1
+2025-07-11 03:10:02.043,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,1
+2025-07-11 03:10:10.040,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,1
+2025-07-11 03:10:26.041,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,1
+2025-07-11 03:11:06.024,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,1
+2025-07-11 03:11:14.023,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:11:46.023,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:12:32.030,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,1
+2025-07-11 03:13:22.064,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,1
+2025-07-11 03:13:44.067,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,1
+2025-07-11 03:14:26.059,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,1
+2025-07-11 03:14:48.029,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:15:30.029,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,1
+2025-07-11 03:15:38.033,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,1
+2025-07-11 03:15:58.026,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:16:42.045,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,1
+2025-07-11 03:17:40.034,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,1
+2025-07-11 03:18:46.039,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,1
+2025-07-11 03:19:58.097,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,1
+2025-07-11 03:21:02.080,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:21:10.066,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,1
+2025-07-11 03:21:58.123,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,1
+2025-07-11 03:22:06.118,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,1
+2025-07-11 03:23:02.034,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,1
+2025-07-11 03:23:10.023,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,1
+2025-07-11 03:24:14.124,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,1
+2025-07-11 03:24:22.107,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:26:20.084,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,1
+2025-07-11 03:26:28.071,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,1
+2025-07-11 03:27:20.027,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,1
+2025-07-11 03:28:40.054,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:28:54.037,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:29:02.040,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:29:10.033,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,2
+2025-07-11 03:29:18.025,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,2
+2025-07-11 03:29:26.124,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:30:06.043,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:32:24.086,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,2
+2025-07-11 03:32:56.048,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:33:46.124,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:34:36.052,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,2
+2025-07-11 03:34:44.040,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,2
+2025-07-11 03:35:42.021,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,2
+2025-07-11 03:35:50.022,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:36:28.031,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:37:08.071,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:37:38.059,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:37:56.058,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:38:44.024,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:39:22.113,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,2
+2025-07-11 03:39:56.071,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:40:04.067,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:40:32.032,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,2
+2025-07-11 03:41:04.028,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:41:38.026,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,2
+2025-07-11 03:42:46.129,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,2
+2025-07-11 03:43:18.029,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,2
+2025-07-11 03:44:36.036,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,2
+2025-07-11 03:45:06.032,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,2
+2025-07-11 03:45:32.042,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,2
+2025-07-11 03:46:10.024,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,2
+2025-07-11 03:47:40.110,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,3
+2025-07-11 03:47:54.092,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,3
+2025-07-11 03:48:02.073,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:48:10.063,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,3
+2025-07-11 03:48:18.052,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 03:48:26.037,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,3
+2025-07-11 03:48:34.027,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:49:12.021,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:49:34.026,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 03:50:12.110,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:50:48.027,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:50:56.023,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 03:51:24.040,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:51:32.037,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 03:51:56.030,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,3
+2025-07-11 03:52:28.031,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,3
+2025-07-11 03:53:10.022,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,3
+2025-07-11 03:53:42.037,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:54:14.031,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 03:54:56.024,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,3
+2025-07-11 03:56:34.030,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,3
+2025-07-11 03:57:02.033,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,3
+2025-07-11 03:57:40.021,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:57:48.025,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 03:58:06.031,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,3
+2025-07-11 03:58:44.037,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,3
+2025-07-11 03:58:52.038,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 03:59:22.030,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,3
+2025-07-11 03:59:52.029,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,3
+2025-07-11 04:00:00.127,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 04:00:58.026,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 04:01:06.026,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,3
+2025-07-11 04:02:04.064,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 04:02:12.065,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,3
+2025-07-11 04:03:10.028,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 04:03:18.118,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,3
+2025-07-11 04:04:22.100,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,3
+2025-07-11 04:04:30.092,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,3
+2025-07-11 04:06:28.080,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:06:42.074,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:06:50.070,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:06:58.053,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:07:06.034,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,4
+2025-07-11 04:07:14.033,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,4
+2025-07-11 04:07:22.024,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:07:52.040,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,4
+2025-07-11 04:08:00.063,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,4
+2025-07-11 04:09:00.042,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,4
+2025-07-11 04:09:34.032,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,4
+2025-07-11 04:10:08.041,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:10:50.025,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:10:58.026,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:11:26.110,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,4
+2025-07-11 04:11:58.066,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:12:06.082,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,4
+2025-07-11 04:12:42.122,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:13:02.085,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:14:08.095,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,4
+2025-07-11 04:15:16.090,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,4
+2025-07-11 04:16:10.099,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,4
+2025-07-11 04:17:04.098,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,4
+2025-07-11 04:17:12.076,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,4
+2025-07-11 04:17:40.044,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,4
+2025-07-11 04:18:12.023,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,4
+2025-07-11 04:18:46.071,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,4
+2025-07-11 04:19:20.047,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:19:54.023,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,4
+2025-07-11 04:21:02.078,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:21:10.075,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:22:08.031,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,4
+2025-07-11 04:22:48.119,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,4
+2025-07-11 04:23:20.113,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,4
+2025-07-11 04:23:48.079,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,4
+2025-07-11 04:25:20.097,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:25:34.076,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,5
+2025-07-11 04:25:42.073,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:25:50.070,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:25:58.059,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:26:06.070,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:26:46.122,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,5
+2025-07-11 04:26:54.109,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,5
+2025-07-11 04:27:46.104,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,5
+2025-07-11 04:27:54.093,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,5
+2025-07-11 04:28:52.062,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,5
+2025-07-11 04:29:00.054,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:29:44.099,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,5
+2025-07-11 04:29:52.084,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,5
+2025-07-11 04:30:18.061,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,5
+2025-07-11 04:30:56.020,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:32:04.023,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,5
+2025-07-11 04:32:12.120,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,5
+2025-07-11 04:33:02.098,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,5
+2025-07-11 04:33:10.084,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Relinquishment,5
+2025-07-11 04:33:56.031,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,5
+2025-07-11 04:34:56.053,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,5
+2025-07-11 04:35:26.100,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,5
+2025-07-11 04:35:58.061,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Authorize,5
+2025-07-11 04:36:30.029,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:36:38.121,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,5
+2025-07-11 04:37:36.121,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:38:42.070,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,5
+2025-07-11 04:38:50.051,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,5
+2025-07-11 04:39:28.119,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Revoke,5
+2025-07-11 04:39:46.024,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:40:24.031,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Grant,5
+2025-07-11 04:42:16.066,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Deregistration,5
+2025-07-11 04:42:56.051,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_medium,Registration,5
+2025-07-11 04:44:16.092,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,1
+2025-07-11 04:44:24.125,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,1
+2025-07-11 04:44:32.052,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Revoke,1
+2025-07-11 04:44:40.067,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,1
+2025-07-11 04:44:56.034,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,1
+2025-07-11 09:44:10.049,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,2
+2025-07-11 09:44:18.056,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,2
+2025-07-11 09:44:26.041,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Revoke,2
+2025-07-11 09:44:34.047,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,2
+2025-07-11 14:44:04.076,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Deregistration,3
+2025-07-11 14:44:12.073,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,3
+2025-07-11 14:44:20.051,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,3
+2025-07-11 14:44:28.037,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,3
+2025-07-11 19:44:00.067,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,4
+2025-07-11 19:44:08.057,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,4
+2025-07-11 19:44:16.050,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Revoke,4
+2025-07-11 19:44:24.037,Authorize,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Authorize,4
+2025-07-12 00:43:56.036,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Deregistration,5
+2025-07-12 00:44:04.033,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Grant,5
+2025-07-12 00:44:12.034,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,5
+2025-07-12 00:44:20.035,Authorize,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Authorize,5
+2025-07-12 00:44:28.033,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,,sas_full_flow_stress,Relinquishment,5

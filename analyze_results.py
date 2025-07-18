@@ -43,6 +43,43 @@ SCENARIO_ORDER = ['Low', 'Medium', 'High', 'Stress']
 def get_scenario_label(scenario):
     return SCENARIO_LABELS.get(scenario, scenario)
 
+def normalize_request_type(request_type):
+    """Normaliza o nome do tipo de requisição para evitar duplicatas por diferenças de formatação."""
+    if pd.isna(request_type):
+        return 'unknown'
+    
+    # Converte para string, remove espaços extras e converte para minúsculas
+    normalized = str(request_type).strip().lower()
+    
+    # Remove caracteres especiais comuns que podem causar problemas
+    normalized = normalized.replace('_', '').replace('-', '').replace(' ', '')
+    
+    # Mapeamento específico para tipos conhecidos
+    request_type_mapping = {
+        'authorize': 'Authorize',
+        'authorize_': 'Authorize',
+        'registration': 'Registration',
+        'registration_': 'Registration',
+        'grant': 'Grant',
+        'grant_': 'Grant',
+        'revoke': 'Revoke',
+        'revoke_': 'Revoke',
+        'relinquishment': 'Relinquishment',
+        'relinquishment_': 'Relinquishment',
+        'deregistration': 'Deregistration',
+        'deregistration_': 'Deregistration',
+    }
+    
+    # Se encontrou no mapeamento, usa o valor mapeado
+    if normalized in request_type_mapping:
+        return request_type_mapping[normalized]
+    
+    # Caso contrário, capitaliza a primeira letra para manter consistência
+    if normalized:
+        normalized = normalized.capitalize()
+    
+    return normalized
+
 def get_jtl_files(base=RESULTS_DIR) -> List[Path]:
     """Busca recursiva por arquivos .jtl no diretório base."""
     return sorted(Path(base).rglob('*.jtl'))
@@ -63,12 +100,19 @@ def load_data(jtl_files: List[Path]) -> pd.DataFrame:
             df['scenario'] = scenario
             df['run'] = run_id
             df['request_type'] = df['label'] if 'label' in df.columns else 'unknown'
+            # Normaliza os nomes dos tipos de requisição
+            df['request_type'] = df['request_type'].apply(normalize_request_type)
             dfs.append(df)
         except Exception as e:
             print(f"[ERRO] Falha ao ler {f}: {e}")
     if dfs:
         all_data = pd.concat(dfs, ignore_index=True)
         print(f"[INFO] Total de linhas carregadas: {len(all_data)}")
+        
+        # Mostra os tipos de requisição encontrados após normalização
+        unique_types = sorted(all_data['request_type'].unique())
+        print(f"[INFO] Tipos de requisição encontrados: {unique_types}")
+        
         # Cálculo do tempo relativo (em segundos desde o início de cada run)
         if 'timeStamp' in all_data.columns:
             all_data['timeStamp'] = pd.to_datetime(all_data['timeStamp'], unit='ms')
@@ -104,99 +148,183 @@ def calc_stats(all_data: pd.DataFrame) -> pd.DataFrame:
     return per_run
 
 def plot_latency_boxplot(all_data: pd.DataFrame, request_type_order=None):
-    """Generates a latency boxplot by scenario/type and exports statistics."""
+    """Generates statistical aggregation plots and individual run plots for latency."""
     if 'elapsed' not in all_data.columns:
         print("[ERROR] Column 'elapsed' not found for latency.")
         return
     all_data = all_data.copy()
     all_data['scenario_label'] = all_data['scenario'].map(get_scenario_label)
+    
+    # Calculate statistics per run
     stats = []
-    for (scenario, req_type), grp in all_data.groupby(['scenario','request_type']):
+    for (scenario, req_type, run), grp in all_data.groupby(['scenario','request_type','run']):
         lat = grp['elapsed']
         stats.append({
             'scenario': get_scenario_label(scenario),
             'request_type': req_type,
+            'run': run,
             'mean': float(lat.mean()),
             'median': float(lat.median()),
             'std': float(lat.std()),
             'min': float(lat.min()),
             'max': float(lat.max()),
             'p90': float(np.percentile(lat, 90)),
+            'p95': float(np.percentile(lat, 95)),
             'p99': float(np.percentile(lat, 99))
         })
     df_stats = pd.DataFrame(stats)
     # Ensure scenario order in export
     df_stats['scenario'] = pd.Categorical(df_stats['scenario'], categories=SCENARIO_ORDER, ordered=True)
-    df_stats = df_stats.sort_values('scenario')
+    df_stats = df_stats.sort_values(['scenario', 'request_type', 'run'])
     df_stats.to_csv(f'{OUTPUT_DIR}/latency_stats.csv', index=False)
     print(f"[INFO] Latency statistics saved to {OUTPUT_DIR}/latency_stats.csv")
-    plt.figure(figsize=(10,6))
-    sns.boxplot(data=all_data, x='scenario_label', y='elapsed', hue='request_type', hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
-    plt.yscale('log')
-    plt.title('Latency Boxplot (ms) by Scenario and Type')
-    plt.xlabel('Scenario')
-    plt.ylabel('Latency (ms)')
-    plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
-    plt.savefig(f'{OUTPUT_DIR}/boxplot_latency.png')
-    plt.close()
-    print(f"[INFO] Latency boxplot saved: {OUTPUT_DIR}/boxplot_latency.png")
+
+    # --- INCONSISTÊNCIA ENTRE RUNS: LATÊNCIA ---
+    inconsistency = (
+        df_stats.groupby(['scenario', 'request_type'])['mean']
+        .agg(['mean', 'std', 'min', 'max', 'count'])
+        .reset_index()
+        .sort_values('std', ascending=False)
+    )
+    inconsistency.to_csv(f'{OUTPUT_DIR}/latency_mean_inconsistency.csv', index=False)
+    print("[INFO] Inconsistência (desvio padrão) da latência média entre runs:")
+    print(inconsistency[['scenario', 'request_type', 'std']].head(10))
+    
+    # Generate statistical aggregation plots (distribution of statistics across runs)
+    for metric in ['mean', 'median', 'p95', 'p99']:
+        plt.figure(figsize=(10,6))
+        sns.boxplot(data=df_stats, x='scenario', y=metric, hue='request_type', 
+                    hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+        plt.yscale('log')
+        plt.title(f'Latency {metric.capitalize()} (ms) - Distribution Across Runs')
+        plt.xlabel('Scenario')
+        plt.ylabel(f'Latency {metric.capitalize()} (ms)')
+        plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.savefig(f'{OUTPUT_DIR}/boxplot_latency_{metric}_stats.png')
+        plt.close()
+        print(f"[INFO] Latency {metric} statistics boxplot saved: {OUTPUT_DIR}/boxplot_latency_{metric}_stats.png")
+    
+    # Generate separate boxplot for each run
+    for run_id in sorted(all_data['run'].unique()):
+        run_data = all_data[all_data['run'] == run_id].copy()
+        if run_data.empty:
+            continue
+            
+        plt.figure(figsize=(10,6))
+        sns.boxplot(data=run_data, x='scenario_label', y='elapsed', hue='request_type', 
+                    hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+        plt.yscale('log')
+        plt.title(f'Latency Boxplot (ms) - Run {run_id}')
+        plt.xlabel('Scenario')
+        plt.ylabel('Latency (ms)')
+        plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.savefig(f'{OUTPUT_DIR}/boxplot_latency_Run{run_id}.png')
+        plt.close()
+        print(f"[INFO] Latency boxplot for Run {run_id} saved: {OUTPUT_DIR}/boxplot_latency_Run{run_id}.png")
 
 def plot_throughput_boxplot(all_data: pd.DataFrame, request_type_order=None):
-    """Generates a throughput boxplot (req/s) by scenario/type and exports statistics."""
+    """Generates statistical aggregation plots and individual run plots for throughput."""
     if 'time_rel' not in all_data.columns:
         print("[ERROR] Column 'time_rel' not found for throughput.")
         return
     all_data = all_data.copy()
     all_data['time_rel_rounded'] = all_data['time_rel'].round().astype(int)
     all_data['scenario_label'] = all_data['scenario'].map(get_scenario_label)
+    
+    # Calculate statistics per run
     stats = []
-    throughput_data = []
-    for (scenario, req_type), grp in all_data.groupby(['scenario','request_type']):
+    for (scenario, req_type, run), grp in all_data.groupby(['scenario','request_type','run']):
         ts = grp.groupby('time_rel_rounded').size()
-        for v in ts:
-            throughput_data.append({'scenario': get_scenario_label(scenario), 'request_type': req_type, 'throughput': v})
         stats.append({
             'scenario': get_scenario_label(scenario),
             'request_type': req_type,
-            'mean': ts.mean(),
-            'median': ts.median(),
-            'std': ts.std(),
-            'min': ts.min(),
-            'max': ts.max(),
-            'p90': np.percentile(ts, 90),
-            'p99': np.percentile(ts, 99)
+            'run': run,
+            'mean': float(ts.mean()),
+            'median': float(ts.median()),
+            'std': float(ts.std()),
+            'min': float(ts.min()),
+            'max': float(ts.max()),
+            'p90': float(np.percentile(ts, 90)),
+            'p95': float(np.percentile(ts, 95)),
+            'p99': float(np.percentile(ts, 99))
         })
-    df_throughput = pd.DataFrame(throughput_data)
     df_stats = pd.DataFrame(stats)
     # Ensure scenario order in export
     df_stats['scenario'] = pd.Categorical(df_stats['scenario'], categories=SCENARIO_ORDER, ordered=True)
-    df_stats = df_stats.sort_values('scenario')
+    df_stats = df_stats.sort_values(['scenario', 'request_type', 'run'])
     df_stats.to_csv(f'{OUTPUT_DIR}/throughput_stats.csv', index=False)
     print(f"[INFO] Throughput statistics saved to {OUTPUT_DIR}/throughput_stats.csv")
-    if not df_throughput.empty:
-        df_throughput['scenario'] = pd.Categorical(df_throughput['scenario'], categories=SCENARIO_ORDER, ordered=True)
+
+    # --- INCONSISTÊNCIA ENTRE RUNS: THROUGHPUT ---
+    inconsistency = (
+        df_stats.groupby(['scenario', 'request_type'])['mean']
+        .agg(['mean', 'std', 'min', 'max', 'count'])
+        .reset_index()
+        .sort_values('std', ascending=False)
+    )
+    inconsistency.to_csv(f'{OUTPUT_DIR}/throughput_mean_inconsistency.csv', index=False)
+    print("[INFO] Inconsistência (desvio padrão) do throughput médio entre runs:")
+    print(inconsistency[['scenario', 'request_type', 'std']].head(10))
+    
+    # Generate statistical aggregation plots (distribution of statistics across runs)
+    for metric in ['mean', 'median', 'p95', 'p99']:
         plt.figure(figsize=(10,6))
-        sns.boxplot(data=df_throughput, x='scenario', y='throughput', hue='request_type', hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
-        plt.title('Throughput Boxplot (req/s) by Scenario and Type')
+        sns.boxplot(data=df_stats, x='scenario', y=metric, hue='request_type', 
+                    hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+        plt.title(f'Throughput {metric.capitalize()} (req/s) - Distribution Across Runs')
         plt.xlabel('Scenario')
-        plt.ylabel('Requests per second')
+        plt.ylabel(f'Throughput {metric.capitalize()} (req/s)')
         plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
         plt.tight_layout()
-        plt.savefig(f'{OUTPUT_DIR}/boxplot_throughput.png')
+        plt.savefig(f'{OUTPUT_DIR}/boxplot_throughput_{metric}_stats.png')
         plt.close()
-        print(f"[INFO] Throughput boxplot saved: {OUTPUT_DIR}/boxplot_throughput.png")
+        print(f"[INFO] Throughput {metric} statistics boxplot saved: {OUTPUT_DIR}/boxplot_throughput_{metric}_stats.png")
+    
+    # Generate separate boxplot for each run (using raw throughput data)
+    throughput_data = []
+    for (scenario, req_type, run), grp in all_data.groupby(['scenario','request_type','run']):
+        ts = grp.groupby('time_rel_rounded').size()
+        for v in ts:
+            throughput_data.append({
+                'scenario': get_scenario_label(scenario), 
+                'request_type': req_type, 
+                'run': run,
+                'throughput': v
+            })
+    df_throughput = pd.DataFrame(throughput_data)
+    
+    if not df_throughput.empty:
+        for run_id in sorted(df_throughput['run'].unique()):
+            run_throughput = df_throughput[df_throughput['run'] == run_id].copy()
+            if run_throughput.empty:
+                continue
+                
+            plt.figure(figsize=(10,6))
+            sns.boxplot(data=run_throughput, x='scenario', y='throughput', hue='request_type', 
+                        hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+            plt.title(f'Throughput Boxplot (req/s) - Run {run_id}')
+            plt.xlabel('Scenario')
+            plt.ylabel('Requests per second')
+            plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+            plt.tight_layout()
+            plt.savefig(f'{OUTPUT_DIR}/boxplot_throughput_Run{run_id}.png')
+            plt.close()
+            print(f"[INFO] Throughput boxplot for Run {run_id} saved: {OUTPUT_DIR}/boxplot_throughput_Run{run_id}.png")
 
 def plot_error_rate_barplot(all_data: pd.DataFrame, request_type_order=None):
-    """Generates a barplot of mean error rate by scenario/type and exports statistics."""
+    """Generates statistical aggregation plots and individual run plots for error rate."""
     if 'success' not in all_data.columns:
         print("[ERROR] Column 'success' not found for error rate.")
         return
     all_data = all_data.copy()
     all_data['is_error'] = ~all_data['success'].astype(bool)
     all_data['scenario_label'] = all_data['scenario'].map(get_scenario_label)
+    
+    # Calculate statistics per run
     stats = (
-        all_data.groupby(['scenario','request_type'])['is_error']
+        all_data.groupby(['scenario','request_type','run'])['is_error']
         .agg(['mean','std','min','max'])
         .reset_index()
         .rename(columns={'mean':'error_rate_mean','std':'error_rate_std','min':'error_rate_min','max':'error_rate_max'})
@@ -204,19 +332,53 @@ def plot_error_rate_barplot(all_data: pd.DataFrame, request_type_order=None):
     # Replace scenario names in export and ensure order
     stats['scenario'] = stats['scenario'].map(get_scenario_label)
     stats['scenario'] = pd.Categorical(stats['scenario'], categories=SCENARIO_ORDER, ordered=True)
-    stats = stats.sort_values('scenario')
+    stats = stats.sort_values(['scenario', 'request_type', 'run'])
     stats.to_csv(f'{OUTPUT_DIR}/error_rate_stats.csv', index=False)
     print(f"[INFO] Error rate statistics saved to {OUTPUT_DIR}/error_rate_stats.csv")
-    plt.figure(figsize=(10,6))
-    sns.barplot(data=all_data, x='scenario_label', y='is_error', hue='request_type', hue_order=request_type_order, order=SCENARIO_ORDER, estimator=np.mean)
-    plt.title('Mean Error Rate by Scenario and Type')
-    plt.xlabel('Scenario')
-    plt.ylabel('Mean error rate')
-    plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
-    plt.savefig(f'{OUTPUT_DIR}/barplot_error_rate.png')
-    plt.close()
-    print(f"[INFO] Error rate barplot saved: {OUTPUT_DIR}/barplot_error_rate.png")
+
+    # --- INCONSISTÊNCIA ENTRE RUNS: TAXA DE ERRO ---
+    inconsistency = (
+        stats.groupby(['scenario', 'request_type'])['error_rate_mean']
+        .agg(['mean', 'std', 'min', 'max', 'count'])
+        .reset_index()
+        .sort_values('std', ascending=False)
+    )
+    inconsistency.to_csv(f'{OUTPUT_DIR}/error_rate_mean_inconsistency.csv', index=False)
+    print("[INFO] Inconsistência (desvio padrão) da taxa de erro média entre runs:")
+    print(inconsistency[['scenario', 'request_type', 'std']].head(10))
+    
+    # Generate statistical aggregation plots (distribution of statistics across runs)
+    for metric in ['error_rate_mean', 'error_rate_std']:
+        plt.figure(figsize=(10,6))
+        sns.boxplot(data=stats, x='scenario', y=metric, hue='request_type', 
+                    hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+        metric_name = metric.replace('error_rate_', '').capitalize()
+        plt.title(f'Error Rate {metric_name} - Distribution Across Runs')
+        plt.xlabel('Scenario')
+        plt.ylabel(f'Error Rate {metric_name}')
+        plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.savefig(f'{OUTPUT_DIR}/boxplot_error_rate_{metric.replace("error_rate_", "")}_stats.png')
+        plt.close()
+        print(f"[INFO] Error rate {metric_name} statistics boxplot saved: {OUTPUT_DIR}/boxplot_error_rate_{metric.replace('error_rate_', '')}_stats.png")
+    
+    # Generate separate barplot for each run
+    for run_id in sorted(all_data['run'].unique()):
+        run_data = all_data[all_data['run'] == run_id].copy()
+        if run_data.empty:
+            continue
+            
+        plt.figure(figsize=(10,6))
+        sns.barplot(data=run_data, x='scenario_label', y='is_error', hue='request_type', 
+                    hue_order=request_type_order, order=SCENARIO_ORDER, estimator=np.mean)
+        plt.title(f'Mean Error Rate - Run {run_id}')
+        plt.xlabel('Scenario')
+        plt.ylabel('Mean error rate')
+        plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.savefig(f'{OUTPUT_DIR}/barplot_error_rate_Run{run_id}.png')
+        plt.close()
+        print(f"[INFO] Error rate barplot for Run {run_id} saved: {OUTPUT_DIR}/barplot_error_rate_Run{run_id}.png")
 
 def export_reports(all_data: pd.DataFrame):
     """Exporta tabelas de códigos de resposta e erros para CSV."""
@@ -239,13 +401,14 @@ def export_reports(all_data: pd.DataFrame):
             print(f"[INFO] Tabela de erros salva em {OUTPUT_DIR}/erros.csv")
 
 def tail_latency_stats(all_data: pd.DataFrame):
-    """Calculates and exports advanced percentiles (p95, p99, p99.9) for latency by scenario and request type."""
+    """Calculates and exports advanced percentiles (p95, p99, p99.9) for latency by scenario, request type and run."""
     stats = []
-    for (scenario, req_type), grp in all_data.groupby(['scenario','request_type']):
+    for (scenario, req_type, run), grp in all_data.groupby(['scenario','request_type','run']):
         lat = grp['elapsed']
         stats.append({
             'scenario': get_scenario_label(scenario),
             'request_type': req_type,
+            'run': run,
             'p95': float(np.percentile(lat, 95)),
             'p99': float(np.percentile(lat, 99)),
             'p999': float(np.percentile(lat, 99.9)),
@@ -254,24 +417,25 @@ def tail_latency_stats(all_data: pd.DataFrame):
         })
     df_stats = pd.DataFrame(stats)
     df_stats['scenario'] = pd.Categorical(df_stats['scenario'], categories=SCENARIO_ORDER, ordered=True)
-    df_stats = df_stats.sort_values('scenario')
+    df_stats = df_stats.sort_values(['scenario', 'request_type', 'run'])
     df_stats.to_csv(f'{OUTPUT_DIR}/tail_latency_stats.csv', index=False)
     print(f"[INFO] Tail latency percentiles saved to {OUTPUT_DIR}/tail_latency_stats.csv")
     print(df_stats)
 
 def tail_throughput_stats(all_data: pd.DataFrame):
-    """Calculates and exports advanced percentiles (p95, p99, p99.9) for throughput by scenario and request type."""
+    """Calculates and exports advanced percentiles (p95, p99, p99.9) for throughput by scenario, request type and run."""
     if 'time_rel' not in all_data.columns:
         print("[ERROR] Column 'time_rel' not found for tail throughput stats.")
         return
     all_data = all_data.copy()
     all_data['time_rel_rounded'] = all_data['time_rel'].round().astype(int)
     throughput_data = []
-    for (scenario, req_type), grp in all_data.groupby(['scenario','request_type']):
+    for (scenario, req_type, run), grp in all_data.groupby(['scenario','request_type','run']):
         ts = grp.groupby('time_rel_rounded').size()
         throughput_data.append({
             'scenario': get_scenario_label(scenario),
             'request_type': req_type,
+            'run': run,
             'p95': float(np.percentile(ts, 95)) if len(ts) > 0 else np.nan,
             'p99': float(np.percentile(ts, 99)) if len(ts) > 0 else np.nan,
             'p999': float(np.percentile(ts, 99.9)) if len(ts) > 0 else np.nan,
@@ -280,7 +444,7 @@ def tail_throughput_stats(all_data: pd.DataFrame):
         })
     df_stats = pd.DataFrame(throughput_data)
     df_stats['scenario'] = pd.Categorical(df_stats['scenario'], categories=SCENARIO_ORDER, ordered=True)
-    df_stats = df_stats.sort_values('scenario')
+    df_stats = df_stats.sort_values(['scenario', 'request_type', 'run'])
     df_stats.to_csv(f'{OUTPUT_DIR}/tail_throughput_stats.csv', index=False)
     print(f"[INFO] Tail throughput percentiles saved to {OUTPUT_DIR}/tail_throughput_stats.csv")
     print(df_stats)

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Any
@@ -86,6 +86,18 @@ class DeregistrationRequest(BaseModel):
 class SASAuthorization(BaseModel):
     sas_address: str
 
+class RegistrationRequestWithKey(RegistrationRequest):
+    private_key: str = None
+class GrantRequestWithKey(GrantRequest):
+    private_key: str = None
+class RelinquishmentRequestWithKey(RelinquishmentRequest):
+    private_key: str = None
+class DeregistrationRequestWithKey(DeregistrationRequest):
+    private_key: str = None
+
+class SASAuthorizationWithKey(SASAuthorization):
+    private_key: str = None
+
 @app.on_event("startup")
 async def startup_event():
     """Inicializar blockchain na startup"""
@@ -128,13 +140,14 @@ async def health_check():
 # Endpoints SAS-SAS
 
 @app.post("/v1.3/registration")
-async def registration(reg_request: RegistrationRequest):
+async def registration(req: RegistrationRequestWithKey):
     """Registration - Registra um CBSD via SAS-SAS"""
     try:
-        receipt = blockchain.registration(reg_request.dict())
+        blockchain = Blockchain(req.private_key)
+        receipt = blockchain.registration(req.dict(exclude={"private_key"}))
         return {
             "success": True,
-            "message": f"CBSD {reg_request.fccId}/{reg_request.cbsdSerialNumber} registrado via SAS-SAS",
+            "message": f"CBSD {req.fccId}/{req.cbsdSerialNumber} registrado via SAS-SAS",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }
@@ -143,13 +156,14 @@ async def registration(reg_request: RegistrationRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/v1.3/grant")
-async def grant_spectrum(grant_request: GrantRequest):
+async def grant_spectrum(req: GrantRequestWithKey):
     """Grant - Solicita espectro via SAS-SAS"""
     try:
-        receipt = blockchain.grant(grant_request.dict())
+        blockchain = Blockchain(req.private_key)
+        receipt = blockchain.grant(req.dict(exclude={"private_key"}))
         return {
             "success": True,
-            "message": f"Grant solicitado para {grant_request.fccId}/{grant_request.cbsdSerialNumber} via SAS-SAS",
+            "message": f"Grant solicitado para {req.fccId}/{req.cbsdSerialNumber} via SAS-SAS",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }
@@ -158,13 +172,14 @@ async def grant_spectrum(grant_request: GrantRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/v1.3/relinquishment")
-async def relinquishment(relinquishment_request: RelinquishmentRequest):
+async def relinquishment(req: RelinquishmentRequestWithKey):
     """Relinquishment - Libera grant via SAS-SAS"""
     try:
-        receipt = blockchain.relinquishment(relinquishment_request.dict())
+        blockchain = Blockchain(req.private_key)
+        receipt = blockchain.relinquishment(req.dict(exclude={"private_key"}))
         return {
             "success": True,
-            "message": f"Relinquishment executado para {relinquishment_request.fccId}/{relinquishment_request.cbsdSerialNumber} via SAS-SAS",
+            "message": f"Relinquishment executado para {req.fccId}/{req.cbsdSerialNumber} via SAS-SAS",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }
@@ -173,13 +188,14 @@ async def relinquishment(relinquishment_request: RelinquishmentRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/v1.3/deregistration")
-async def deregistration(dereg_request: DeregistrationRequest):
+async def deregistration(req: DeregistrationRequestWithKey):
     """Deregistration - Remove CBSD via SAS-SAS"""
     try:
-        receipt = blockchain.deregistration(dereg_request.dict())
+        blockchain = Blockchain(req.private_key)
+        receipt = blockchain.deregistration(req.dict(exclude={"private_key"}))
         return {
             "success": True,
-            "message": f"CBSD {dereg_request.fccId}/{dereg_request.cbsdSerialNumber} removido via SAS-SAS",
+            "message": f"Deregistration executado para {req.fccId}/{req.cbsdSerialNumber} via SAS-SAS",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }
@@ -203,24 +219,13 @@ async def check_sas_authorization(sas_address: str):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/sas/authorize")
-async def authorize_sas(request: Request):
-    body = await request.body()
-    # print("DEBUG: Corpo cru recebido em /sas/authorize:", body)
-    import json
+async def authorize_sas(req: SASAuthorizationWithKey):
     try:
-        data = json.loads(body)
-    except Exception as e:
-        # print("DEBUG: Falha ao parsear JSON:", e)
-        raise HTTPException(status_code=400, detail="JSON inválido")
-    if "sas_address" not in data:
-        # print("DEBUG: Campo 'sas_address' ausente no JSON recebido")
-        raise HTTPException(status_code=422, detail="Campo 'sas_address' ausente")
-    sas_address = data["sas_address"]
-    try:
-        receipt = blockchain.authorize_sas(sas_address)
+        blockchain = Blockchain(req.private_key)
+        receipt = blockchain.authorize_sas(req.sas_address)
         return {
             "success": True,
-            "message": f"SAS {sas_address} autorizado",
+            "message": f"SAS {req.sas_address} autorizado",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }
@@ -229,13 +234,13 @@ async def authorize_sas(request: Request):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/sas/revoke")
-async def revoke_sas(sas_auth: SASAuthorization):
-    """Revoga autorização de um SAS"""
+async def revoke_sas(req: SASAuthorizationWithKey):
     try:
-        receipt = blockchain.revoke_sas(sas_auth.sas_address)
+        blockchain = Blockchain(req.private_key)
+        receipt = blockchain.revoke_sas(req.sas_address)
         return {
             "success": True,
-            "message": f"SAS {sas_auth.sas_address} revogado",
+            "message": f"SAS {req.sas_address} revogado",
             "transaction_hash": receipt['transactionHash'].hex(),
             "block_number": receipt['blockNumber']
         }

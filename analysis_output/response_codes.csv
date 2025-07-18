@@ -1,5 +1,5 @@
 scenario,request_type,responseCode,count
-sas_full_flow_high,Authorize ,200,1200
+sas_full_flow_high,Authorize,200,1200
 sas_full_flow_high,Deregistration,400,846
 sas_full_flow_high,Deregistration,200,354
 sas_full_flow_high,Grant,400,850
@@ -9,7 +9,7 @@ sas_full_flow_high,Registration,200,356
 sas_full_flow_high,Relinquishment,400,828
 sas_full_flow_high,Relinquishment,200,372
 sas_full_flow_high,Revoke,200,1200
-sas_full_flow_low,Authorize ,200,20
+sas_full_flow_low,Authorize,200,20
 sas_full_flow_low,Deregistration,200,12
 sas_full_flow_low,Deregistration,400,8
 sas_full_flow_low,Grant,400,14
@@ -19,13 +19,13 @@ sas_full_flow_low,Registration,400,8
 sas_full_flow_low,Relinquishment,200,12
 sas_full_flow_low,Relinquishment,400,8
 sas_full_flow_low,Revoke,200,20
-sas_full_flow_medium,Authorize ,200,200
+sas_full_flow_medium,Authorize,200,200
 sas_full_flow_medium,Deregistration,200,200
 sas_full_flow_medium,Grant,200,200
 sas_full_flow_medium,Registration,200,200
 sas_full_flow_medium,Relinquishment,200,200
 sas_full_flow_medium,Revoke,200,200
-sas_full_flow_stress,Authorize ,200,3000
+sas_full_flow_stress,Authorize,200,3000
 sas_full_flow_stress,Deregistration,400,2223
 sas_full_flow_stress,Deregistration,200,777
 sas_full_flow_stress,Grant,400,2263

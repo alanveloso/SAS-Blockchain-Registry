@@ -1,0 +1,601 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1752206755889,195,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,1,1,http://10.126.1.244:9000/sas/authorize,189,0,32
+1752206756088,2003,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,1,1,http://10.126.1.244:9000/v1.3/registration,2003,0,0
+1752206758092,1999,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,2,2,http://10.126.1.244:9000/v1.3/grant,1999,0,0
+1752206758750,3340,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,3,3,http://10.126.1.244:9000/sas/authorize,3340,0,2
+1752206760139,3946,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,3,3,http://10.126.1.244:9000/v1.3/relinquishment,3946,0,0
+1752206762090,6001,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,5,5,http://10.126.1.244:9000/v1.3/registration,6001,0,0
+1752206761751,6340,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,5,5,http://10.126.1.244:9000/sas/authorize,6340,0,2
+1752206764085,6000,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,5,5,http://10.126.1.244:9000/v1.3/deregistration,6000,0,0
+1752206768092,7991,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,7,7,http://10.126.1.244:9000/v1.3/registration,7991,0,0
+1752206764750,11333,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,7,7,http://10.126.1.244:9000/sas/authorize,11333,0,1
+1752206768092,7991,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,7,7,http://10.126.1.244:9000/v1.3/grant,7991,0,0
+1752206767750,12338,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,9,9,http://10.126.1.244:9000/sas/authorize,12338,0,2
+1752206770086,10002,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,9,9,http://10.126.1.244:9000/sas/revoke,10002,0,0
+1752206770749,17330,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,17330,0,1
+1752206776085,11996,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11995,0,0
+1752206776085,11995,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11995,0,0
+1752206776085,11995,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11995,0,0
+1752206773749,20333,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,20333,0,1
+1752206780090,13992,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13992,0,0
+1752206780091,13991,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13991,0,0
+1752206788080,6001,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-4,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752206788080,13992,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13992,0,0
+1752206776749,25324,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,25324,0,1
+1752206788080,13992,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13992,0,0
+1752206788080,13992,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13992,0,0
+1752206779749,30320,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,30320,0,2
+1752206794084,15984,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15984,0,0
+1752206794082,15986,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15986,0,0
+1752206794082,15986,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15986,0,0
+1752206802074,7995,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-6,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752206802074,15978,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15978,0,0
+1752206782751,35302,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,35301,0,2
+1752206802074,15978,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15978,0,0
+1752206802074,15978,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15978,0,0
+1752206810070,7982,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752206794084,31948,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,31948,0,1
+1752206810071,15962,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15962,0,0
+1752206810070,15963,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15963,0,0
+1752206810070,15963,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15963,0,0
+1752206818053,7979,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-3,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752206810071,23961,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,23961,0,2
+1752206818053,15978,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15977,0,0
+1752206818053,15978,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15978,0,0
+1752206818053,15978,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15978,0,0
+1752206826034,7997,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-7,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/relinquishment,0,0,0
+1752206818053,23970,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,23970,0,1
+1752206826034,15990,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15990,0,0
+1752206826034,15990,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15990,0,0
+1752206826034,15990,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15990,0,0
+1752206834033,7991,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-8,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/relinquishment,0,0,0
+1752206834032,14091,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,14091,0,0
+1752206826034,22089,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,22089,0,2
+1752206834033,14090,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,14090,0,0
+1752206842024,6098,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-4,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752206842023,10009,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,10009,0,0
+1752206834033,18000,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,18000,0,1
+1752206848123,9908,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,9908,0,0
+1752206834033,23999,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,23999,0,1
+1752206848123,9908,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,9908,0,0
+1752206852037,11988,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11988,0,0
+1752206842024,22000,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,22000,0,1
+1752206852034,11991,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11991,0,0
+1752206858033,14007,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14007,0,0
+1752206842024,30015,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,30015,0,1
+1752206858033,14007,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,14007,0,0
+1752206858033,14007,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,14007,0,0
+1752206864026,16037,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16037,0,0
+1752206864026,16037,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,16037,0,0
+1752206842024,38038,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,38038,0,1
+1752206864026,16037,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16037,0,0
+1752206872040,8022,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-7,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/authorize,0,0,0
+1752206872040,14029,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14028,0,0
+1752206848124,37945,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,37944,0,1
+1752206872040,14029,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14028,0,0
+1752206880063,6005,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-2,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/deregistration,0,0,0
+1752206880066,12030,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,12030,0,0
+1752206848124,43972,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,43972,0,2
+1752206880063,12033,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12033,0,0
+1752206886070,12050,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,12050,0,0
+1752206886070,12050,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12050,0,0
+1752206872040,26079,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,26079,0,1
+1752206892098,13943,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13943,0,0
+1752206892098,13943,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13943,0,0
+1752206892098,13943,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13943,0,0
+1752206880063,25977,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,25977,0,2
+1752206898120,15912,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15912,0,0
+1752206880064,33968,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,33968,0,1
+1752206898120,15912,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15912,0,0
+1752206898120,15912,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15912,0,0
+1752206886071,33950,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33949,0,1
+1752206906042,13979,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13979,0,0
+1752206906042,13979,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13978,0,0
+1752206886070,39970,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,39970,0,2
+1752206914034,12006,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,12006,0,0
+1752206914034,12006,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,12006,0,0
+1752206920021,12017,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,12017,0,0
+1752206920021,12017,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12017,0,0
+1752206906042,25996,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,25996,0,1
+1752206906042,33999,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,33999,0,1
+1752206926039,14001,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14001,0,0
+1752206926039,14001,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,14001,0,0
+1752206926040,14000,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14000,0,0
+1752206932038,16005,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,16005,0,0
+1752206932038,16006,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16006,0,0
+1752206914034,34010,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,34010,0,1
+1752206932038,16005,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16005,0,0
+1752206940042,8001,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-7,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/deregistration,0,0,0
+1752206940042,13997,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13997,0,0
+1752206940044,13995,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13995,0,0
+1752206914037,40002,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,40002,0,1
+1752206920022,40012,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,40012,0,1
+1752206948045,11989,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11989,0,0
+1752206948045,11989,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11989,0,0
+1752206940042,25989,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,25988,0,2
+1752206954039,11991,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11990,0,0
+1752206954039,11991,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11990,0,0
+1752206960035,13993,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13993,0,0
+1752206960035,13993,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13993,0,0
+1752206960035,13993,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13993,0,0
+1752206948044,25984,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,25984,0,2
+1752206966031,16011,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,16011,0,0
+1752206966031,16011,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16011,0,0
+1752206966031,16011,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16011,0,0
+1752206948045,33997,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33997,0,1
+1752206974032,8010,Authorize ,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-4,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/authorize,0,0,0
+1752206974029,14013,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14013,0,0
+1752206948045,39997,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,39997,0,1
+1752206974029,14013,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,14013,0,0
+1752206954039,40018,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,40018,0,1
+1752206982042,12015,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,12015,0,0
+1752206982042,12015,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12015,0,0
+1752206988043,12003,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12003,0,0
+1752206988043,12003,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,12003,0,0
+1752206974029,26017,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,26017,0,2
+1752206982042,25999,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,25999,0,1
+1752206994059,13983,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13983,0,0
+1752206994059,13983,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13983,0,0
+1752206994059,13983,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13983,0,0
+1752207000047,15992,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15992,0,0
+1752207000050,15989,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15989,0,0
+1752206982042,33996,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,33996,0,1
+1752207000048,15991,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15991,0,0
+1752207008041,7996,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752206982042,39982,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,39982,0,1
+1752207008041,13983,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13983,0,0
+1752207008041,13983,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13983,0,0
+1752206988044,39979,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,39979,0,1
+1752207016040,11984,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11983,0,0
+1752207016040,11984,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11984,0,0
+1752207022026,12001,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12001,0,0
+1752207008041,25985,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,25985,0,2
+1752207022026,12001,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,12001,0,0
+1752207028023,14000,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14000,0,0
+1752207016040,25984,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,25984,0,1
+1752207028024,13999,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13999,0,0
+1752207028023,14000,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,14000,0,0
+1752207034029,15994,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15994,0,0
+1752207016039,33985,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,33985,0,2
+1752207034027,15996,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15996,0,0
+1752207034027,15996,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15996,0,0
+1752207042025,16001,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,16001,0,0
+1752207042025,16001,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16001,0,0
+1752207042025,16001,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16001,0,0
+1752207016039,41987,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,41987,0,2
+1752207050025,8001,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-6,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207050025,11999,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11999,0,0
+1752207022026,39998,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,39998,0,1
+1752207058026,3997,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207058026,8102,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,8102,0,0
+1752207042025,24104,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,24104,0,1
+1752207062024,10097,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,10097,0,0
+1752207050025,22097,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,22097,0,1
+1752207062026,10095,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,10095,0,0
+1752207050025,28096,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,28096,0,1
+1752207066130,11991,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11991,0,0
+1752207066130,11991,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11991,0,0
+1752207058026,28083,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,28083,0,1
+1752207072123,13987,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13987,0,0
+1752207072123,13987,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13987,0,0
+1752207072123,13987,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13987,0,0
+1752207078122,13973,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13973,0,0
+1752207078122,13973,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13973,0,0
+1752207058026,34069,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,34069,0,1
+1752207086110,5984,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-8,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/deregistration,0,0,0
+1752207086110,9980,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,9980,0,0
+1752207058026,38064,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,38064,0,2
+1752207062024,42058,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,42058,0,1
+1752207092096,11987,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11987,0,0
+1752207092099,11984,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11984,0,0
+1752207092096,11987,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11987,0,0
+1752207078122,31951,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,31951,0,1
+1752207096092,13981,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13981,0,0
+1752207096092,13981,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13981,0,0
+1752207086110,31954,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,31954,0,2
+1752207104084,13981,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13981,0,0
+1752207104084,13981,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13981,0,0
+1752207104084,13981,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13981,0,0
+1752207086110,39970,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,39970,0,2
+1752207110073,16007,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16007,0,0
+1752207110073,16008,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,16007,0,0
+1752207110073,16008,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,16008,0,0
+1752207118066,8015,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752207092097,37975,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,37975,0,1
+1752207118066,12006,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,12006,0,0
+1752207126082,3990,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-7,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/registration,0,0,0
+1752207126082,7992,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,7992,0,0
+1752207104084,29990,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,29990,0,2
+1752207130073,9989,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,9989,0,0
+1752207130073,9989,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,9989,0,0
+1752207118066,21996,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,21996,0,1
+1752207134075,11984,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11983,0,0
+1752207134075,11984,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11983,0,0
+1752207118066,27993,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,27993,0,2
+1752207126082,27961,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,27960,0,2
+1752207140062,13980,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13979,0,0
+1752207140062,13980,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13979,0,0
+1752207140062,13980,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13980,0,0
+1752207146060,16062,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16062,0,0
+1752207126083,36039,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,36039,0,1
+1752207146060,16062,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16062,0,0
+1752207146060,16062,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,16062,0,0
+1752207154043,14075,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14075,0,0
+1752207126084,42034,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,42034,0,1
+1752207154047,14071,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14071,0,0
+1752207162122,5995,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-5,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207162122,11978,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11977,0,0
+1752207162123,11977,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11976,0,0
+1752207130074,44027,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,44026,0,1
+1752207168118,13962,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13962,0,0
+1752207168118,13962,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13962,0,0
+1752207168118,13962,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13962,0,0
+1752207154043,28038,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,28038,0,2
+1752207174101,15958,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15958,0,0
+1752207174101,15958,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15958,0,0
+1752207174101,15958,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15958,0,0
+1752207154043,36016,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,36016,0,2
+1752207182085,7974,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207162122,33926,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33925,0,2
+1752207182082,13967,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13966,0,0
+1752207182082,13967,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13966,0,0
+1752207190059,11977,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11977,0,0
+1752207168118,33918,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,33918,0,1
+1752207190059,11978,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11977,0,0
+1752207196049,11973,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11973,0,0
+1752207182082,25940,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,25940,0,2
+1752207196049,11973,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11973,0,0
+1752207190059,24059,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,24059,0,1
+1752207202038,12081,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,12081,0,0
+1752207202038,12081,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,12081,0,0
+1752207208023,14099,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,14098,0,0
+1752207190059,32062,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,32061,0,1
+1752207208023,14099,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,14098,0,0
+1752207208023,14099,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14098,0,0
+1752207214124,13995,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13995,0,0
+1752207214120,13999,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13999,0,0
+1752207190059,38059,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,38059,0,2
+1752207222122,11898,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11897,0,0
+1752207222122,11898,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11898,0,0
+1752207196049,37972,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,37971,0,2
+1752207202038,38076,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,38076,0,2
+1752207228120,11994,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11994,0,0
+1752207228120,11994,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11994,0,0
+1752207234021,14074,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14074,0,0
+1752207214120,33975,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33975,0,2
+1752207234021,14074,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,14074,0,0
+1752207234021,14074,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,14074,0,0
+1752207240118,15962,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15962,0,0
+1752207240115,15965,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15965,0,0
+1752207222122,33957,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,33957,0,1
+1752207248095,7984,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/relinquishment,0,0,0
+1752207240115,15966,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15965,0,0
+1752207248095,13967,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13967,0,0
+1752207248095,13968,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13967,0,0
+1752207222122,39940,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,39940,0,1
+1752207256081,11996,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11995,0,0
+1752207228120,39957,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,39957,0,2
+1752207256081,11996,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11995,0,0
+1752207262064,11998,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11998,0,0
+1752207248095,25966,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,25966,0,2
+1752207262064,11998,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11998,0,0
+1752207256081,23966,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,23966,0,1
+1752207268077,11970,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11970,0,0
+1752207268077,11970,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11970,0,0
+1752207256081,31943,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,31943,0,1
+1752207274062,13961,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13961,0,0
+1752207274063,13960,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13960,0,0
+1752207274065,13958,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13958,0,0
+1752207256082,39939,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,39939,0,1
+1752207280048,15974,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15973,0,0
+1752207280048,15974,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15974,0,0
+1752207280048,15973,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15973,0,0
+1752207288024,14092,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14092,0,0
+1752207262064,40052,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,40052,0,2
+1752207288024,14092,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14092,0,0
+1752207296022,12079,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,12079,0,0
+1752207296022,12079,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,12079,0,0
+1752207268077,40025,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,40025,0,2
+1752207288024,28066,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,28065,0,2
+1752207302119,13970,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13969,0,0
+1752207302117,13972,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13971,0,0
+1752207302117,13972,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13972,0,0
+1752207308103,15967,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15967,0,0
+1752207308103,15967,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15967,0,0
+1752207308103,15967,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15967,0,0
+1752207316090,7980,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-10,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/registration,0,0,0
+1752207288025,36046,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,36045,0,1
+1752207316090,11969,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11969,0,0
+1752207296022,32036,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,32036,0,1
+1752207296022,38025,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,38025,0,1
+1752207324070,9977,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,9977,0,0
+1752207324071,9976,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,9976,0,0
+1752207316090,23956,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,23955,0,2
+1752207328058,11987,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11986,0,0
+1752207328059,11986,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11986,0,0
+1752207334052,11982,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11982,0,0
+1752207334049,11985,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11985,0,0
+1752207316091,29943,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,29943,0,1
+1752207340046,13973,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13973,0,0
+1752207340046,13973,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13973,0,0
+1752207340046,13973,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13973,0,0
+1752207324070,29948,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,29948,0,1
+1752207346033,16068,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,16068,0,0
+1752207346033,16068,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,16068,0,0
+1752207324070,38031,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,38031,0,1
+1752207346033,16068,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,16068,0,0
+1752207354019,16080,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16079,0,0
+1752207324070,46029,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,46028,0,1
+1752207354019,16080,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16079,0,0
+1752207354019,16080,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16079,0,0
+1752207334049,42035,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,42034,0,2
+1752207362103,13981,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13980,0,0
+1752207362103,13981,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13980,0,0
+1752207370099,5983,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-6,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/deregistration,0,0,0
+1752207370099,11975,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11975,0,0
+1752207354019,28055,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,28055,0,1
+1752207370099,11975,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11975,0,0
+1752207376085,13971,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13971,0,0
+1752207376084,13972,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13972,0,0
+1752207362103,27953,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,27953,0,2
+1752207376085,13971,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13971,0,0
+1752207362105,35941,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,35941,0,2
+1752207382076,15970,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15970,0,0
+1752207382076,15970,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15970,0,0
+1752207382076,15970,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15970,0,0
+1752207370099,33939,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,33939,0,2
+1752207390060,13979,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13979,0,0
+1752207390057,13982,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13982,0,0
+1752207376084,33943,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33943,0,2
+1752207398045,11981,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11981,0,0
+1752207398045,11981,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11981,0,0
+1752207390057,26060,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,26060,0,2
+1752207404040,12077,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,12077,0,0
+1752207404040,12077,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,12077,0,0
+1752207390057,34041,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,34041,0,2
+1752207410027,14071,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14071,0,0
+1752207410027,14071,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,14071,0,0
+1752207410028,14070,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,14070,0,0
+1752207416117,15957,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15957,0,0
+1752207416117,15957,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15957,0,0
+1752207398046,34028,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,34028,0,1
+1752207416117,15957,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15957,0,0
+1752207424098,7976,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-6,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/registration,0,0,0
+1752207398046,38025,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,38025,0,1
+1752207424103,11968,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11968,0,0
+1752207432076,3996,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/registration,0,0,0
+1752207432076,7988,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,7988,0,0
+1752207404040,36024,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,36024,0,2
+1752207436073,9995,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,9995,0,0
+1752207424098,21969,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,21969,0,2
+1752207436073,9995,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,9995,0,0
+1752207440065,11983,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11983,0,0
+1752207440065,11983,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11983,0,0
+1752207424098,27949,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,27949,0,2
+1752207432076,27967,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,27967,0,1
+1752207446068,13974,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13974,0,0
+1752207446068,13974,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13974,0,0
+1752207446068,13974,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13974,0,0
+1752207452051,15983,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15983,0,0
+1752207452049,15986,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15985,0,0
+1752207452049,15986,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15985,0,0
+1752207432076,35959,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,35958,0,1
+1752207460044,7990,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-3,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/relinquishment,0,0,0
+1752207432076,39956,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,39956,0,1
+1752207460044,11988,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11988,0,0
+1752207468034,9989,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,9989,0,0
+1752207436073,41951,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,41951,0,2
+1752207468034,9989,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,9989,0,0
+1752207472033,12087,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,12087,0,0
+1752207472033,12087,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,12087,0,0
+1752207460044,24076,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,24076,0,2
+1752207478025,13998,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13998,0,0
+1752207478025,13998,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13998,0,0
+1752207478025,13999,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13998,0,0
+1752207460044,31980,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,31979,0,2
+1752207484121,15992,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15992,0,0
+1752207484123,15990,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15990,0,0
+1752207468034,32078,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,32078,0,1
+1752207484121,15992,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15992,0,0
+1752207492023,8089,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-1,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/deregistration,0,0,0
+1752207468034,38070,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,38070,0,1
+1752207492023,14081,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,14081,0,0
+1752207492023,14081,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,14081,0,0
+1752207468034,44064,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,44064,0,1
+1752207500114,11985,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11985,0,0
+1752207500114,11985,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11985,0,0
+1752207506106,11983,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11983,0,0
+1752207506106,11983,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11983,0,0
+1752207492023,26065,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,26065,0,2
+1752207500114,25956,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,25956,0,1
+1752207512100,13969,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13969,0,0
+1752207512100,13969,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13969,0,0
+1752207512103,13966,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13966,0,0
+1752207518090,15985,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15985,0,0
+1752207518090,15985,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15985,0,0
+1752207500114,33961,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33961,0,1
+1752207518090,15985,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15985,0,0
+1752207526071,8004,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-3,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/registration,0,0,0
+1752207526071,13987,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13987,0,0
+1752207526071,13987,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13987,0,0
+1752207500114,39944,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,39944,0,1
+1752207534075,11981,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11981,0,0
+1752207534075,11981,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11981,0,0
+1752207506106,39951,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,39951,0,2
+1752207540059,11996,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11996,0,0
+1752207540059,11996,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11996,0,0
+1752207526071,25985,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,25985,0,2
+1752207546058,13989,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13989,0,0
+1752207546058,13989,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13989,0,0
+1752207546058,13989,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13989,0,0
+1752207534075,25971,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,25971,0,2
+1752207534075,33967,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,33967,0,2
+1752207552057,15986,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15986,0,0
+1752207560047,7995,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-8,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207552057,15986,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15986,0,0
+1752207552057,15986,Grant,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15986,0,0
+1752207534075,39960,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,39960,0,2
+1752207560047,13988,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13988,0,0
+1752207560047,13988,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13988,0,0
+1752207568043,11991,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11991,0,0
+1752207568044,11990,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11990,0,0
+1752207540061,39972,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,39972,0,3
+1752207560047,25982,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,25982,0,2
+1752207574037,11994,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11993,0,0
+1752207574041,11989,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11989,0,0
+1752207568043,25980,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,25980,0,2
+1752207580035,13988,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13988,0,0
+1752207580035,13988,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13988,0,0
+1752207580035,13988,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13988,0,0
+1752207586030,16089,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,16089,0,0
+1752207586030,16089,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,16089,0,0
+1752207586030,16089,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,16089,0,0
+1752207568044,34077,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,34076,0,1
+1752207594023,8097,Registration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-4,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/registration,0,0,0
+1752207594023,13999,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13999,0,0
+1752207594023,13999,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13999,0,0
+1752207568044,39978,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,39978,0,1
+1752207602121,12004,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,12004,0,0
+1752207574037,40088,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,40088,0,1
+1752207602124,12001,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,12001,0,0
+1752207608022,12094,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,12094,0,0
+1752207594023,26094,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,26094,0,2
+1752207608022,12094,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,12094,0,0
+1752207614124,13990,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13990,0,0
+1752207602121,25994,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,25994,0,2
+1752207614124,13990,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13990,0,0
+1752207614124,13990,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13990,0,0
+1752207620118,15990,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15990,0,0
+1752207620118,15990,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15990,0,0
+1752207620118,15990,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,15990,0,0
+1752207602121,33987,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,33987,0,2
+1752207628115,13983,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13983,0,0
+1752207628115,13983,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13983,0,0
+1752207602121,39978,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,39978,0,2
+1752207636109,11989,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11989,0,0
+1752207608022,40075,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,40075,0,1
+1752207636108,11990,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11990,0,0
+1752207642100,11992,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,11992,0,0
+1752207628115,25976,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,25976,0,1
+1752207642100,11992,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11992,0,0
+1752207648099,13978,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13978,0,0
+1752207628115,33961,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,33961,0,1
+1752207648099,13978,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13978,0,0
+1752207648099,13978,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13978,0,0
+1752207636108,33966,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,33966,0,2
+1752207654092,15981,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15981,0,0
+1752207654092,15981,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15981,0,0
+1752207662078,7996,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-4,text,false,,2601,0,10,10,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207654092,15981,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15981,0,0
+1752207662080,13991,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13991,0,0
+1752207636108,39963,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,39963,0,2
+1752207662078,13993,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13993,0,0
+1752207670075,5996,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-6,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752207642100,37960,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,37960,0,1
+1752207670075,9985,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,9985,0,0
+1752207662078,23964,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,23964,0,2
+1752207676070,9971,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,9971,0,0
+1752207676070,9971,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,9971,0,0
+1752207680060,11980,Registration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11980,0,0
+1752207670075,21966,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,21966,0,1
+1752207680060,11980,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,11980,0,0
+1752207686043,13990,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13990,0,0
+1752207686043,13990,Registration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,13990,0,0
+1752207686043,13990,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13990,0,0
+1752207670075,29958,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,29958,0,1
+1752207692042,15999,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,15999,0,0
+1752207670075,37966,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,37966,0,1
+1752207692044,15997,Grant,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15997,0,0
+1752207692042,15999,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,15999,0,0
+1752207700034,14007,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14007,0,0
+1752207676070,37970,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,37970,0,1
+1752207700033,14008,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14008,0,0
+1752207676071,43960,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,43960,0,1
+1752207708041,11991,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11991,0,0
+1752207708041,11991,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11991,0,0
+1752207700033,27998,Grant,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,27998,0,2
+1752207714043,13988,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,13988,0,0
+1752207714043,13988,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,13988,0,0
+1752207714043,13988,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,13988,0,0
+1752207720034,15992,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,15992,0,0
+1752207720034,15993,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,15993,0,0
+1752207720035,15992,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,15991,0,0
+1752207700033,35994,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,35993,0,2
+1752207728031,7994,Deregistration,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-7,text,false,,2601,0,10,10,http://10.126.1.244:9000/v1.3/deregistration,0,0,0
+1752207708042,33989,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,33989,0,1
+1752207728031,14000,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,14000,0,0
+1752207728031,14000,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,14000,0,0
+1752207736027,11996,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,11996,0,0
+1752207708042,39980,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,39980,0,1
+1752207736027,11996,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,11996,0,0
+1752207742032,12086,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,12086,0,0
+1752207742032,12086,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,12086,0,0
+1752207728031,26087,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,10,10,http://10.126.1.244:9000/v1.3/registration,26086,0,2
+1752207748023,11998,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,10,10,http://10.126.1.244:9000/v1.3/deregistration,11998,0,0
+1752207736027,23994,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,23994,0,2
+1752207748023,11998,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,10,10,http://10.126.1.244:9000/v1.3/relinquishment,11998,0,0
+1752207754118,13999,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-2,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13999,0,0
+1752207754121,13996,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-1,text,true,,317,242,10,10,http://10.126.1.244:9000/sas/revoke,13996,0,0
+1752207736027,32091,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,319,245,10,10,http://10.126.1.244:9000/sas/authorize,32091,0,2
+1752207754118,13999,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,10,10,http://10.126.1.244:9000/v1.3/grant,13999,0,0
+1752207760021,16088,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,16088,0,0
+1752207736027,40083,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,8,8,http://10.126.1.244:9000/v1.3/deregistration,40083,0,2
+1752207760021,16088,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,8,8,http://10.126.1.244:9000/v1.3/deregistration,16088,0,0
+1752207760021,16088,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,8,8,http://10.126.1.244:9000/sas/revoke,16088,0,0
+1752207768119,7991,Relinquishment,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-10,text,false,,2601,0,8,8,http://10.126.1.244:9000/v1.3/relinquishment,0,0,0
+1752207742032,38076,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,38076,0,2
+1752207768119,11989,Registration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,11989,0,0
+1752207748023,38078,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,38078,0,2
+1752207776110,9990,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,8,8,http://10.126.1.244:9000/sas/revoke,9990,0,0
+1752207776110,9990,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,9990,0,0
+1752207780108,12009,Registration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,12009,0,0
+1752207776110,16007,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,16007,0,1
+1752207780112,12005,Grant,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,378,506,8,8,http://10.126.1.244:9000/v1.3/grant,12005,0,0
+1752207786102,14011,Registration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,14011,0,0
+1752207786102,14011,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,14011,0,0
+1752207776110,24002,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,8,8,http://10.126.1.244:9000/sas/revoke,24002,0,2
+1752207786102,14011,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,8,8,http://10.126.1.244:9000/v1.3/grant,14011,0,0
+1752207792119,15913,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,386,329,8,8,http://10.126.1.244:9000/v1.3/relinquishment,15913,0,0
+1752207776110,31921,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,8,8,http://10.126.1.244:9000/v1.3/deregistration,31921,0,2
+1752207792119,15913,Registration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,15913,0,0
+1752207792119,15913,Grant,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,378,506,8,8,http://10.126.1.244:9000/v1.3/grant,15913,0,0
+1752207800113,7918,Grant,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-6,text,false,,2601,0,8,8,http://10.126.1.244:9000/v1.3/grant,0,0,0
+1752207800113,9917,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,9917,0,0
+1752207800113,15917,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,8,8,http://10.126.1.244:9000/v1.3/relinquishment,15917,0,2
+1752207808033,7999,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,8,8,http://10.126.1.244:9000/sas/revoke,7998,0,0
+1752207808033,7998,Grant,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,378,506,8,8,http://10.126.1.244:9000/v1.3/grant,7998,0,0
+1752207810036,10018,Registration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,10018,0,0
+1752207800113,19941,Registration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,19940,0,2
+1752207816032,12046,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,386,329,8,8,http://10.126.1.244:9000/v1.3/relinquishment,12046,0,0
+1752207808033,20045,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,370,307,8,8,http://10.126.1.244:9000/v1.3/deregistration,20045,0,1
+1752207816032,12046,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,319,245,8,8,http://10.126.1.244:9000/sas/authorize,12046,0,0
+1752207816032,12046,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,8,8,http://10.126.1.244:9000/v1.3/deregistration,12046,0,0
+1752207808033,26068,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,386,329,8,8,http://10.126.1.244:9000/v1.3/relinquishment,26068,0,1
+1752207820055,14046,Grant,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,378,506,8,8,http://10.126.1.244:9000/v1.3/grant,14046,0,0
+1752207828079,6022,Revoke,Non HTTP response code: java.net.SocketException,Non HTTP response message: Connection reset,SAS Full Flow Thread Group Medium 1-7,text,false,,2601,0,8,8,http://10.126.1.244:9000/sas/revoke,0,0,0
+1752207820055,14046,Grant,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,378,506,8,8,http://10.126.1.244:9000/v1.3/grant,14046,0,0
+1752207808034,34085,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,386,329,8,8,http://10.126.1.244:9000/v1.3/relinquishment,34085,0,0
+1752207828079,14040,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,370,307,8,8,http://10.126.1.244:9000/v1.3/deregistration,14040,0,0
+1752207828079,14040,Registration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,372,717,8,8,http://10.126.1.244:9000/v1.3/registration,14040,0,0
+1752207828079,14040,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-3,text,true,,317,242,8,8,http://10.126.1.244:9000/sas/revoke,14040,0,0
+1752207834100,13928,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,386,329,7,7,http://10.126.1.244:9000/v1.3/relinquishment,13928,0,0
+1752207834100,13929,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,370,307,7,7,http://10.126.1.244:9000/v1.3/deregistration,13929,0,0
+1752207834100,13929,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,386,329,7,7,http://10.126.1.244:9000/v1.3/relinquishment,13929,0,0
+1752207842122,9928,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,370,307,7,7,http://10.126.1.244:9000/v1.3/deregistration,9928,0,0
+1752207834100,17949,Authorize ,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,319,245,7,7,http://10.126.1.244:9000/sas/authorize,17949,0,2
+1752207842120,15942,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-5,text,true,,317,242,7,7,http://10.126.1.244:9000/sas/revoke,15942,0,2
+1752207848030,10032,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,370,307,7,7,http://10.126.1.244:9000/v1.3/deregistration,10032,0,0
+1752207848030,10032,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-9,text,true,,317,242,7,7,http://10.126.1.244:9000/sas/revoke,10032,0,0
+1752207852049,12020,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-6,text,true,,317,242,5,5,http://10.126.1.244:9000/sas/revoke,12019,0,0
+1752207852049,12019,Registration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,372,717,5,5,http://10.126.1.244:9000/v1.3/registration,12019,0,0
+1752207842120,21950,Grant,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,378,506,5,5,http://10.126.1.244:9000/v1.3/grant,21950,0,2
+1752207848030,20039,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,370,307,4,4,http://10.126.1.244:9000/v1.3/deregistration,20039,0,1
+1752207858061,10007,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-4,text,true,,317,242,4,4,http://10.126.1.244:9000/sas/revoke,10007,0,0
+1752207864070,8005,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,386,329,3,3,http://10.126.1.244:9000/v1.3/relinquishment,8005,0,0
+1752207864070,8005,Grant,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,378,506,3,3,http://10.126.1.244:9000/v1.3/grant,8005,0,0
+1752207868070,6014,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-8,text,true,,317,242,3,3,http://10.126.1.244:9000/sas/revoke,6014,0,0
+1752207872075,6033,Relinquishment,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,386,329,2,2,http://10.126.1.244:9000/v1.3/relinquishment,6033,0,0
+1752207872078,6030,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,370,307,2,2,http://10.126.1.244:9000/v1.3/deregistration,6030,0,0
+1752207878109,4002,Deregistration,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,370,307,2,2,http://10.126.1.244:9000/v1.3/deregistration,4002,0,0
+1752207878109,4002,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-10,text,true,,317,242,2,2,http://10.126.1.244:9000/sas/revoke,4002,0,0
+1752207882112,1906,Revoke,200,OK,SAS Full Flow Thread Group Medium 1-7,text,true,,317,242,1,1,http://10.126.1.244:9000/sas/revoke,1906,0,0

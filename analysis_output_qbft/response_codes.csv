@@ -1,0 +1,41 @@
+scenario,request_type,responseCode,count
+sas_full_flow_high,Authorize,200,2999
+sas_full_flow_high,Authorize,Non HTTP response code: java.net.SocketException,1
+sas_full_flow_high,Deregistration,200,2994
+sas_full_flow_high,Deregistration,Non HTTP response code: java.net.SocketException,6
+sas_full_flow_high,Grant,200,2985
+sas_full_flow_high,Grant,Non HTTP response code: java.net.SocketException,15
+sas_full_flow_high,Registration,200,3000
+sas_full_flow_high,Relinquishment,200,2996
+sas_full_flow_high,Relinquishment,Non HTTP response code: java.net.SocketException,4
+sas_full_flow_high,Revoke,200,2997
+sas_full_flow_high,Revoke,Non HTTP response code: java.net.SocketException,3
+sas_full_flow_low,Authorize,200,50
+sas_full_flow_low,Deregistration,200,50
+sas_full_flow_low,Grant,200,50
+sas_full_flow_low,Registration,200,50
+sas_full_flow_low,Relinquishment,200,50
+sas_full_flow_low,Revoke,200,50
+sas_full_flow_medium,Authorize,200,478
+sas_full_flow_medium,Authorize,Non HTTP response code: java.net.SocketException,22
+sas_full_flow_medium,Deregistration,200,478
+sas_full_flow_medium,Deregistration,Non HTTP response code: java.net.SocketException,22
+sas_full_flow_medium,Grant,200,457
+sas_full_flow_medium,Grant,Non HTTP response code: java.net.SocketException,43
+sas_full_flow_medium,Registration,200,474
+sas_full_flow_medium,Registration,Non HTTP response code: java.net.SocketException,26
+sas_full_flow_medium,Relinquishment,200,474
+sas_full_flow_medium,Relinquishment,Non HTTP response code: java.net.SocketException,26
+sas_full_flow_medium,Revoke,200,470
+sas_full_flow_medium,Revoke,Non HTTP response code: java.net.SocketException,30
+sas_full_flow_stress,Authorize,200,7498
+sas_full_flow_stress,Authorize,Non HTTP response code: java.net.SocketException,2
+sas_full_flow_stress,Deregistration,200,7498
+sas_full_flow_stress,Deregistration,Non HTTP response code: java.net.SocketException,2
+sas_full_flow_stress,Grant,200,7492
+sas_full_flow_stress,Grant,Non HTTP response code: java.net.SocketException,8
+sas_full_flow_stress,Registration,200,7500
+sas_full_flow_stress,Relinquishment,200,7493
+sas_full_flow_stress,Relinquishment,Non HTTP response code: java.net.SocketException,7
+sas_full_flow_stress,Revoke,200,7497
+sas_full_flow_stress,Revoke,Non HTTP response code: java.net.SocketException,3
