@@ -30,6 +30,11 @@ async function main() {
   // Salva as contas em um arquivo JSON
   fs.writeFileSync("generated_accounts.json", JSON.stringify(accounts, null, 2));
   console.log("Contas e chaves privadas salvas em generated_accounts.json");
+
+  // Salva as contas em um arquivo CSV
+  const csv = ["address,privateKey"].concat(accounts.map(a => `${a.address},${a.privateKey}`)).join("\n");
+  fs.writeFileSync("accounts.csv", csv);
+  console.log("Contas e chaves privadas salvas em accounts.csv");
 }
 
 main()

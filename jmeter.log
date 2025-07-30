@@ -1,219 +1,63 @@
-2025-07-02 11:06:10,444 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
-2025-07-02 11:06:10,467 INFO o.a.j.JMeter: Loading user properties from: /opt/apache-jmeter-5.6.3/bin/user.properties
-2025-07-02 11:06:10,468 INFO o.a.j.JMeter: Loading system properties from: /opt/apache-jmeter-5.6.3/bin/system.properties
-2025-07-02 11:06:10,475 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
-2025-07-02 11:06:10,475 INFO o.a.j.JMeter: Version 5.6.3
-2025-07-02 11:06:10,476 INFO o.a.j.JMeter: java.version=21.0.7
-2025-07-02 11:06:10,476 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
-2025-07-02 11:06:10,476 INFO o.a.j.JMeter: os.name=Linux
-2025-07-02 11:06:10,476 INFO o.a.j.JMeter: os.arch=amd64
-2025-07-02 11:06:10,476 INFO o.a.j.JMeter: os.version=6.11.0-28-generic
-2025-07-02 11:06:10,476 INFO o.a.j.JMeter: file.encoding=UTF-8
-2025-07-02 11:06:10,477 INFO o.a.j.JMeter: java.awt.headless=true
-2025-07-02 11:06:10,477 INFO o.a.j.JMeter: Max memory     =1073741824
-2025-07-02 11:06:10,477 INFO o.a.j.JMeter: Available Processors =4
-2025-07-02 11:06:10,490 INFO o.a.j.JMeter: Default Locale=English (EN)
-2025-07-02 11:06:10,490 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
-2025-07-02 11:06:10,491 INFO o.a.j.JMeter: JMeterHome=/opt/apache-jmeter-5.6.3
-2025-07-02 11:06:10,491 INFO o.a.j.JMeter: user.dir  =/home/alanveloso/repos/SAS-Blockchain-Registry
-2025-07-02 11:06:10,491 INFO o.a.j.JMeter: PWD       =/home/alanveloso/repos/SAS-Blockchain-Registry
-2025-07-02 11:06:10,491 INFO o.a.j.JMeter: IP: 127.0.1.1 Name: bluequeen FullName: bluequeen
-2025-07-02 11:06:10,509 INFO o.a.j.s.FileServer: Default base='/home/alanveloso/repos/SAS-Blockchain-Registry'
-2025-07-02 11:06:10,511 INFO o.a.j.s.FileServer: Set new base='/home/alanveloso/repos/SAS-Blockchain-Registry/plans'
-2025-07-02 11:06:10,759 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
-2025-07-02 11:06:10,793 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
-2025-07-02 11:06:10,797 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
-2025-07-02 11:06:10,801 INFO o.a.j.s.SaveService: Loading file: plans/sas_full_flow_stress.jmx
-2025-07-02 11:06:10,863 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2025-07-02 11:06:10,864 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2025-07-02 11:06:10,864 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2025-07-02 11:06:10,864 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2025-07-02 11:06:10,864 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
-2025-07-02 11:06:10,864 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
-2025-07-02 11:06:10,888 INFO o.a.j.JMeter: Creating summariser <summary>
-2025-07-02 11:06:10,910 INFO o.a.j.e.StandardJMeterEngine: Running the test!
-2025-07-02 11:06:10,911 INFO o.a.j.s.SampleEvent: List of sample_variables: []
-2025-07-02 11:06:10,911 INFO o.a.j.s.SampleEvent: List of sample_variables: []
-2025-07-02 11:06:10,917 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
-2025-07-02 11:06:10,917 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
-2025-07-02 11:06:11,002 INFO o.a.j.JMeter: Running test (1751465171002)
-2025-07-02 11:06:11,031 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : SAS Full Flow Thread Group Stress
-2025-07-02 11:06:11,032 INFO o.a.j.e.StandardJMeterEngine: Starting 50 threads for group SAS Full Flow Thread Group Stress.
-2025-07-02 11:06:11,032 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
-2025-07-02 11:06:11,032 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=50 ramp-up=90 delayedStart=false
-2025-07-02 11:06:11,040 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-1
-2025-07-02 11:06:11,071 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = bluequeen
-2025-07-02 11:06:11,082 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
-2025-07-02 11:06:11,084 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
-2025-07-02 11:06:11,084 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
-2025-07-02 11:06:11,084 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
-2025-07-02 11:06:11,084 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
-2025-07-02 11:06:11,153 INFO o.a.j.t.ThreadGroup: Started thread group number 1
-2025-07-02 11:06:11,154 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
-2025-07-02 11:06:12,836 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-2
-2025-07-02 11:06:14,636 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-3
-2025-07-02 11:06:16,437 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-4
-2025-07-02 11:06:18,235 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-5
-2025-07-02 11:06:20,034 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-6
-2025-07-02 11:06:21,834 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-7
-2025-07-02 11:06:23,636 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-8
-2025-07-02 11:06:25,437 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-9
-2025-07-02 11:06:27,236 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-10
-2025-07-02 11:06:29,034 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-11
-2025-07-02 11:06:30,043 INFO o.a.j.r.Summariser: summary +    613 in 00:00:19 =   32.2/s Avg:   174 Min:    26 Max:   410 Err:   239 (38.99%) Active: 11 Started: 11 Finished: 0
-2025-07-02 11:06:30,835 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-12
-2025-07-02 11:06:32,634 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-13
-2025-07-02 11:06:34,435 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-14
-2025-07-02 11:06:35,829 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-1
-2025-07-02 11:06:35,830 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-1
-2025-07-02 11:06:36,234 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-15
-2025-07-02 11:06:38,034 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-16
-2025-07-02 11:06:39,834 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-17
-2025-07-02 11:06:41,634 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-18
-2025-07-02 11:06:43,433 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-19
-2025-07-02 11:06:45,234 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-20
-2025-07-02 11:06:47,036 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-21
-2025-07-02 11:06:48,836 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-22
-2025-07-02 11:06:50,636 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-23
-2025-07-02 11:06:52,438 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-24
-2025-07-02 11:06:54,234 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-25
-2025-07-02 11:06:56,036 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-26
-2025-07-02 11:06:57,835 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-27
-2025-07-02 11:06:59,635 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-28
-2025-07-02 11:07:00,077 INFO o.a.j.r.Summariser: summary +   1060 in 00:00:30 =   35.3/s Avg:   513 Min:   151 Max:  1191 Err:   544 (51.32%) Active: 27 Started: 28 Finished: 1
-2025-07-02 11:07:00,079 INFO o.a.j.r.Summariser: summary =   1673 in 00:00:49 =   34.1/s Avg:   388 Min:    26 Max:  1191 Err:   783 (46.80%)
-2025-07-02 11:07:01,435 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-29
-2025-07-02 11:07:03,237 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-30
-2025-07-02 11:07:04,852 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-2
-2025-07-02 11:07:04,852 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-2
-2025-07-02 11:07:05,034 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-31
-2025-07-02 11:07:06,835 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-32
-2025-07-02 11:07:08,633 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-33
-2025-07-02 11:07:10,437 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-34
-2025-07-02 11:07:12,234 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-35
-2025-07-02 11:07:14,035 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-36
-2025-07-02 11:07:15,841 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-37
-2025-07-02 11:07:17,634 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-38
-2025-07-02 11:07:19,436 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-39
-2025-07-02 11:07:21,236 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-40
-2025-07-02 11:07:23,034 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-41
-2025-07-02 11:07:24,836 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-42
-2025-07-02 11:07:26,635 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-43
-2025-07-02 11:07:28,434 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-44
-2025-07-02 11:07:30,118 INFO o.a.j.r.Summariser: summary +   1057 in 00:00:30 =   35.2/s Avg:   934 Min:   185 Max:  2057 Err:   552 (52.22%) Active: 42 Started: 44 Finished: 2
-2025-07-02 11:07:30,118 INFO o.a.j.r.Summariser: summary =   2730 in 00:01:19 =   34.5/s Avg:   600 Min:    26 Max:  2057 Err:  1335 (48.90%)
-2025-07-02 11:07:30,119 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-3
-2025-07-02 11:07:30,119 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-3
-2025-07-02 11:07:30,237 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-45
-2025-07-02 11:07:32,036 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-46
-2025-07-02 11:07:33,834 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-47
-2025-07-02 11:07:35,638 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-48
-2025-07-02 11:07:37,434 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-49
-2025-07-02 11:07:39,234 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Stress 1-50
-2025-07-02 11:07:56,154 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-4
-2025-07-02 11:07:56,154 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-4
-2025-07-02 11:08:00,596 INFO o.a.j.r.Summariser: summary +   1095 in 00:00:30 =   35.9/s Avg:  1285 Min:   111 Max:  2615 Err:   542 (49.50%) Active: 46 Started: 50 Finished: 4
-2025-07-02 11:08:00,597 INFO o.a.j.r.Summariser: summary =   3825 in 00:01:50 =   34.9/s Avg:   796 Min:    26 Max:  2615 Err:  1877 (49.07%)
-2025-07-02 11:08:11,847 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-5
-2025-07-02 11:08:11,848 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-5
-2025-07-02 11:08:17,089 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-6
-2025-07-02 11:08:17,090 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-6
-2025-07-02 11:08:30,049 INFO o.a.j.r.Summariser: summary +   1033 in 00:00:29 =   35.1/s Avg:  1273 Min:   265 Max:  2890 Err:   520 (50.34%) Active: 44 Started: 50 Finished: 6
-2025-07-02 11:08:30,049 INFO o.a.j.r.Summariser: summary =   4858 in 00:02:19 =   34.9/s Avg:   897 Min:    26 Max:  2890 Err:  2397 (49.34%)
-2025-07-02 11:08:43,952 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-7
-2025-07-02 11:08:43,952 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-7
-2025-07-02 11:08:50,251 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-9
-2025-07-02 11:08:50,252 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-9
-2025-07-02 11:08:55,734 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-8
-2025-07-02 11:08:55,735 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-8
-2025-07-02 11:09:00,160 INFO o.a.j.r.Summariser: summary +   1076 in 00:00:30 =   35.7/s Avg:  1208 Min:   284 Max:  3102 Err:   537 (49.91%) Active: 41 Started: 50 Finished: 9
-2025-07-02 11:09:00,162 INFO o.a.j.r.Summariser: summary =   5934 in 00:02:49 =   35.1/s Avg:   954 Min:    26 Max:  3102 Err:  2934 (49.44%)
-2025-07-02 11:09:10,541 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-10
-2025-07-02 11:09:10,541 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-10
-2025-07-02 11:09:14,879 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-12
-2025-07-02 11:09:14,880 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-12
-2025-07-02 11:09:15,783 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-11
-2025-07-02 11:09:15,783 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-11
-2025-07-02 11:09:22,690 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-13
-2025-07-02 11:09:22,690 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-13
-2025-07-02 11:09:27,147 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-15
-2025-07-02 11:09:27,148 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-15
-2025-07-02 11:09:28,601 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-14
-2025-07-02 11:09:28,601 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-14
-2025-07-02 11:09:30,627 INFO o.a.j.r.Summariser: summary +   1079 in 00:00:30 =   35.4/s Avg:  1115 Min:   202 Max:  3481 Err:   513 (47.54%) Active: 35 Started: 50 Finished: 15
-2025-07-02 11:09:30,629 INFO o.a.j.r.Summariser: summary =   7013 in 00:03:20 =   35.1/s Avg:   979 Min:    26 Max:  3481 Err:  3447 (49.15%)
-2025-07-02 11:09:41,758 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-21
-2025-07-02 11:09:41,758 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-21
-2025-07-02 11:09:43,002 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-16
-2025-07-02 11:09:43,002 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-16
-2025-07-02 11:09:45,752 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-20
-2025-07-02 11:09:45,753 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-20
-2025-07-02 11:09:50,081 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-17
-2025-07-02 11:09:50,081 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-17
-2025-07-02 11:09:51,045 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-22
-2025-07-02 11:09:51,045 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-22
-2025-07-02 11:09:52,299 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-19
-2025-07-02 11:09:52,299 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-19
-2025-07-02 11:09:53,273 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-18
-2025-07-02 11:09:53,273 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-18
-2025-07-02 11:10:00,388 INFO o.a.j.r.Summariser: summary +   1062 in 00:00:30 =   35.7/s Avg:   915 Min:   105 Max:  2224 Err:   538 (50.66%) Active: 28 Started: 50 Finished: 22
-2025-07-02 11:10:00,388 INFO o.a.j.r.Summariser: summary =   8075 in 00:03:49 =   35.2/s Avg:   970 Min:    26 Max:  3481 Err:  3985 (49.35%)
-2025-07-02 11:10:07,123 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-26
-2025-07-02 11:10:07,123 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-26
-2025-07-02 11:10:08,008 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-23
-2025-07-02 11:10:08,008 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-23
-2025-07-02 11:10:08,367 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-24
-2025-07-02 11:10:08,367 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-24
-2025-07-02 11:10:11,954 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-27
-2025-07-02 11:10:11,954 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-27
-2025-07-02 11:10:12,673 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-28
-2025-07-02 11:10:12,673 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-28
-2025-07-02 11:10:14,199 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-29
-2025-07-02 11:10:14,199 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-29
-2025-07-02 11:10:15,443 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-25
-2025-07-02 11:10:15,444 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-25
-2025-07-02 11:10:18,621 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-30
-2025-07-02 11:10:18,621 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-30
-2025-07-02 11:10:21,274 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-32
-2025-07-02 11:10:21,274 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-32
-2025-07-02 11:10:21,552 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-41
-2025-07-02 11:10:21,553 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-41
-2025-07-02 11:10:21,553 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-31
-2025-07-02 11:10:21,553 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-31
-2025-07-02 11:10:21,553 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-40
-2025-07-02 11:10:21,553 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-40
-2025-07-02 11:10:22,301 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-35
-2025-07-02 11:10:22,301 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-35
-2025-07-02 11:10:22,683 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-37
-2025-07-02 11:10:22,684 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-37
-2025-07-02 11:10:23,041 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-38
-2025-07-02 11:10:23,042 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-38
-2025-07-02 11:10:23,042 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-43
-2025-07-02 11:10:23,042 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-43
-2025-07-02 11:10:23,042 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-42
-2025-07-02 11:10:23,042 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-42
-2025-07-02 11:10:23,231 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-34
-2025-07-02 11:10:23,232 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-34
-2025-07-02 11:10:23,462 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-33
-2025-07-02 11:10:23,462 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-33
-2025-07-02 11:10:23,704 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-45
-2025-07-02 11:10:23,704 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-45
-2025-07-02 11:10:23,955 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-39
-2025-07-02 11:10:23,955 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-39
-2025-07-02 11:10:24,105 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-47
-2025-07-02 11:10:24,105 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-47
-2025-07-02 11:10:24,261 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-36
-2025-07-02 11:10:24,262 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-36
-2025-07-02 11:10:24,286 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-44
-2025-07-02 11:10:24,286 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-44
-2025-07-02 11:10:24,747 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-46
-2025-07-02 11:10:24,747 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-46
-2025-07-02 11:10:25,642 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-48
-2025-07-02 11:10:25,642 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-48
-2025-07-02 11:10:25,690 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-50
-2025-07-02 11:10:25,690 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-50
-2025-07-02 11:10:26,008 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Stress 1-49
-2025-07-02 11:10:26,008 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Stress 1-49
-2025-07-02 11:10:26,008 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
-2025-07-02 11:10:26,009 INFO o.a.j.r.Summariser: summary +    925 in 00:00:26 =   36.1/s Avg:   618 Min:    24 Max:  1525 Err:   465 (50.27%) Active: 0 Started: 50 Finished: 50
-2025-07-02 11:10:26,009 INFO o.a.j.r.Summariser: summary =   9000 in 00:04:15 =   35.3/s Avg:   934 Min:    24 Max:  3481 Err:  4450 (49.44%)
+2025-07-18 16:37:05,675 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2025-07-18 16:37:05,700 INFO o.a.j.JMeter: Loading user properties from: /opt/jmeter/bin/user.properties
+2025-07-18 16:37:05,701 INFO o.a.j.JMeter: Loading system properties from: /opt/jmeter/bin/system.properties
+2025-07-18 16:37:05,709 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2025-07-18 16:37:05,709 INFO o.a.j.JMeter: Version 5.6.3
+2025-07-18 16:37:05,709 INFO o.a.j.JMeter: java.version=21.0.7
+2025-07-18 16:37:05,709 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2025-07-18 16:37:05,709 INFO o.a.j.JMeter: os.name=Linux
+2025-07-18 16:37:05,710 INFO o.a.j.JMeter: os.arch=amd64
+2025-07-18 16:37:05,710 INFO o.a.j.JMeter: os.version=6.14.0-24-generic
+2025-07-18 16:37:05,710 INFO o.a.j.JMeter: file.encoding=UTF-8
+2025-07-18 16:37:05,710 INFO o.a.j.JMeter: java.awt.headless=true
+2025-07-18 16:37:05,710 INFO o.a.j.JMeter: Max memory     =1073741824
+2025-07-18 16:37:05,710 INFO o.a.j.JMeter: Available Processors =8
+2025-07-18 16:37:05,723 INFO o.a.j.JMeter: Default Locale=English (EN)
+2025-07-18 16:37:05,723 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2025-07-18 16:37:05,724 INFO o.a.j.JMeter: JMeterHome=/opt/jmeter
+2025-07-18 16:37:05,724 INFO o.a.j.JMeter: user.dir  =/home/alanveloso/repos/SAS-Blockchain-Registry
+2025-07-18 16:37:05,724 INFO o.a.j.JMeter: PWD       =/home/alanveloso/repos/SAS-Blockchain-Registry
+2025-07-18 16:37:05,724 INFO o.a.j.JMeter: IP: 127.0.1.1 Name: alanveloso-ThinkPad-T480 FullName: alanveloso-ThinkPad-T480
+2025-07-18 16:37:05,741 INFO o.a.j.s.FileServer: Default base='/home/alanveloso/repos/SAS-Blockchain-Registry'
+2025-07-18 16:37:05,743 INFO o.a.j.s.FileServer: Set new base='/home/alanveloso/repos/SAS-Blockchain-Registry/plans'
+2025-07-18 16:37:06,047 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2025-07-18 16:37:06,099 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2025-07-18 16:37:06,105 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2025-07-18 16:37:06,110 INFO o.a.j.s.SaveService: Loading file: plans/sas_full_flow_low.jmx
+2025-07-18 16:37:06,196 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2025-07-18 16:37:06,196 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2025-07-18 16:37:06,196 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2025-07-18 16:37:06,196 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2025-07-18 16:37:06,196 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2025-07-18 16:37:06,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2025-07-18 16:37:06,228 INFO o.a.j.JMeter: Creating summariser <summary>
+2025-07-18 16:37:06,254 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2025-07-18 16:37:06,255 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2025-07-18 16:37:06,256 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2025-07-18 16:37:06,260 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2025-07-18 16:37:06,261 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2025-07-18 16:37:06,365 INFO o.a.j.JMeter: Running test (1752867426365)
+2025-07-18 16:37:06,395 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : SAS Full Flow Thread Group Low
+2025-07-18 16:37:06,396 INFO o.a.j.e.StandardJMeterEngine: Starting 2 threads for group SAS Full Flow Thread Group Low.
+2025-07-18 16:37:06,396 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2025-07-18 16:37:06,396 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=2 ramp-up=10 delayedStart=false
+2025-07-18 16:37:06,406 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2025-07-18 16:37:06,406 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2025-07-18 16:37:06,452 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Low 1-1
+2025-07-18 16:37:06,455 INFO o.a.j.s.FileServer: Stored: /home/alanveloso/repos/SAS-Blockchain-Registry/accounts.csv
+2025-07-18 16:37:06,485 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2025-07-18 16:37:06,485 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2025-07-18 16:37:06,486 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2025-07-18 16:37:06,486 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2025-07-18 16:37:07,027 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = alanveloso-ThinkPad-T480
+2025-07-18 16:37:07,035 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2025-07-18 16:37:11,445 INFO o.a.j.t.JMeterThread: Thread started: SAS Full Flow Thread Group Low 1-2
+2025-07-18 16:37:30,201 INFO o.a.j.r.Summariser: summary +     58 in 00:00:24 =    2.4/s Avg:    68 Min:     0 Max:   170 Err:     7 (12.07%) Active: 2 Started: 2 Finished: 0
+2025-07-18 16:37:31,620 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Low 1-1
+2025-07-18 16:37:31,620 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Low 1-1
+2025-07-18 16:37:36,414 INFO o.a.j.t.JMeterThread: Thread is done: SAS Full Flow Thread Group Low 1-2
+2025-07-18 16:37:36,414 INFO o.a.j.t.JMeterThread: Thread finished: SAS Full Flow Thread Group Low 1-2
+2025-07-18 16:37:36,415 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2025-07-18 16:37:36,415 INFO o.a.j.s.FileServer: Close: /home/alanveloso/repos/SAS-Blockchain-Registry/accounts.csv
+2025-07-18 16:37:36,418 INFO o.a.j.r.Summariser: summary +     12 in 00:00:06 =    1.9/s Avg:    76 Min:     0 Max:   115 Err:     1 (8.33%) Active: 0 Started: 2 Finished: 2
+2025-07-18 16:37:36,418 INFO o.a.j.r.Summariser: summary =     70 in 00:00:30 =    2.3/s Avg:    69 Min:     0 Max:   170 Err:     8 (11.43%)

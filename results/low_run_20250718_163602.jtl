@@ -1,0 +1,8 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1752867365012,5,Debug Sampler,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,627,0,1,1,null,0,0,0
+1752867365642,84,Authorize,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,316,338,1,1,http://localhost:9000/sas/authorize,84,0,24
+1752867367728,93,Registration,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,369,799,1,1,http://localhost:9000/v1.3/registration,93,0,0
+1752867368322,85,Grant,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,375,503,1,1,http://localhost:9000/v1.3/grant,85,0,0
+1752867368948,75,Relinquishment,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,383,326,1,1,http://localhost:9000/v1.3/relinquishment,75,0,0
+1752867369524,58,Deregistration,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,383,304,1,1,http://localhost:9000/v1.3/deregistration,58,0,0
+1752867370084,50,Revoke,200,OK,SAS Full Flow Thread Group Low 1-1,text,true,,314,335,1,1,http://localhost:9000/sas/revoke,50,0,0
