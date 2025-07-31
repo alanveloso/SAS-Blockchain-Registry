@@ -11,9 +11,9 @@ class Settings(BaseSettings):
     
     # Blockchain settings
     RPC_URL: str = "http://127.0.0.1:8545"
-    CONTRACT_ADDRESS: str = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    CONTRACT_ADDRESS: str = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
     OWNER_PRIVATE_KEY: str = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
-    CHAIN_ID: int = 31337
+    CHAIN_ID: int = 1337
     GAS_LIMIT: int = 3000000
     
     # API settings

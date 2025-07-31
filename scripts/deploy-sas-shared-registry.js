@@ -16,11 +16,12 @@ async function main() {
   console.log("👤 Conta que fez o deploy:", deployer.address);
   console.log("💰 Saldo da conta:", await hre.ethers.provider.getBalance(deployer.address));
 
+  const network = await hre.ethers.provider.getNetwork();
   console.log("\n📋 Configurações para o .env:");
   console.log(`RPC_URL=http://127.0.0.1:8545`);
   console.log(`CONTRACT_ADDRESS=${address}`);
   console.log(`OWNER_PRIVATE_KEY=${deployer.privateKey}`);
-  console.log(`CHAIN_ID=31337`);
+  console.log(`CHAIN_ID=${network.chainId}`);
 
   return address;
 }

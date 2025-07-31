@@ -1,14 +1,16 @@
 from web3 import Web3
 from web3.exceptions import ContractLogicError
 from config.settings import settings
+from .nonce_manager import NonceManager
 import json
 import os
 import logging
+import asyncio
 
 logger = logging.getLogger(__name__)
 
 class Blockchain:
-    def __init__(self):
+    def __init__(self, private_key=None):
         self.web3 = Web3(Web3.HTTPProvider(settings.RPC_URL))
         
         # Verificar conexão com Besu
@@ -16,8 +18,12 @@ class Blockchain:
             raise ConnectionError(f"Não foi possível conectar ao Besu em {settings.RPC_URL}")
         
         # Configurar conta
-        self.account = self.web3.eth.account.from_key(settings.OWNER_PRIVATE_KEY)
+        key = private_key or settings.OWNER_PRIVATE_KEY
+        self.account = self.web3.eth.account.from_key(key)
         self.web3.eth.default_account = self.account.address
+        
+        # Inicializar NonceManager
+        self.nonce_manager = NonceManager(self.web3, self.account.address)
         
         # Carregar ABI
         abi_path = os.path.join(os.path.dirname(__file__), 'abi', 'SASSharedRegistry.json')
@@ -40,6 +46,7 @@ class Blockchain:
         
         logger.info(f"Conectado ao Besu. Conta: {self.account.address}")
         logger.info(f"Contrato: {settings.CONTRACT_ADDRESS}")
+        logger.info(f"NonceManager inicializado para conta: {self.account.address}")
 
     def get_event_filter(self, event_name, from_block='latest'):
         """Cria filtro para eventos do contrato"""
@@ -102,14 +109,26 @@ class Blockchain:
         
         return function_call.build_transaction(tx_params)
 
+    async def send_transaction_with_nonce_manager(self, function_call, gas_limit=None):
+        """Envia uma transação usando NonceManager para evitar conflitos"""
+        try:
+            # Usar NonceManager para enviar transação com retry
+            receipt = await self.nonce_manager.send_transaction_with_retry(function_call)
+            logger.info(f"Transação enviada com NonceManager: {receipt['transactionHash'].hex()}")
+            return receipt
+            
+        except Exception as e:
+            logger.error(f"Erro ao enviar transação com NonceManager: {e}")
+            raise
+
     def send_transaction(self, function_call, gas_limit=None):
-        """Envia uma transação para o Besu"""
+        """Envia uma transação para o Besu (método legado)"""
         try:
             # Construir transação
             tx = self.build_transaction(function_call, gas_limit)
             
             # Assinar transação
-            signed_tx = self.web3.eth.account.sign_transaction(tx, settings.OWNER_PRIVATE_KEY)
+            signed_tx = self.web3.eth.account.sign_transaction(tx, self.account.key)
             
             # Enviar transação
             tx_hash = self.web3.eth.send_raw_transaction(signed_tx.raw_transaction)
@@ -132,7 +151,37 @@ class Blockchain:
             logger.error(f"Erro na chamada da função: {e}")
             raise
 
-    # Funções SAS-SAS
+    # Funções SAS-SAS com NonceManager (recomendadas para redes reais)
+    async def registration_with_nonce_manager(self, data: dict):
+        """Executa operação SAS-SAS Registration usando NonceManager"""
+        try:
+            args = [
+                data["fccId"],
+                data["userId"],
+                data["cbsdSerialNumber"],
+                data["callSign"],
+                data["cbsdCategory"],
+                data["airInterface"],
+                data["measCapability"],
+                data["eirpCapability"],
+                data["latitude"],
+                data["longitude"],
+                data["height"],
+                data["heightType"],
+                data["indoorDeployment"],
+                data["antennaGain"],
+                data["antennaBeamwidth"],
+                data["antennaAzimuth"],
+                data["groupingParam"],
+                data["cbsdAddress"]
+            ]
+            tx = self.contract.functions.registration(args)
+            return await self.send_transaction_with_nonce_manager(tx)
+        except Exception as e:
+            logger.error(f"Erro na operação registration com NonceManager: {e}")
+            raise
+
+    # Funções SAS-SAS (métodos legados - mantidos para compatibilidade)
     def registration(self, data: dict):
         """Executa operação SAS-SAS Registration (struct RegistrationRequest)"""
         try:
@@ -162,6 +211,27 @@ class Blockchain:
             logger.error(f"Erro na operação registration: {e}")
             raise
 
+    async def grant_with_nonce_manager(self, data: dict):
+        """Executa operação SAS-SAS Grant usando NonceManager"""
+        try:
+            args = [
+                data["fccId"],
+                data["cbsdSerialNumber"],
+                data["channelType"],
+                data["maxEirp"],
+                data["lowFrequency"],
+                data["highFrequency"],
+                data["requestedMaxEirp"],
+                data["requestedLowFrequency"],
+                data["requestedHighFrequency"],
+                data["grantExpireTime"]
+            ]
+            tx = self.contract.functions.grant(args)
+            return await self.send_transaction_with_nonce_manager(tx)
+        except Exception as e:
+            logger.error(f"Erro na operação grant com NonceManager: {e}")
+            raise
+
     def grant(self, data: dict):
         """Executa operação SAS-SAS Grant (struct GrantRequest)"""
         try:
@@ -181,6 +251,28 @@ class Blockchain:
             return self.send_transaction(tx)
         except Exception as e:
             logger.error(f"Erro na operação grant: {e}")
+            raise
+
+    async def relinquishment_with_nonce_manager(self, data: dict):
+        """Executa operação SAS-SAS Relinquishment usando NonceManager"""
+        try:
+            tx = self.contract.functions.relinquishment(
+                data["fccId"], data["cbsdSerialNumber"], data["grantId"]
+            )
+            return await self.send_transaction_with_nonce_manager(tx)
+        except Exception as e:
+            logger.error(f"Erro na operação relinquishment com NonceManager: {e}")
+            raise
+
+    async def deregistration_with_nonce_manager(self, data: dict):
+        """Executa operação SAS-SAS Deregistration usando NonceManager"""
+        try:
+            tx = self.contract.functions.deregistration(
+                data["fccId"], data["cbsdSerialNumber"]
+            )
+            return await self.send_transaction_with_nonce_manager(tx)
+        except Exception as e:
+            logger.error(f"Erro na operação deregistration com NonceManager: {e}")
             raise
 
     def relinquishment(self, data: dict):
@@ -205,7 +297,30 @@ class Blockchain:
             logger.error(f"Erro na operação deregistration: {e}")
             raise
 
-    # Funções de autorização SAS
+    # Funções de autorização SAS com NonceManager
+    async def authorize_sas_with_nonce_manager(self, sas_address: str):
+        """Autoriza um endereço como SAS usando NonceManager"""
+        try:
+            # Converter endereço para o tipo correto
+            address = self.web3.to_checksum_address(sas_address)
+            tx = self.contract.functions.authorizeSAS(address)
+            return await self.send_transaction_with_nonce_manager(tx)
+        except Exception as e:
+            logger.error(f"Erro ao autorizar SAS {sas_address} com NonceManager: {e}")
+            raise
+
+    async def revoke_sas_with_nonce_manager(self, sas_address: str):
+        """Revoga autorização de um SAS usando NonceManager"""
+        try:
+            # Converter endereço para o tipo correto
+            address = self.web3.to_checksum_address(sas_address)
+            tx = self.contract.functions.revokeSAS(address)
+            return await self.send_transaction_with_nonce_manager(tx)
+        except Exception as e:
+            logger.error(f"Erro ao revogar SAS {sas_address} com NonceManager: {e}")
+            raise
+
+    # Funções de autorização SAS (métodos legados - mantidos para compatibilidade)
     def authorize_sas(self, sas_address: str):
         """Autoriza um endereço como SAS"""
         try:
@@ -244,4 +359,12 @@ class Blockchain:
             return self.contract.functions.owner().call()
         except Exception as e:
             logger.error(f"Erro ao obter owner: {e}")
+            raise
+
+    def get_nonce_manager_stats(self):
+        """Obtém estatísticas do NonceManager para debug"""
+        try:
+            return self.nonce_manager.get_stats()
+        except Exception as e:
+            logger.error(f"Erro ao obter estatísticas do NonceManager: {e}")
             raise 
