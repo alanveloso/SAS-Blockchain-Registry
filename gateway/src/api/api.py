@@ -143,6 +143,15 @@ async def health_check():
 async def registration(req: RegistrationRequestWithKey):
     """Registration - Registra um CBSD via SAS-SAS"""
     try:
+        # Print para debug
+        logger.info(f"=== REGISTRATION DEBUG ===")
+        logger.info(f"fccId: {req.fccId}")
+        logger.info(f"userId: {req.userId}")
+        logger.info(f"cbsdSerialNumber: {req.cbsdSerialNumber}")
+        logger.info(f"cbsdAddress: {req.cbsdAddress}")
+        logger.info(f"private_key: {req.private_key[:10]}...")
+        logger.info(f"==========================")
+        
         blockchain = Blockchain(req.private_key)
         receipt = blockchain.registration(req.dict(exclude={"private_key"}))
         return {
@@ -159,6 +168,13 @@ async def registration(req: RegistrationRequestWithKey):
 async def grant_spectrum(req: GrantRequestWithKey):
     """Grant - Solicita espectro via SAS-SAS"""
     try:
+        # Print para debug
+        logger.info(f"=== GRANT DEBUG ===")
+        logger.info(f"fccId: {req.fccId}")
+        logger.info(f"cbsdSerialNumber: {req.cbsdSerialNumber}")
+        logger.info(f"private_key: {req.private_key[:10]}...")
+        logger.info(f"===================")
+        
         blockchain = Blockchain(req.private_key)
         receipt = blockchain.grant(req.dict(exclude={"private_key"}))
         return {
@@ -175,6 +191,14 @@ async def grant_spectrum(req: GrantRequestWithKey):
 async def relinquishment(req: RelinquishmentRequestWithKey):
     """Relinquishment - Libera grant via SAS-SAS"""
     try:
+        # Print para debug
+        logger.info(f"=== RELINQUISHMENT DEBUG ===")
+        logger.info(f"fccId: {req.fccId}")
+        logger.info(f"cbsdSerialNumber: {req.cbsdSerialNumber}")
+        logger.info(f"grantId: {req.grantId}")
+        logger.info(f"private_key: {req.private_key[:10]}...")
+        logger.info(f"============================")
+        
         blockchain = Blockchain(req.private_key)
         receipt = blockchain.relinquishment(req.dict(exclude={"private_key"}))
         return {
@@ -191,6 +215,13 @@ async def relinquishment(req: RelinquishmentRequestWithKey):
 async def deregistration(req: DeregistrationRequestWithKey):
     """Deregistration - Remove CBSD via SAS-SAS"""
     try:
+        # Print para debug
+        logger.info(f"=== DEREGISTRATION DEBUG ===")
+        logger.info(f"fccId: {req.fccId}")
+        logger.info(f"cbsdSerialNumber: {req.cbsdSerialNumber}")
+        logger.info(f"private_key: {req.private_key[:10]}...")
+        logger.info(f"============================")
+        
         blockchain = Blockchain(req.private_key)
         receipt = blockchain.deregistration(req.dict(exclude={"private_key"}))
         return {

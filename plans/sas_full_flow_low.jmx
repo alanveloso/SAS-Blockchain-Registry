@@ -8,17 +8,17 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="test_fccId" elementType="Argument">
             <stringProp name="Argument.name">test_fccId</stringProp>
-            <stringProp name="Argument.value">FCC-${__UUID}</stringProp>
+                            <stringProp name="Argument.value">FCC-${__UUID}-${__threadNum}-ABC123</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="test_userId" elementType="Argument">
             <stringProp name="Argument.name">test_userId</stringProp>
-            <stringProp name="Argument.value">USER-${__UUID}</stringProp>
+                            <stringProp name="Argument.value">USER-${__UUID}-${__threadNum}-ABC123</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="test_cbsdSerialNumber" elementType="Argument">
             <stringProp name="Argument.name">test_cbsdSerialNumber</stringProp>
-            <stringProp name="Argument.value">CBSD-${__UUID}</stringProp>
+                            <stringProp name="Argument.value">CBSD-${__UUID}-${__threadNum}-ABC123</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="test_sasAddress" elementType="Argument">
@@ -92,8 +92,8 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 500ms" enabled="true">
-            <stringProp name="ConstantTimer.delay">500</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 5000ms" enabled="true">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
@@ -110,7 +110,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;${test_fccId}&quot;,&quot;userId&quot;:&quot;${test_userId}&quot;,&quot;cbsdSerialNumber&quot;:&quot;${test_cbsdSerialNumber}&quot;,&quot;callSign&quot;:&quot;CALL1&quot;,&quot;cbsdCategory&quot;:&quot;A&quot;,&quot;airInterface&quot;:&quot;E_UTRA&quot;,&quot;measCapability&quot;:[&quot;EUTRA_CARRIER_RSSI&quot;],&quot;eirpCapability&quot;:47,&quot;latitude&quot;:375000000,&quot;longitude&quot;:1224000000,&quot;height&quot;:30,&quot;heightType&quot;:&quot;AGL&quot;,&quot;indoorDeployment&quot;:false,&quot;antennaGain&quot;:15,&quot;antennaBeamwidth&quot;:360,&quot;antennaAzimuth&quot;:0,&quot;groupingParam&quot;:&quot;&quot;,&quot;cbsdAddress&quot;:&quot;${address}&quot;, &quot;private_key&quot;: &quot;${privateKey}&quot;}</stringProp>
+                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;FCC-${__threadNum}-ABC123&quot;,&quot;userId&quot;:&quot;USER-${__threadNum}-ABC123&quot;,&quot;cbsdSerialNumber&quot;:&quot;CBSD-${__threadNum}-ABC123&quot;,&quot;callSign&quot;:&quot;CALL1&quot;,&quot;cbsdCategory&quot;:&quot;A&quot;,&quot;airInterface&quot;:&quot;E_UTRA&quot;,&quot;measCapability&quot;:[&quot;EUTRA_CARRIER_RSSI&quot;],&quot;eirpCapability&quot;:47,&quot;latitude&quot;:375000000,&quot;longitude&quot;:1224000000,&quot;height&quot;:30,&quot;heightType&quot;:&quot;AGL&quot;,&quot;indoorDeployment&quot;:false,&quot;antennaGain&quot;:15,&quot;antennaBeamwidth&quot;:360,&quot;antennaAzimuth&quot;:0,&quot;groupingParam&quot;:&quot;&quot;,&quot;cbsdAddress&quot;:&quot;${address}&quot;,&quot;private_key&quot;:&quot;${privateKey}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -126,8 +126,8 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 2000ms" enabled="true">
-            <stringProp name="ConstantTimer.delay">2000</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 10000ms" enabled="true">
+            <stringProp name="ConstantTimer.delay">10000</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
@@ -144,7 +144,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;${test_fccId}&quot;,&quot;cbsdSerialNumber&quot;:&quot;${test_cbsdSerialNumber}&quot;,&quot;channelType&quot;:&quot;GAA&quot;,&quot;maxEirp&quot;:47,&quot;lowFrequency&quot;:3550000000,&quot;highFrequency&quot;:3700000000,&quot;requestedMaxEirp&quot;:47,&quot;requestedLowFrequency&quot;:3550000000,&quot;requestedHighFrequency&quot;:3700000000,&quot;grantExpireTime&quot;:1750726000}</stringProp>
+                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;FCC-${__threadNum}-ABC123&quot;,&quot;cbsdSerialNumber&quot;:&quot;CBSD-${__threadNum}-ABC123&quot;,&quot;channelType&quot;:&quot;GAA&quot;,&quot;maxEirp&quot;:47,&quot;lowFrequency&quot;:3550000000,&quot;highFrequency&quot;:3700000000,&quot;requestedMaxEirp&quot;:47,&quot;requestedLowFrequency&quot;:3550000000,&quot;requestedHighFrequency&quot;:3700000000,&quot;grantExpireTime&quot;:1750726000,&quot;private_key&quot;:&quot;${privateKey}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -160,8 +160,8 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 500ms" enabled="true">
-            <stringProp name="ConstantTimer.delay">500</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 8000ms" enabled="true">
+            <stringProp name="ConstantTimer.delay">8000</stringProp>
           </ConstantTimer>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract grantId" enabled="true">
@@ -185,7 +185,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;${test_fccId}&quot;,&quot;cbsdSerialNumber&quot;:&quot;${test_cbsdSerialNumber}&quot;,&quot;grantId&quot;:&quot;${grantId}&quot;}</stringProp>
+                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;FCC-${__threadNum}-ABC123&quot;,&quot;cbsdSerialNumber&quot;:&quot;CBSD-${__threadNum}-ABC123&quot;,&quot;grantId&quot;:&quot;${grantId}&quot;,&quot;private_key&quot;:&quot;${privateKey}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -201,8 +201,8 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 500ms" enabled="true">
-            <stringProp name="ConstantTimer.delay">500</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 8000ms" enabled="true">
+            <stringProp name="ConstantTimer.delay">8000</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
@@ -219,7 +219,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;${test_fccId}&quot;,&quot;cbsdSerialNumber&quot;:&quot;${test_cbsdSerialNumber}&quot;}</stringProp>
+                <stringProp name="Argument.value">{&quot;fccId&quot;:&quot;FCC-${__threadNum}-ABC123&quot;,&quot;cbsdSerialNumber&quot;:&quot;CBSD-${__threadNum}-ABC123&quot;,&quot;private_key&quot;:&quot;${privateKey}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -235,8 +235,8 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 500ms" enabled="true">
-            <stringProp name="ConstantTimer.delay">500</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 8000ms" enabled="true">
+            <stringProp name="ConstantTimer.delay">8000</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
@@ -272,8 +272,8 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 500ms" enabled="true">
-            <stringProp name="ConstantTimer.delay">500</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay 5000ms" enabled="true">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
