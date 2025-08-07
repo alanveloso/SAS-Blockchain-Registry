@@ -5,7 +5,7 @@ set -e
 PLANS_DIR="plans"
 RESULTS_DIR="results"
 CONTROL_FILE="$RESULTS_DIR/finished_runs.txt"
-RUNS=2
+RUNS=1
 
 # Backup dos resultados anteriores, se existirem
 echo "[INFO] Verificando resultados anteriores..."
@@ -25,6 +25,7 @@ for plan in "$PLANS_DIR"/sas_full_flow_*.jmx; do
     for i in $(seq 1 $RUNS); do
         ts=$(date +%Y%m%d_%H%M%S)
         result_file="$plan_result_dir/run_${i}_$ts.jtl"
+        html_report_dir="$plan_result_dir/run_${i}_$ts_html"
         run_id="${plan_name}/run_${i}_$ts.jtl"
         # Verifica se já foi executado
         if grep -Fxq "$run_id" "$CONTROL_FILE"; then
@@ -32,7 +33,8 @@ for plan in "$PLANS_DIR"/sas_full_flow_*.jmx; do
             continue
         fi
         echo "[RUN] Executando $plan_name (run $i/$RUNS) -> $result_file"
-        jmeter -n -t "$plan" -l "$result_file"
+        echo "[RUN] Gerando relatório HTML -> $html_report_dir"
+        jmeter -n -t "$plan" -l "$result_file" -e -o "$html_report_dir"
         echo "$run_id" >> "$CONTROL_FILE"
     done
     echo "[OK] $plan_name finalizado. Resultados em $plan_result_dir/"

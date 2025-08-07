@@ -37,8 +37,9 @@ SCENARIO_LABELS = {
     'sas_full_flow_medium': 'Medium',
     'sas_full_flow_high': 'High',
     'sas_full_flow_stress': 'Stress',
+    'sas_full_flow_extreme': 'Extreme',
 }
-SCENARIO_ORDER = ['Low', 'Medium', 'High', 'Stress']
+SCENARIO_ORDER = ['Low', 'Medium', 'High', 'Stress', 'Extreme']
 
 def get_scenario_label(scenario):
     return SCENARIO_LABELS.get(scenario, scenario)
@@ -457,6 +458,14 @@ def plot_latency_by_type(all_data: pd.DataFrame):
         if subset.empty:
             continue
         subset['scenario_label'] = subset['scenario'].map(get_scenario_label)
+        # Filtrar apenas cenários válidos (não NaN)
+        subset = subset[subset['scenario_label'].notna()]
+        if subset.empty:
+            continue
+        # Filtrar apenas cenários que estão na ordem definida
+        subset = subset[subset['scenario_label'].isin(SCENARIO_ORDER)]
+        if subset.empty:
+            continue
         plt.figure(figsize=(8,5))
         sns.boxplot(
             data=subset,
@@ -510,6 +519,14 @@ def plot_throughput_by_type(all_data: pd.DataFrame):
         if subset.empty:
             continue
         subset['scenario_label'] = subset['scenario'].map(get_scenario_label)
+        # Filtrar apenas cenários válidos (não NaN)
+        subset = subset[subset['scenario_label'].notna()]
+        if subset.empty:
+            continue
+        # Filtrar apenas cenários que estão na ordem definida
+        subset = subset[subset['scenario_label'].isin(SCENARIO_ORDER)]
+        if subset.empty:
+            continue
         subset['scenario_label'] = pd.Categorical(subset['scenario_label'], categories=SCENARIO_ORDER, ordered=True)
         plt.figure(figsize=(8,5))
         sns.boxplot(
@@ -540,6 +557,14 @@ def plot_error_rate_by_type(all_data: pd.DataFrame):
         if subset.empty:
             continue
         subset['scenario_label'] = subset['scenario'].map(get_scenario_label)
+        # Filtrar apenas cenários válidos (não NaN)
+        subset = subset[subset['scenario_label'].notna()]
+        if subset.empty:
+            continue
+        # Filtrar apenas cenários que estão na ordem definida
+        subset = subset[subset['scenario_label'].isin(SCENARIO_ORDER)]
+        if subset.empty:
+            continue
         plt.figure(figsize=(8,5))
         sns.barplot(
             data=subset,
