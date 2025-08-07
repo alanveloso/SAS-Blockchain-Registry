@@ -1,6 +1,9 @@
 import logging
 from typing import Dict, Any
 from repository.repository import CBSDRepository
+from functools import lru_cache
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
@@ -9,16 +12,39 @@ logger = logging.getLogger(__name__)
 # Instância global do repositório
 repo = CBSDRepository()
 
+# Pool de threads para operações assíncronas
+executor = ThreadPoolExecutor(max_workers=10)
+
+# Cache para eventos
+event_cache = {}
+
+@lru_cache(maxsize=1000)
+def get_cbsd_id(fcc_id: str, serial_number: str) -> str:
+    """Gera ID único do CBSD com cache"""
+    return f"{fcc_id}_{serial_number}"
+
+async def process_event_async(event: Dict[str, Any], handler_func):
+    """Processa evento de forma assíncrona"""
+    try:
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(executor, handler_func, event)
+    except Exception as e:
+        logger.error(f"Erro ao processar evento assíncrono: {e}")
+
 def handle_sas_authorized(event: Dict[str, Any]):
     """Handler para evento SASAuthorized"""
     sas_address = event['args']['sas']
     logger.info(f"SAS autorizado: {sas_address}")
+    # Cache do evento
+    event_cache[f"sas_auth_{sas_address}"] = event
     # Adicione lógica específica para SAS autorizado
 
 def handle_sas_revoked(event: Dict[str, Any]):
     """Handler para evento SASRevoked"""
     sas_address = event['args']['sas']
     logger.info(f"SAS revogado: {sas_address}")
+    # Cache do evento
+    event_cache[f"sas_revoke_{sas_address}"] = event
     # Adicione lógica específica para SAS revogado
 
 def handle_cbsd_registered(event: Dict[str, Any]):
@@ -27,8 +53,8 @@ def handle_cbsd_registered(event: Dict[str, Any]):
     serial_number = event['args']['serialNumber']
     sas_origin = event['args']['sasOrigin']
     
-    # Gerar ID único do CBSD (fccId + serialNumber)
-    cbsd_id = f"{fcc_id}_{serial_number}"
+    # Gerar ID único do CBSD (fccId + serialNumber) com cache
+    cbsd_id = get_cbsd_id(fcc_id, serial_number)
     
     logger.info(f"Novo CBSD registrado - FCC ID: {fcc_id}, Serial: {serial_number}, SAS Origin: {sas_origin}")
     
@@ -49,7 +75,7 @@ def handle_grant_created(event: Dict[str, Any]):
     grant_id = event['args']['grantId']
     sas_origin = event['args']['sasOrigin']
     
-    cbsd_id = f"{fcc_id}_{serial_number}"
+    cbsd_id = get_cbsd_id(fcc_id, serial_number)
     
     logger.info(f"Novo grant criado - FCC ID: {fcc_id}, Serial: {serial_number}, "
                 f"Grant ID: {grant_id}, SAS: {sas_origin}")
@@ -75,7 +101,7 @@ def handle_grant_terminated(event: Dict[str, Any]):
     grant_id = event['args']['grantId']
     sas_origin = event['args']['sasOrigin']
     
-    cbsd_id = f"{fcc_id}_{serial_number}"
+    cbsd_id = get_cbsd_id(fcc_id, serial_number)
     
     logger.info(f"Grant terminado - FCC ID: {fcc_id}, Serial: {serial_number}, "
                 f"Grant ID: {grant_id}, SAS: {sas_origin}")
@@ -109,9 +135,22 @@ def handle_fcc_id_blacklisted(event: Dict[str, Any]):
 
 def handle_serial_number_blacklisted(event: Dict[str, Any]):
     """Handler para evento SerialNumberBlacklisted"""
-    fcc_id = event['args']['fccId']
     serial_number = event['args']['serialNumber']
-    logger.info(f"Serial number blacklistado - FCC ID: {fcc_id}, Serial: {serial_number}")
+    logger.info(f"Serial Number blacklistado: {serial_number}")
+
+# Função para limpar cache periodicamente
+def clear_event_cache():
+    """Limpa o cache de eventos"""
+    event_cache.clear()
+    logger.info("Cache de eventos limpo")
+
+# Função para obter estatísticas do cache
+def get_cache_stats():
+    """Retorna estatísticas do cache"""
+    return {
+        'event_cache_size': len(event_cache),
+        'cbsd_id_cache_info': get_cbsd_id.cache_info()
+    }
 
 # Mapeamento de eventos para handlers
 EVENT_HANDLERS = {
