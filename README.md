@@ -55,17 +55,16 @@ Cada operação SAS-SAS emite eventos específicos (ex: `CBSDRegistered`, `Grant
 
 ## Setup do Smart Contract
 
-### Opção 1: Hardhat Node Local (Desenvolvimento)
+### Setup do Smart Contract
 
 #### 1. Instalar Dependências
 ```bash
 npm install
 ```
 
-#### 2. Compilar e Testar Contrato
+#### 2. Compilar
 ```bash
 npx hardhat compile
-npx hardhat test
 ```
 
 #### 3. Iniciar Blockchain
@@ -74,50 +73,53 @@ npx hardhat node
 ```
 
 #### 4. Deploy do Contrato
+
+**Nota:** O Hardhat já vem configurado com a rede `localhost` por padrão. Para outras redes (Besu, etc.), configure no `hardhat.config.js` e use `--network <nome_da_rede>`.
+
 ```bash
-npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
+npx hardhat console --network localhost
 ```
 
-#### 5. Teste de Integração SAS-SAS
-```bash
-node scripts/integration-test-sas-shared-registry.js
+No console:
+```javascript
+const SASSharedRegistry = await ethers.getContractFactory("SASSharedRegistry");
+const sasSharedRegistry = await SASSharedRegistry.deploy();
+await sasSharedRegistry.waitForDeployment();
+const address = await sasSharedRegistry.getAddress();
+const [deployer] = await ethers.getSigners();
+console.log("Contrato:", address);
+console.log("Conta:", deployer.address);
+
+.exit
 ```
 
-Esse teste cobre:
-- Autorização e revogação de SAS
-- Todas as operações SAS-SAS (registration, grant, relinquishment, deregistration)
-- Restrições de acesso para SAS não autorizado
-- Emissão de eventos
+#### 5. Configurar .env
+Copie as informações do console para o arquivo `.env`:
+```bash
+cd gateway
+cp env.example .env
+```
 
-### Opção 2: Deploy em Qualquer Rede Besu (Produção/Teste)
-
-Você pode usar qualquer rede compatível com Besu (ex: Hyperledger Besu local, testnet, mainnet privada, etc). Após iniciar sua rede Besu, siga os passos abaixo:
-
-#### 1. Configure o ambiente para apontar para o RPC da sua rede Besu
-
+Editar o `.env` com as informações do deploy:
 ```env
-RPC_URL=http://127.0.0.1:8545 # ou o endpoint da sua rede
-CHAIN_ID=<chain_id_da_rede>
-OWNER_PRIVATE_KEY=<chave_privada_do_owner>
+RPC_URL=http://127.0.0.1:8545
+CONTRACT_ADDRESS=<endereço_do_contrato>
+OWNER_PRIVATE_KEY=<chave_privada_do_hardhat>
+CHAIN_ID=31337
 ```
 
-#### 2. Compile e faça o deploy do contrato
+**Nota:** A chave privada padrão do Hardhat é: `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`
 
+#### 6. Executar API
 ```bash
-npx hardhat compile
-npx hardhat run scripts/deploy-sas-shared-registry.js --network <nome_da_rede_configurada_no_hardhat>
+cd gateway
+python app.py
 ```
 
-#### 3. Copie o endereço do contrato e atualize o .env do middleware
 
-#### 4. Garanta que o ABI do contrato esteja disponível para o middleware
-
----
-
-## Exemplo de chamada via ethers.js
+## Exemplo de Uso
 
 ```js
-// Exemplo de chamada para registration
 const registrationArgs = [
   "FCC123", "USR1", "SN123", "CALL", "A", "E-UTRA", ["RECEIVED_POWER_WITHOUT_GRANT"],
   30, 12345, 67890, 10, "AGL", false, 5, 60, 90, "group1", "0x..."
@@ -127,30 +129,42 @@ await contract.registration(registrationArgs);
 
 ---
 
-## Testes Automatizados
+## Testes
 
-Os testes cobrem:
-- Autorização e revogação de SAS
-- Registro, grant, relinquishment, deregistration
-- Restrições de acesso para SAS não autorizado
-- Emissão de eventos
-
-Execute:
 ```bash
 npx hardhat test
 ```
 
 ---
 
-## Scripts Disponíveis
+## Scripts
 
-- **Deploy do contrato:**
+```bash
+# Deploy manual
+npx hardhat console --network localhost
+
+# Deploy automatizado
+npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
+
+# Análise de performance
+python3 scripts/analyze_results.py
+```
+
+
+
+## Configuração do .env
+
+Após o deploy, copie as informações do console para o arquivo `.env`:
+
+```env
+RPC_URL=http://127.0.0.1:8545
+CONTRACT_ADDRESS=<endereço_do_contrato>
+OWNER_PRIVATE_KEY=<chave_privada>
+CHAIN_ID=<chain_id>
+```
+- **Testes unitários:**
   ```bash
-  npx hardhat run scripts/deploy-sas-shared-registry.js --network localhost
-  ```
-- **Teste de integração:**
-  ```bash
-  node scripts/integration-test-sas-shared-registry.js
+  npx hardhat test
   ```
 
 ---
@@ -259,15 +273,15 @@ python3 run.py
 ./scripts/test_blockchain.sh
 ```
 
-## Testes de Integração do Contrato
+## Testes do Contrato
 
 Após o deploy do contrato, execute o teste de integração SAS-SAS:
 
 ```bash
-node scripts/integration-test-sas-shared-registry.js
+npx hardhat test
 ```
 
-Esse teste cobre:
+Os testes unitários cobrem:
 - Autorização e revogação de SAS
 - Todas as operações SAS-SAS (registration, grant, relinquishment, deregistration)
 - Verificação de acesso negado para SAS não autorizado
@@ -333,7 +347,7 @@ SAS-Blockchain-Registry/
 ├── middleware/                  # API Python (documentação separada)
 ├── scripts/
 │   ├── deploy-sas-shared-registry.js           # Deploy Hardhat
-│   └── integration-test-sas-shared-registry.js  # Teste SAS-SAS
+│   └── (testes unitários via npx hardhat test)
 ├── test/
 │   └── SASSharedRegistry.js     # Testes unitários
 ├── hardhat.config.js            # Configuração Hardhat
@@ -347,9 +361,9 @@ SAS-Blockchain-Registry/
 npx hardhat test
 ```
 
-### Testes de Integração (SAS-SAS)
+### Testes de API
 ```bash
-node scripts/integration-test-sas-shared-registry.js
+cd gateway && python -m pytest tests/
 ```
 
 ## Configurações
@@ -373,7 +387,6 @@ curl -X POST -H "Content-Type: application/json" \
   --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
   http://127.0.0.1:8545
 ```
-
 ## Middleware
 
 > **Nota:** O middleware Python com API REST está disponível na pasta `middleware/` e será documentado separadamente.
@@ -381,3 +394,4 @@ curl -X POST -H "Content-Type: application/json" \
 ## Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+

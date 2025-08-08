@@ -101,3 +101,10 @@ middleware/keys/*.pem
 middleware/keys/*.key
 middleware/keys/*.crt
 middleware/keys/*.csr
+node_modules/
+cache/
+artifacts/
+analysis_output/
+
+# Performance output
+analysis_output/

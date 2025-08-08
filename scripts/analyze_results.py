@@ -6,7 +6,7 @@ Este script lê e analisa automaticamente os arquivos de resultados de testes de
 gerando estatísticas, gráficos e relatórios para facilitar a avaliação dos experimentos.
 
 Uso:
-    python analyze_results.py
+    python3 scripts/analyze_results.py
 
 Dependências:
     pip install pandas numpy matplotlib seaborn
@@ -21,15 +21,33 @@ from typing import List
 import matplotlib.ticker as mticker
 
 # Configurações globais de visualização
+import matplotlib
+matplotlib.use('Agg')  # Usar backend não-interativo para evitar problemas de display
 sns.set(style='whitegrid', palette='Set2')
 plt.rcParams['figure.figsize'] = (12, 6)
 plt.rcParams['axes.titlesize'] = 16
 plt.rcParams['axes.labelsize'] = 13
 plt.rcParams['legend.fontsize'] = 11
+plt.rcParams['font.family'] = 'DejaVu Sans'  # Fonte mais compatível
+plt.rcParams['figure.dpi'] = 100  # DPI padrão para melhor performance
+plt.rcParams['savefig.dpi'] = 100
+plt.rcParams['savefig.bbox'] = 'tight'
+plt.rcParams['savefig.pad_inches'] = 0.1
 
 RESULTS_DIR = 'results'
 OUTPUT_DIR = 'analysis_output'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+def cleanup_old_files():
+    """Remove arquivos PNG antigos para evitar conflitos."""
+    import glob
+    old_files = glob.glob(f'{OUTPUT_DIR}/*.png')
+    for file in old_files:
+        try:
+            os.remove(file)
+            print(f"[INFO] Removed old file: {file}")
+        except Exception as e:
+            print(f"[WARNING] Could not remove {file}: {e}")
 
 # Ordem fixa dos cenários para os gráficos e tabelas
 SCENARIO_LABELS = {
@@ -193,18 +211,22 @@ def plot_latency_boxplot(all_data: pd.DataFrame, request_type_order=None):
     
     # Generate statistical aggregation plots (distribution of statistics across runs)
     for metric in ['mean', 'median', 'p95', 'p99']:
-        plt.figure(figsize=(10,6))
-        sns.boxplot(data=df_stats, x='scenario', y=metric, hue='request_type', 
-                    hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
-        plt.yscale('log')
-        plt.title(f'Latency {metric.capitalize()} (ms) - Distribution Across Runs')
-        plt.xlabel('Scenario')
-        plt.ylabel(f'Latency {metric.capitalize()} (ms)')
-        plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
-        plt.tight_layout()
-        plt.savefig(f'{OUTPUT_DIR}/boxplot_latency_{metric}_stats.png')
-        plt.close()
-        print(f"[INFO] Latency {metric} statistics boxplot saved: {OUTPUT_DIR}/boxplot_latency_{metric}_stats.png")
+        try:
+            plt.figure(figsize=(10,6))
+            sns.boxplot(data=df_stats, x='scenario', y=metric, hue='request_type', 
+                        hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+            plt.yscale('log')
+            plt.title(f'Latency {metric.capitalize()} (ms) - Distribution Across Runs')
+            plt.xlabel('Scenario')
+            plt.ylabel(f'Latency {metric.capitalize()} (ms)')
+            plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+            plt.tight_layout()
+            plt.savefig(f'{OUTPUT_DIR}/boxplot_latency_{metric}_stats.png', dpi=100, bbox_inches='tight')
+            plt.close()
+            print(f"[INFO] Latency {metric} statistics boxplot saved: {OUTPUT_DIR}/boxplot_latency_{metric}_stats.png")
+        except Exception as e:
+            print(f"[WARNING] Failed to create latency {metric} plot: {e}")
+            plt.close()
     
     # Generate separate boxplot for each run
     for run_id in sorted(all_data['run'].unique()):
@@ -212,18 +234,22 @@ def plot_latency_boxplot(all_data: pd.DataFrame, request_type_order=None):
         if run_data.empty:
             continue
             
-        plt.figure(figsize=(10,6))
-        sns.boxplot(data=run_data, x='scenario_label', y='elapsed', hue='request_type', 
-                    hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
-        plt.yscale('log')
-        plt.title(f'Latency Boxplot (ms) - Run {run_id}')
-        plt.xlabel('Scenario')
-        plt.ylabel('Latency (ms)')
-        plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
-        plt.tight_layout()
-        plt.savefig(f'{OUTPUT_DIR}/boxplot_latency_Run{run_id}.png')
-        plt.close()
-        print(f"[INFO] Latency boxplot for Run {run_id} saved: {OUTPUT_DIR}/boxplot_latency_Run{run_id}.png")
+        try:
+            plt.figure(figsize=(10,6))
+            sns.boxplot(data=run_data, x='scenario_label', y='elapsed', hue='request_type', 
+                        hue_order=request_type_order, order=SCENARIO_ORDER, showfliers=False)
+            plt.yscale('log')
+            plt.title(f'Latency Boxplot (ms) - Run {run_id}')
+            plt.xlabel('Scenario')
+            plt.ylabel('Latency (ms)')
+            plt.legend(title='Request Type', bbox_to_anchor=(1.05, 1), loc='upper left')
+            plt.tight_layout()
+            plt.savefig(f'{OUTPUT_DIR}/boxplot_latency_Run{run_id}.png', dpi=100, bbox_inches='tight')
+            plt.close()
+            print(f"[INFO] Latency boxplot for Run {run_id} saved: {OUTPUT_DIR}/boxplot_latency_Run{run_id}.png")
+        except Exception as e:
+            print(f"[WARNING] Failed to create latency plot for Run {run_id}: {e}")
+            plt.close()
 
 def plot_throughput_boxplot(all_data: pd.DataFrame, request_type_order=None):
     """Generates statistical aggregation plots and individual run plots for throughput."""
@@ -452,7 +478,6 @@ def tail_throughput_stats(all_data: pd.DataFrame):
 
 def plot_latency_by_type(all_data: pd.DataFrame):
     """Gera boxplots de latência por tipo de requisição, comparando cenários."""
-    yticks = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
     for req_type in all_data['request_type'].unique():
         subset = all_data[all_data['request_type'] == req_type].copy()
         if subset.empty:
@@ -466,26 +491,46 @@ def plot_latency_by_type(all_data: pd.DataFrame):
         subset = subset[subset['scenario_label'].isin(SCENARIO_ORDER)]
         if subset.empty:
             continue
-        plt.figure(figsize=(8,5))
-        sns.boxplot(
-            data=subset,
-            x='scenario_label',
-            y='elapsed',
-            order=SCENARIO_ORDER,
-            showfliers=False
-        )
-        plt.yscale('log')
-        plt.ylim(10, 10000)
-        plt.yticks(yticks, [str(y) for y in yticks])
-        plt.grid(which='major', axis='y', linestyle='-', linewidth=1, alpha=0.8)
-        plt.title(f'Latency (ms) — {req_type}')
-        plt.xlabel('Scenario')
-        plt.ylabel('Latency (ms)')
-        plt.tight_layout()
-        fname = f'{OUTPUT_DIR}/boxplot_latency_{req_type}.png'.replace(' ', '_')
-        plt.savefig(fname)
-        plt.close()
-        print(f"[INFO] Latency boxplot by type saved: {fname}")
+        
+        try:
+            # Calcular limites dinâmicos baseados nos dados
+            max_latency = subset['elapsed'].max()
+            min_latency = subset['elapsed'].min()
+            
+            # Definir limite superior dinamicamente
+            if max_latency > 100000:  # Se passar de 100 segundos
+                y_max = max_latency * 1.2  # 20% de margem
+                yticks = [10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, int(y_max)]
+            elif max_latency > 10000:  # Se passar de 10 segundos
+                y_max = max_latency * 1.2
+                yticks = [10, 50, 100, 500, 1000, 5000, 10000, int(y_max)]
+            else:
+                y_max = 10000
+                yticks = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
+            
+            plt.figure(figsize=(8,5))
+            sns.boxplot(
+                data=subset,
+                x='scenario_label',
+                y='elapsed',
+                order=SCENARIO_ORDER,
+                showfliers=False
+            )
+            plt.yscale('log')
+            plt.ylim(10, y_max)
+            plt.yticks(yticks, [str(y) for y in yticks])
+            plt.grid(which='major', axis='y', linestyle='-', linewidth=1, alpha=0.8)
+            plt.title(f'Latency (ms) — {req_type}')
+            plt.xlabel('Scenario')
+            plt.ylabel('Latency (ms)')
+            plt.tight_layout()
+            fname = f'{OUTPUT_DIR}/boxplot_latency_{req_type}.png'.replace(' ', '_')
+            plt.savefig(fname, dpi=100, bbox_inches='tight')
+            plt.close()
+            print(f"[INFO] Latency boxplot by type saved: {fname} (max: {max_latency:.0f}ms)")
+        except Exception as e:
+            print(f"[WARNING] Failed to create latency plot for {req_type}: {e}")
+            plt.close()  # Garantir que a figura seja fechada
 
 def plot_throughput_by_type(all_data: pd.DataFrame):
     """Gera boxplots de throughput por tipo de requisição, comparando cenários, todos alinhados com o mesmo limite de eixo y."""
@@ -528,25 +573,30 @@ def plot_throughput_by_type(all_data: pd.DataFrame):
         if subset.empty:
             continue
         subset['scenario_label'] = pd.Categorical(subset['scenario_label'], categories=SCENARIO_ORDER, ordered=True)
-        plt.figure(figsize=(8,5))
-        sns.boxplot(
-            data=subset,
-            x='scenario_label',
-            y='throughput',
-            order=SCENARIO_ORDER,
-            showfliers=False
-        )
-        plt.ylim(0, y_max)
-        plt.yticks(yticks)
-        plt.grid(which='major', axis='y', linestyle='-', linewidth=1, alpha=0.8)
-        plt.title(f'Throughput (req/s) — {req_type}')
-        plt.xlabel('Scenario')
-        plt.ylabel('Requests per second')
-        plt.tight_layout()
-        fname = f'{OUTPUT_DIR}/boxplot_throughput_{req_type}.png'.replace(' ', '_')
-        plt.savefig(fname)
-        plt.close()
-        print(f"[INFO] Throughput boxplot by type saved: {fname}")
+        
+        try:
+            plt.figure(figsize=(8,5))
+            sns.boxplot(
+                data=subset,
+                x='scenario_label',
+                y='throughput',
+                order=SCENARIO_ORDER,
+                showfliers=False
+            )
+            plt.ylim(0, y_max)
+            plt.yticks(yticks)
+            plt.grid(which='major', axis='y', linestyle='-', linewidth=1, alpha=0.8)
+            plt.title(f'Throughput (req/s) — {req_type}')
+            plt.xlabel('Scenario')
+            plt.ylabel('Requests per second')
+            plt.tight_layout()
+            fname = f'{OUTPUT_DIR}/boxplot_throughput_{req_type}.png'.replace(' ', '_')
+            plt.savefig(fname, dpi=100, bbox_inches='tight')
+            plt.close()
+            print(f"[INFO] Throughput boxplot by type saved: {fname}")
+        except Exception as e:
+            print(f"[WARNING] Failed to create throughput plot for {req_type}: {e}")
+            plt.close()  # Garantir que a figura seja fechada
 
 def plot_error_rate_by_type(all_data: pd.DataFrame):
     """Gera gráficos de barra da taxa de erro por tipo de requisição, comparando cenários."""
@@ -565,45 +615,71 @@ def plot_error_rate_by_type(all_data: pd.DataFrame):
         subset = subset[subset['scenario_label'].isin(SCENARIO_ORDER)]
         if subset.empty:
             continue
-        plt.figure(figsize=(8,5))
-        sns.barplot(
-            data=subset,
-            x='scenario_label',
-            y='is_error',
-            order=SCENARIO_ORDER,
-            estimator=np.mean
-        )
-        plt.ylim(0, 1)
-        plt.yticks(np.arange(0, 1.05, 0.1))
-        plt.title(f'Mean Error Rate — {req_type}')
-        plt.xlabel('Scenario')
-        plt.ylabel('Mean error rate')
-        plt.tight_layout()
-        fname = f'{OUTPUT_DIR}/barplot_error_rate_{req_type}.png'.replace(' ', '_')
-        plt.savefig(fname)
-        plt.close()
-        print(f"[INFO] Error rate barplot by type saved: {fname}")
+        try:
+            plt.figure(figsize=(8,5))
+            sns.barplot(
+                data=subset,
+                x='scenario_label',
+                y='is_error',
+                order=SCENARIO_ORDER,
+                estimator=np.mean
+            )
+            plt.ylim(0, 1)
+            plt.yticks(np.arange(0, 1.05, 0.1))
+            plt.title(f'Mean Error Rate — {req_type}')
+            plt.xlabel('Scenario')
+            plt.ylabel('Mean error rate')
+            plt.tight_layout()
+            fname = f'{OUTPUT_DIR}/barplot_error_rate_{req_type}.png'.replace(' ', '_')
+            plt.savefig(fname, dpi=100, bbox_inches='tight')
+            plt.close()
+            print(f"[INFO] Error rate barplot by type saved: {fname}")
+        except Exception as e:
+            print(f"[WARNING] Failed to create error rate plot for {req_type}: {e}")
+            plt.close()  # Garantir que a figura seja fechada
 
 def main():
+    print("[INFO] Starting analysis...")
+    print("[INFO] Cleaning up old files...")
+    cleanup_old_files()
+    
     print("[INFO] Searching for .jtl files...")
     jtl_files = get_jtl_files()
     print(f"[INFO] {len(jtl_files)} files found.")
+    
     all_data = load_data(jtl_files)
     if all_data.empty:
         print("[ERROR] No data to analyze.")
         return
+    
+    print("[INFO] Calculating statistics...")
     calc_stats(all_data)
+    
     request_type_order = sorted(all_data['request_type'].unique())
+    
+    print("[INFO] Generating latency plots...")
     plot_latency_boxplot(all_data, request_type_order=request_type_order)
+    
+    print("[INFO] Generating throughput plots...")
     plot_throughput_boxplot(all_data, request_type_order=request_type_order)
+    
+    print("[INFO] Generating error rate plots...")
     plot_error_rate_barplot(all_data, request_type_order=request_type_order)
+    
+    print("[INFO] Calculating tail statistics...")
     tail_latency_stats(all_data)
     tail_throughput_stats(all_data)
+    
+    print("[INFO] Generating individual type plots...")
     plot_latency_by_type(all_data)
     plot_throughput_by_type(all_data)
     plot_error_rate_by_type(all_data)
+    
+    print("[INFO] Exporting reports...")
     export_reports(all_data)
-    print(f"[INFO] Analysis completed. Results in: {OUTPUT_DIR}/")
+    
+    print(f"[INFO] Analysis completed successfully. Results in: {OUTPUT_DIR}/")
+    print(f"[INFO] Generated {len([f for f in os.listdir(OUTPUT_DIR) if f.endswith('.png')])} plot files")
 
 if __name__ == "__main__":
     main()
